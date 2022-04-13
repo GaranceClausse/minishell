@@ -6,15 +6,15 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/13 17:17:50 by vkrajcov         ###   ########.fr        #
+#    Updated: 2022/04/13 17:30:49 by vkrajcov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, \
-	   $(addprefix xx/, xx.o))
+OBJS = $(addprefix srcs/, main.o)
 
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lreadline
 DBFLAGS = -g3 -fsanitize=address
 
 all: $(NAME)
