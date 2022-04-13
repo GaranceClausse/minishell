@@ -6,50 +6,13 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/13 17:56:45 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/13 18:07:45 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "lexer.h"
-
-int	ft_strlen(const char *str)
-{
-	int	i = 0;
-	while(str[i])
-		i++;
-	return i;
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t		i;
-	char		*cpy;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	if (len <= ft_strlen(s))
-		cpy = malloc(sizeof(char) * (len + 1));
-	else
-		cpy = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!cpy)
-		return (NULL);
-	if (start > ft_strlen(s))
-	{
-		cpy[0] = '\0';
-		return (cpy);
-	}
-	while (s[start] && i < len)
-	{
-		cpy[i] = s[start];
-		i++;
-		start++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
-}
 
 int	isinset(char c, char *str)
 {
@@ -126,6 +89,14 @@ t_token	get_token(char *str)
 			token.content = ft_substr(str, 0 , 1);
 		token.type = REDIRECTION;
 	}
+	if (str[i] == '\n' || str[i] == '|' || str[i] == '=')
+		token.content = str[i];
+	if (str[i] == '\n')
+	       token.type = NEWLINE;
+	if (str[i] == '|')
+		token.type = PIPE;
+	if (str[i] == '=')
+		token.type = ASSIGNMENT;
 	return (token);
 }
 
