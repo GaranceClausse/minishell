@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/13 18:07:45 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:29:40 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_token	get_token(char *str)
 		token.type = REDIRECTION;
 	}
 	if (str[i] == '\n' || str[i] == '|' || str[i] == '=')
-		token.content = str[i];
+		token.content = ft_substr(str, 0, 1);
 	if (str[i] == '\n')
 	       token.type = NEWLINE;
 	if (str[i] == '|')
@@ -100,22 +100,10 @@ t_token	get_token(char *str)
 	return (token);
 }
 
-int	main(int argc, char **argv)
+int	main()
 {
-	int	i;
-	int	j;
 	t_token token;
 
-	i = 1;
-	if (argc > 0)
-	{
-		while (argv[i])
-		{
-			token = get_token(argv[i]);
-			printf("%s\n", token.content);
-			i++;
-		
-		}
-	}
-
+	token = get_token("salut ca va?");
+	printf("%s", token.content);
 }

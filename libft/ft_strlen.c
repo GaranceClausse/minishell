@@ -1,42 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/14 10:31:39 by gclausse         ###   ########.fr       */
+/*   Created: 2022/04/14 10:23:26 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/14 10:24:13 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
-# include "libft/libft.h"
-# include <errno.h>
-# include <unistd.h>
-# include <string.h>
-# include <pthread.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <sys/wait.h>
+#include <stdio.h>
 
-typedef enum {
-	WORD,
-	ASSIGNMENT,
-	REDIRECTION,
-	PIPE,
-	NEWLINE,
-	ENDOF,
-	EXPANSION,
-	ERROR
+size_t	ft_strlen(const char *s)
+{
+	int	i;
 
-}	t_type;
-
-typedef struct s_token {
-	t_type	type;
-	char *content;
-}	t_token;
-
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
