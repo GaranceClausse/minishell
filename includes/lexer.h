@@ -6,13 +6,13 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/14 10:31:39 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:50:18 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-# include "libft/libft.h"
+# include "libft.h"
 # include <errno.h>
 # include <unistd.h>
 # include <string.h>
@@ -23,10 +23,10 @@
 # include <sys/wait.h>
 
 typedef enum {
-	WORD,
 	ASSIGNMENT,
 	REDIRECTION,
 	PIPE,
+	WORD,
 	NEWLINE,
 	ENDOF,
 	EXPANSION,

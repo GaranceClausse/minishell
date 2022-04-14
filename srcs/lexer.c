@@ -6,12 +6,10 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/14 10:29:40 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:58:14 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "lexer.h"
 
 int	isinset(char c, char *str)
@@ -30,7 +28,7 @@ int	isinset(char c, char *str)
 
 int	isspecial(char c)
 {
-	if (isinset(c, "|<>=$\n\t\v\r\f\"\'"))
+	if (isinset(c, "|<>=$\n\t\v\r\f\"\'") || c == 32)
 		return (1);
 	return (0);
 }
@@ -106,4 +104,5 @@ int	main()
 
 	token = get_token("salut ca va?");
 	printf("%s", token.content);
+	printf("%u", token.type);
 }
