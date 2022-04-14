@@ -6,103 +6,93 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/14 10:58:14 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/14 15:06:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-int	isinset(char c, char *str)
+void	feed_lexer(char *str)
 {
-	int	i;
+	t_lexer	lexer;
+	int i = 0;
 
-	i = 0;
-	while (str[i])
+	lexer.index = 0;
+	lexer.str = str;
+	while (str[lexer.index])
 	{
-		if (c == str[i])
-			return (1);
+		if (str[lexer.index] == ' ')
+			lexer.index += 1;
+		lexer.token = get_token(&lexer);
+		printf("index = %d\n", lexer.index);
+		printf("content = %s\n", lexer.token.content);
+		printf("type = %u\n", lexer.token.type);
+		printf("new str = %s\n\n", &str[lexer.index]);
+
 		i++;
 	}
-	return (0);
+
 }
 
-int	isspecial(char c)
-{
-	if (isinset(c, "|<>=$\n\t\v\r\f\"\'") || c == 32)
-		return (1);
-	return (0);
-}
-
-int	search_for_char(char c, char *str)
-{
-	int	i;
-
-	i = 1;
-	while (str[i])
-	{
-
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int	search_for_special(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (isspecial(str[i]) == 0)
-		i++;
-	return (i);
-}
-
-
-t_token	get_token(char *str)
+t_token	get_token(t_lexer *lexer)
 {
 	int	i;
 	int	j;
 	t_token	token;
+	char *str;
 
 	i = 0;
-	if (str[i] == '\"' || str[i] == '\'' || isspecial(str[i]) == 0)
+	str = lexer->str + lexer->index;
+	token.type = ERROR;
+	token.content = NULL;
+	if (str[i] == '\0')
 	{
-
+		token.type = ENDOF;
+		token.content = NULL;
+		return (token);
+	}
+	else if (str[i] == '\"' || str[i] == '\'' || is_special(str[i]) == 0)
+	{
 		j = search_for_char(str[i], str);
-		if (isspecial(str[i]) == 0)
+		if (is_special(str[i]) == 0)
 			j = search_for_special(str);
 		if (j != -1)
 		{
-			token.content = ft_substr(str, 0, j);
+			token.content = ft_substr(str, i, j);
 			token.type = WORD;
+			lexer->index += j;
 		}
 
 	}
-	if (str[i + 1] && (str[i] == '>' || str[i] == '<'))
+	else if (str[i + 1] && (str[i] == '>' || str[i] == '<'))
 	{
 		if (str[i] == str[i + 1])
+		{
 			token.content = ft_substr(str, 0, 2);
+			lexer->index += 2;
+		}
 		else
+		{
 			token.content = ft_substr(str, 0 , 1);
+			lexer->index += 1;
+		}
 		token.type = REDIRECTION;
 	}
-	if (str[i] == '\n' || str[i] == '|' || str[i] == '=')
+	else if (str[i] == '\n' || str[i] == '|' || str[i] == '=')
+	{
 		token.content = ft_substr(str, 0, 1);
-	if (str[i] == '\n')
+		lexer->index += 1;
+	}
+	else if (str[i] == '\n')
 	       token.type = NEWLINE;
-	if (str[i] == '|')
+	else if (str[i] == '|')
 		token.type = PIPE;
-	if (str[i] == '=')
+	else if (str[i] == '=')
 		token.type = ASSIGNMENT;
 	return (token);
 }
 
 int	main()
 {
-	t_token token;
-
-	token = get_token("salut ca va?");
-	printf("%s", token.content);
-	printf("%u", token.type);
+	feed_lexer("salut ca< v >?");
 }

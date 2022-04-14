@@ -6,12 +6,12 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/14 10:45:40 by gclausse         ###   ########.fr        #
+#    Updated: 2022/04/14 11:56:01 by gclausse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, lexer.o)
+OBJS = $(addprefix srcs/, lexer.o lexer_utils.o)
 	#   $(addprefix xx/, xx.o))
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o)
