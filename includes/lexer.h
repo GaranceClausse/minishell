@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/14 12:38:46 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:20:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/wait.h>
+# include <readline/readline.h>
 
 typedef enum {
 	ASSIGNMENT,
 	REDIRECTION,
 	PIPE,
 	WORD,
-	NEWLINE,
+	NLINE,
 	ENDOF,
 	EXPANSION,
 	ERROR
@@ -50,6 +51,6 @@ int	is_special(char c);
 int	search_for_char(char c, char *str);
 int	search_for_special(char *str);
 t_token	get_token(t_lexer *lexer);
-void	feed_lexer(char *str);
+void	feed_lexer(t_lexer *lexer, char *str);
 
 #endif

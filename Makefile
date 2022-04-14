@@ -6,7 +6,7 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/14 11:56:01 by gclausse         ###   ########.fr        #
+#    Updated: 2022/04/14 16:22:38 by gclausse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ OBJS = $(addprefix srcs/, lexer.o lexer_utils.o)
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
-DBFLAGS = -g3 -fsanitize=address
+DBFLAGS = -g3
+LDFLAGS = -lreadline
 
 all: $(NAME)
 
