@@ -6,17 +6,19 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/15 15:06:12 by vkrajcov         ###   ########.fr        #
+#    Updated: 2022/04/15 16:31:04 by vkrajcov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, \
+OBJS = $(addprefix srcs/, main.o lexer.o lexer_utils.o \
 	   $(addprefix builtins/, echo.o))
-LIBFT_OBJS= $(addprefix libft/, ft_strcmp.o ft_strlen.o)
-CC = gcc
-CFLAGS = -Ilibft -Wall -Wextra -Werror
-DBFLAGS = -g3 -fsanitize=address
+
+LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o)
+
+CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
+DBFLAGS = -g3
+LDFLAGS = -lreadline
 
 all: $(NAME)
 
@@ -24,11 +26,11 @@ debug: CFLAGS+=$(DBFLAGS)
 debug: LDFLAGS+=$(DBFLAGS)
 debug:	$(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_OBJS)
+$(NAME): $(OBJS) $(LIBFTOBJ)
 	$(CC) $(LDFLAGS) $^ -o $@ 
 
 clean: 
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(LIBFT_OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
