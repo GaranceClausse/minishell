@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 15:57:19 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/15 18:26:14 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,28 @@ void	feed_lexer(t_lexer *lexer, char *str)
 
 void	get_token_type(t_token *token, char c)
 {
+	int	i;
+	int	eq;
+
+	i = 1;
+	eq = 0;
 	if (c == '\n' || c == '\0')
 		token->type = NLINE;
 	else if (c == '|')
 		token->type = PIPE;
-	else if (c == '=')
-		token->type = ASSIGNMENT;
-	else if (c == '\"' || c == '\'' || is_special(c) == 0)
-		token->type = WORD;
+	else if (c == '\"' || c == '\'' || is_special(c) == 0 || is_special(c) == 2)
+	{
+		while (token->content[i])
+		{
+			if (is_special(token->content[i]) == 2)
+				eq++;
+			i++;
+		}
+		if (eq != 0)
+			token->type = ASSIGNMENT;
+		else
+			token->type = WORD;
+	}
 	else if (c == '>' || c == '<')
 		token->type = REDIRECTION;
 }
@@ -55,7 +69,7 @@ t_token	get_token(t_lexer *lexer)
 	str = lexer->str + lexer->index;
 	token.type = ERROR;
 	token.content = NULL;
-	if (*str == '\n' || *str == '|' || *str == '=' || *str == '\0')
+	if (*str == '\n' || *str == '|' || *str == '\0')
 		fill_token(&token, *str, 1, lexer);
 	else if (*str == '\"' || *str == '\'' || is_special(*str) == 0)
 	{
@@ -68,6 +82,8 @@ t_token	get_token(t_lexer *lexer)
 	else if (*str == '>' || *str == '<')
 		fill_token(&token, *str,
 			1 + (*str + 1 && (*str == *(str + 1))), lexer);
+	else if (*str == '=' && (*str + 1 && is_special(*(str + 1)) == 0))
+		fill_token(&token, *str, search_for_special(str), lexer);
 	return (token);
 }
 
