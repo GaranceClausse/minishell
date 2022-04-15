@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/14 10:53:22 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 16:06:55 by gclausse         ###   ########.fr       */
+/*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/15 18:21:07 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef ENV_H
+# define ENV_H
 
-# define PS1 "minishell > "
+typedef struct s_var_list
+{
+	int		size;
+	int 	max;
+	char	**list;
+}	t_var_list;
+
+typedef struct s_env
+{
+	int			last_return;
+	t_var_list	shell_var;
+	t_var_list	env_var;
+}	t_env;
 
 
 #endif

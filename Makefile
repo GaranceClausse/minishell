@@ -6,7 +6,7 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/15 16:02:13 by gclausse         ###   ########.fr        #
+#    Updated: 2022/04/15 18:02:02 by vkrajcov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(NAME): $(OBJS) $(LIBFTOBJ)
 	$(CC) $(LDFLAGS) $^ -o $@ 
 
 clean: 
-	$(RM) $(OBJS) $(LIBFT_OBJ)
+	$(RM) $(OBJS) $(LIBFTOBJ) 
 
 fclean: clean
 	$(RM) $(NAME)
