@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/14 17:53:24 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/15 14:41:46 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,5 @@ int	main(int argc, char	*argv[], char *env[])
 	if (isatty(STDIN_FILENO))
 		if (argc == 1 || (argc == 2 && !ft_strcmp(argv[1], "-")))
 			return (interactive_shell());
-	//if (argc > 1 && (argc != 2 && !ft_strcmp(argv[1], "-")) ||  )
-		//readfile
-	//readinput
+	//readfile arg 1 ou arg 2 (-)
 }
