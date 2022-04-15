@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 11:42:41 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/14 14:10:05 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/15 14:43:55 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	search_for_char(char c, char *str)
 	i = 1;
 	while (str[i])
 	{
-
 		if (str[i] == c)
 			return (i);
 		i++;
