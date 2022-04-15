@@ -6,18 +6,19 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/14 17:35:46 by vkrajcov         ###   ########.fr        #
+#    Updated: 2022/04/15 16:02:13 by gclausse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, main.o)
+OBJS = $(addprefix srcs/, main.o lexer.o lexer_utils.o)
+	#   $(addprefix xx/, xx.o))
 
-LIBFT_OBJ = $(addprefix libft/, ft_strcmp.o)
+LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o)
 
-CFLAGS = -Iincludes -Ilibft -Wall -Wextra -Werror
-LDFLAGS = -lreadline
+CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3
+LDFLAGS = -lreadline
 
 all: $(NAME)
 
@@ -25,7 +26,7 @@ debug: CFLAGS+=$(DBFLAGS)
 debug: LDFLAGS+=$(DBFLAGS)
 debug:	$(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_OBJ)
+$(NAME): $(OBJS) $(LIBFTOBJ)
 	$(CC) $(LDFLAGS) $^ -o $@ 
 
 clean: 
