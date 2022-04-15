@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 15:15:37 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/15 16:08:22 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 
-typedef enum s_type {
+typedef enum e_type {
 	ASSIGNMENT,
 	REDIRECTION,
 	PIPE,
@@ -51,5 +51,6 @@ int		search_for_char(char c, char *str);
 int		search_for_special(char *str);
 t_token	get_token(t_lexer *lexer);
 void	feed_lexer(t_lexer *lexer, char *str);
+void	tokenize_input(char *str);
 
 #endif

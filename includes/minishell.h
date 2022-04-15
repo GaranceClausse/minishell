@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:53:22 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/14 10:54:13 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/15 16:06:55 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 # define MINISHELL_H
 
 # define PS1 "minishell > "
-# define PS2 " > "
+
 
 #endif

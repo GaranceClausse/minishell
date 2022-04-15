@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 15:57:19 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/15 16:10:19 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,28 +71,19 @@ t_token	get_token(t_lexer *lexer)
 	return (token);
 }
 
-int	main(void)
+void	tokenize_input(char *str)
 {
 	t_token	token;
 	t_lexer	lexer;
-	char	*str;
 
-	str = readline(NULL);
-	while (str) // readline up to EOF
+	feed_lexer(&lexer, str);
+	token = get_token(&lexer);
+	while (token.content != NULL)
 	{
-		feed_lexer(&lexer, str); //lexer as paramater
-		//parser check if executable if not then
-		token = get_token(&lexer);
 		printf("token.content = %s\n", token.content);
 		printf("token.type = %u\n\n", token.type);
-		while (token.content != NULL) //parser is not error and not finished
-		{
-			if (lexer.str[lexer.index] == ' ')
-				lexer.index += 1;
-			token = get_token(&lexer); //parser is asking for new token
-			printf("token.content = %s\n", token.content);
-			printf("token.type = %u\n\n", token.type);
-		}
-	str = readline(NULL);
+		if (lexer.str[lexer.index] == ' ')
+			lexer.index += 1;
+		token = get_token(&lexer);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 14:41:46 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/15 16:07:08 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "libft.h"
 #include "minishell.h"
+#include "lexer.h"
 
 void	sighandler(int signo)
 {
@@ -32,14 +33,14 @@ void	sighandler(int signo)
 
 int	interactive_shell(void)
 {
-	char				*usr_input;
+	char	*usr_input;
 
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 	usr_input = readline(PS1);
 	while (usr_input)
 	{
-		(void)usr_input; //handle input
+		tokenize_input(usr_input);
 		add_history(usr_input);
 		free(usr_input);
 		usr_input = readline(PS1);
