@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 16:07:08 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/15 16:39:59 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	interactive_shell(void)
 {
 	char	*usr_input;
 
-	signal(SIGINT, sighandler);
+	signal(SIGINT, sighandler); //issue with infinite loop
 	signal(SIGQUIT, SIG_IGN);
 	usr_input = readline(PS1);
 	while (usr_input)
