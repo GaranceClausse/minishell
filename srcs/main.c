@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 16:39:59 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 10:37:39 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
-#include "minishell.h"
 #include "lexer.h"
 
 void	sighandler(int signo)
