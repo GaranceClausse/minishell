@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 16:07:08 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:50:10 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
-#include "minishell.h"
 #include "lexer.h"
+#include "env.h"
+#define PS1 "minishell > "
 
 void	sighandler(int signo)
 {
@@ -35,7 +36,7 @@ int	interactive_shell(void)
 {
 	char	*usr_input;
 
-	signal(SIGINT, sighandler);
+	signal(SIGINT, sighandler); //issue with infinite loop
 	signal(SIGQUIT, SIG_IGN);
 	usr_input = readline(PS1);
 	while (usr_input)
@@ -51,11 +52,15 @@ int	interactive_shell(void)
 	return (0);
 }
 
-int	main(int argc, char	*argv[], char *env[])
+int	main(int argc, char *argv[], char *envp[])
 {
-	(void)env;
+	t_env	env;
+
+	if (!init_env(&env, 20, envp))
+		return (1); //sortir error
 	if (isatty(STDIN_FILENO))
 		if (argc == 1 || (argc == 2 && !ft_strcmp(argv[1], "-")))
 			return (interactive_shell());
+	free_env(&env);
 	//readfile arg 1 ou arg 2 (-)
 }
