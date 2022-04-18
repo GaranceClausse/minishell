@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/18 12:11:45 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:14:18 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 	else if (dst->size + 1 > dst->max)
 	{
 		dst->max *= 2;
-		if (realloc(dst->list, (dst->max * sizeof(char *))) == NULL)
+		if (ft_realloc_str(dst->list, dst->max) == NULL)
 			return (1);
 	}
 	dst->list[dst->size] = var;
