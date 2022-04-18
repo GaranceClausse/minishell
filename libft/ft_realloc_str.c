@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_realloc_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:13:52 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 12:03:38 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:08:10 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-char	**realloc_str_tab(char **ptr, size_t nb_elms)
+char	**realloc_str(char **ptr, size_t nb_elms)
 {
 	char	**new_ptr;
 	size_t	i;
@@ -30,5 +30,6 @@ char	**realloc_str_tab(char **ptr, size_t nb_elms)
 		}
 	}
 	free(ptr);
+	ptr = new_ptr;
 	return (new_ptr);
 }
