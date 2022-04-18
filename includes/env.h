@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 18:21:07 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 10:32:10 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,12 @@ typedef struct s_env
 	t_var_list	env_var;
 }	t_env;
 
+//void *ft_realloc(void *ptr, size_t size);
+
+//char *search(s_env *env, char *var);
+//int add_var(s_env *env, t_var_list *dst, char *var) 
+//-> check si on doit realloc ou si ca existe deja
+//
+//int delete_var(s_env *env, char *var)
 
 #endif
