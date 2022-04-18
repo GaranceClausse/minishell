@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/18 12:01:36 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:20:09 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,11 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 		return (0);
 	else if (dst->size + 1 > dst->max)
 	{
-		if (realloc(dst->list, (dst->max * 2 * sizeof(char *))) == NULL)
+		dst->max *= 2;
+		if (!realloc_str(dst->list,  dst->max * 2))
 			return (1);
 	}
 	dst->list[dst->size] = var;
 	dst->list[dst->size + 1] = NULL;
 	return (0);
-}
-
-int main()
-{
-	t_env env;
-	t_var_list	shell_env;
-	
-	if (init_env(&env, 5, NULL))
-	{
-		shell_env = env.shell_var;
-		add_var(&env, &shell_env, "coucou=");
-		search(&env, "coucou");
-		free_env(&env);
-	}
 }
