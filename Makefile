@@ -6,16 +6,16 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/18 12:08:19 by vkrajcov         ###   ########.fr        #
+#    Updated: 2022/04/18 12:09:26 by vkrajcov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, main.o lexer.o lexer_utils.o env.c)
+OBJS = $(addprefix srcs/, lexer.o lexer_utils.o env.o env_utils.o)
 	#   $(addprefix xx/, xx.o))
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o free_char_tab.o \
-			ft_realloc_str.o)
+	   ft_strncmp.o ft_realloc_str.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3
