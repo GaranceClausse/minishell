@@ -6,26 +6,32 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:05:27 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 18:29:41 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 10:56:30 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "env.h"
+#include "libft.h"
 
-//add_var
-//delete_var
-
-void	free_var_list(t_var_list *list)
+void	free_env(t_env *env)
 {
-	int	i;
-
-	i = 0;
-	while (list->list[i])
-		free(list->list[i++]);
-	free(list);
+	free_char_tab(env->shell_var.list);
+	free_char_tab(env->env_var.list);
 }
 
-t_var_list *copy_var_list(t_var_list *list, int max, char *envp[])
+static t_var_list	*init_var_list(t_var_list *list, int max)
+{
+	list->size = 0;
+	list->max = max;
+	list->list = malloc(sizeof(char *) * max);
+	if (!list->list)
+		return (NULL);
+	list->list[0] = NULL;
+	return (list);
+}
+/*
+static t_var_list *copy_var_list(t_var_list *list, int max, char *envp[])
 {
 	char	*cur;
 	int		i;
@@ -43,30 +49,23 @@ t_var_list *copy_var_list(t_var_list *list, int max, char *envp[])
 		}
 	}
 	return (list);
-}
+}*/
 
-t_var_list	*init_var_list(t_var_list *list, int max)
+t_env	*init_env(t_env *env, int max, char *envp[])
 {
-	list->size = 0;
-	list->max = max;
-	list->list = malloc(sizeof(char *) * max);
-	if (!list->list)
-		return (NULL);
-	list[0] = NULL;
-	return (list);
-}
-
-t_var *env	init_env(t_var *env, int max, char *envp[])
-{
-	int	i;
-
-	env->last_code = 0;
+	(void)envp;
+	env->last_return = 0;
 	if (!init_var_list(&env->shell_var, max))
 		return (NULL);
-	if (!copy_var_list(&env->env_var, max, envp))
+	if (!init_var_list(&env->env_var, max))
+	{
+		free_char_tab(env->shell_var.list);
+		return (NULL);
+	}
+	/*if (!copy_var_list(&env->env_var, max, envp))
 	{
 		free_var_list(&env->shell_var);
 		return (NULL);
-	}
+	}*/
 	return (env);
 }
