@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/18 12:14:18 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:42:54 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 	else if (dst->size + 1 > dst->max)
 	{
 		dst->max *= 2;
-		if (ft_realloc_str(dst->list, dst->max) == NULL)
+		dst->list = realloc_str(dst->list, (dst->max * 2 + 1));
+		if (!dst->list)
 			return (1);
 	}
-	dst->list[dst->size] = var;
-	dst->list[dst->size + 1] = NULL;
+	dst->list[dst->size++] = var;
+	dst->list[dst->size] = NULL;
 	return (0);
 }
