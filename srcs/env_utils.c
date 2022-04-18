@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/18 12:22:11 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:38:53 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 	else if (dst->size + 1 > dst->max)
 	{
 		dst->max *= 2;
-		if (!realloc_str(dst->list,  dst->max * 2))
+		dst->list = realloc_str(dst->list, (dst->max * 2 + 1));
+		if (!dst->list)
 			return (1);
 	}
-	dst->list[dst->size] = var;
-	dst->list[dst->size + 1] = NULL;
+	dst->list[dst->size++] = var;
+	dst->list[dst->size] = NULL;
 	return (0);
 }

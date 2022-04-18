@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:13:52 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 12:08:10 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:33:34 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ char	**realloc_str(char **ptr, size_t nb_elms)
 		}
 	}
 	free(ptr);
-	ptr = new_ptr;
 	return (new_ptr);
 }
