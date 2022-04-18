@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 10:32:10 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 10:56:38 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ typedef struct s_env
 	t_var_list	shell_var;
 	t_var_list	env_var;
 }	t_env;
+
+void	free_env(t_env *env);
+t_env	*init_env(t_env *env, int max, char *envp[]);
 
 //void *ft_realloc(void *ptr, size_t size);
 
