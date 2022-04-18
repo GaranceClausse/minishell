@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/18 15:42:55 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:00:55 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	search(t_var_list *dst, char *var_name)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*ret;
 
 	i = 0;
@@ -43,10 +43,11 @@ char	*extract_name(char *var)
    0 == error;
    1 == not finished;
    comme ca add_var return +1 quand c'est fini ou error */
+
 int	change_var(t_var_list *dst, char *var)
 {
 	char	*var_name;
-	int	index;
+	int		index;
 
 	var_name = extract_name(var);
 	if (var_name == NULL)
@@ -86,9 +87,9 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 
 char	*delete_var(t_env *env, char *var_name)
 {
-	int	index;
+	int			index;
 	t_var_list	*var_list;
-	char	*tmp;
+	char		*tmp;
 
 	index = search(&env->shell_var, var_name);
 	if (index == -1)
