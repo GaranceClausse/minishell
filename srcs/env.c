@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:05:27 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 10:56:30 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/18 11:48:09 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_env	*init_env(t_env *env, int max, char *envp[])
 		free_char_tab(env->shell_var.list);
 		return (NULL);
 	}
-	/*if (!copy_var_list(&env->env_var, max, envp))
+	/*if (!copy_var_list(&env->env_var, max, envp)
 	{
 		free_var_list(&env->shell_var);
 		return (NULL);
