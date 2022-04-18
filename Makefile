@@ -6,7 +6,7 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/18 11:06:50 by gclausse         ###   ########.fr        #
+#    Updated: 2022/04/18 12:08:10 by gclausse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ OBJS = $(addprefix srcs/, lexer.o lexer_utils.o env.o env_utils.o)
 	#   $(addprefix xx/, xx.o))
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o free_char_tab.o \
-	   ft_strncmp.o)
+	   ft_strncmp.o ft_realloc_str.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3
