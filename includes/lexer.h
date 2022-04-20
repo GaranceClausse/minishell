@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 16:08:22 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:40:37 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 
 typedef enum e_type {
 	ASSIGNMENT,
-	REDIRECTION,
+	REDIR_IN,
+	REDIR_OUT,
+	HERE_DOC,
+	APPEND,
 	PIPE,
 	WORD,
 	NLINE,

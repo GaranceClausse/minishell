@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 11:42:41 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 14:43:55 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:48:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	is_in_set(char c, char *str)
 	{
 		if (c == str[i])
 			return (1);
+		if (c == '=')
+			return (2);
 		i++;
 	}
 	return (0);
@@ -28,8 +30,10 @@ int	is_in_set(char c, char *str)
 
 int	is_special(char c)
 {
-	if (is_in_set(c, " |<>=$\n\t\v\r\f\"\'"))
+	if (is_in_set(c, " |<>$\n\t\v\r\f\"\'") == 1)
 		return (1);
+	else if (is_in_set(c, " |<>$\n\t\v\r\f\"\'") == 2)
+		return (2);
 	return (0);
 }
 
@@ -52,7 +56,7 @@ int	search_for_special(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && is_special(str[i]) == 0)
+	while (str[i] && (is_special(str[i]) == 0 || is_special(str[i]) == 2))
 		i++;
 	return (i);
 }
