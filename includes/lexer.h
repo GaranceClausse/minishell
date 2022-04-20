@@ -35,8 +35,8 @@ typedef enum e_type {
 }	t_type;
 
 typedef struct s_token {
-	t_type	type;
-	char	*content;
+	t_type			type;
+	char			*content;
 }	t_token;
 
 typedef struct s_lexer {
@@ -52,5 +52,6 @@ int		search_for_special(char *str);
 t_token	get_token(t_lexer *lexer);
 void	feed_lexer(t_lexer *lexer, char *str);
 void	tokenize_input(char *str);
+void	delete_token(void *token);
 
 #endif

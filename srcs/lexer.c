@@ -87,3 +87,12 @@ void	tokenize_input(char *str)
 		token = get_token(&lexer);
 	}
 }
+
+void	delete_token(void *token_void)
+{
+	t_token	*token;
+
+	token = (t_token *)token_void;
+	free(token->content);
+	free(token);
+}
