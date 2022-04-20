@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 15:15:37 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:37:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 
 typedef enum s_type {
 	ASSIGNMENT,
-	REDIRECTION,
+	REDIR_IN,
+	REDIR_OUT,
+	HERE_DOC,
+	APPEND,
 	PIPE,
 	WORD,
 	NLINE,

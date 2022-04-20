@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 18:26:14 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:38:25 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,20 @@ void	get_token_type(t_token *token, char c)
 		else
 			token->type = WORD;
 	}
-	else if (c == '>' || c == '<')
-		token->type = REDIRECTION;
+	else if (c == '>')
+	{
+		if (token->content[i])
+			token->type = APPEND;
+		else
+			token->type = REDIR_OUT;
+	}
+	else if (c == '<')
+	{
+		if (token->content[i])
+			token->type = HERE_DOC;
+		else
+			token->type = REDIR_IN;
+	}
 }
 
 void	fill_token(t_token *token, char c, int j, t_lexer *lexer)
@@ -85,30 +97,4 @@ t_token	get_token(t_lexer *lexer)
 	else if (*str == '=' && (*str + 1 && is_special(*(str + 1)) == 0))
 		fill_token(&token, *str, search_for_special(str), lexer);
 	return (token);
-}
-
-int	main(void)
-{
-	t_token	token;
-	t_lexer	lexer;
-	char	*str;
-
-	str = readline(NULL);
-	while (str) // readline up to EOF
-	{
-		feed_lexer(&lexer, str); //lexer as paramater
-		//parser check if executable if not then
-		token = get_token(&lexer);
-		printf("token.content = %s\n", token.content);
-		printf("token.type = %u\n\n", token.type);
-		while (token.content != NULL) //parser is not error and not finished
-		{
-			if (lexer.str[lexer.index] == ' ')
-				lexer.index += 1;
-			token = get_token(&lexer); //parser is asking for new token
-			printf("token.content = %s\n", token.content);
-			printf("token.type = %u\n\n", token.type);
-		}
-	str = readline(NULL);
-	}
 }
