@@ -6,13 +6,13 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 12:26:47 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:07:37 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static t_cmd	*init_cmd(void)
+t_cmd	*init_cmd(void)
 {
 	t_cmd	*cmd;
 
@@ -40,19 +40,18 @@ void	delete_cmd(void *cmd_void)
 	free(cmd);
 }
 
-t_cmd	*feed_cmd(t_lexer *lexer)
+void	print_token(t_list	**token_list)
 {
-	(void)lexer;
-	t_cmd	*cmd;
-
-	cmd = init_cmd();
-	if (!cmd)
-		return (NULL);
-
-	//call grammar and check command
-	return (cmd);
+	t_token	*cur_token;
+	t_list	*cur;
+	cur = *token_list;
+	while (cur)
+	{
+		cur_token = (t_token *)cur->content;
+		printf("type = %d val = %s\n", cur_token->type, cur_token->content);
+		cur = cur->next;
+	}
 }
-
 int	add_token(t_list **token_list, t_token *token)
 {
 	t_list *new;

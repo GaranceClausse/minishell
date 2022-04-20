@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/20 10:40:36 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:47:09 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	feed_lexer(t_lexer *lexer, char *str)
 {
 	lexer->str = str;
 	lexer->index = 0;
-	lexer->token.content = NULL;
+	lexer->token = NULL;
 }
 
 void	get_token_type(t_token *token, char c)
@@ -59,7 +59,7 @@ void	get_token_type(t_token *token, char c)
 	}
 }
 
-void	fill_token(t_token *token, char c, int j, t_lexer *lexer)
+int	fill_token(t_token *token, char c, int j, t_lexer *lexer)
 {
 	char	*str;
 
@@ -67,53 +67,69 @@ void	fill_token(t_token *token, char c, int j, t_lexer *lexer)
 	{
 		str = lexer->str + lexer->index;
 		token->content = ft_substr(str, 0, j);
+		if (!token->content)
+			return (1);
 		lexer->index += j;
 	}
 	get_token_type(token, c);
+	return (0);
 }
 
-t_token	get_token(t_lexer *lexer)
+int	extract_token(t_lexer *lexer)
 {
 	int		j;
-	t_token	token;
 	char	*str;
 
 	str = lexer->str + lexer->index;
-	token.type = ERROR;
-	token.content = NULL;
+	while (*str == ' ')
+	{
+		str++;
+		lexer->index++;
+	}
 	if (*str == '\n' || *str == '|' || *str == '\0')
-		fill_token(&token, *str, 1, lexer);
+		return (fill_token(lexer->token, *str, 1, lexer));
 	else if (*str == '\"' || *str == '\'' || is_special(*str) == 0)
 	{
 		j = search_for_char(*str, str) + 1;
 		if (is_special(*str) == 0)
 			j = search_for_special(str);
 		if (j != 0)
-			fill_token(&token, *str, j, lexer);
+			return (fill_token(lexer->token, *str, j, lexer));
 	}
 	else if (*str == '>' || *str == '<')
-		fill_token(&token, *str,
-			1 + (*str + 1 && (*str == *(str + 1))), lexer);
+		return (fill_token(lexer->token, *str,
+			1 + (*str + 1 && (*str == *(str + 1))), lexer));
 	else if (*str == '=' && (*str + 1 && is_special(*(str + 1)) == 0))
-		fill_token(&token, *str, search_for_special(str), lexer);
-	return (token);
+		return (fill_token(lexer->token, *str, search_for_special(str), lexer));
+	return (0);
 }
 
-void	tokenize_input(char *str)
+t_token	*pick_token(t_lexer	*lexer)
 {
-	t_token	token;
-	t_lexer	lexer;
-
-	feed_lexer(&lexer, str);
-	token = get_token(&lexer);
-	while (token.content != NULL)
+	if (!lexer->token)
 	{
-		printf("token.content = %s\n", token.content);
-		printf("token.type = %u\n\n", token.type);
-		if (lexer.str[lexer.index] == ' ')
-			lexer.index += 1;
-		token = get_token(&lexer);
+		lexer->token = malloc(sizeof(t_token));
+		if (!lexer->token)
+			return (NULL);
+		lexer->token->type = UNINITIALIZED;
+		lexer->token->content = NULL;
+		if (extract_token(lexer))
+		{
+			free(lexer->token);
+			lexer->token = NULL;
+		}
 	}
+	return (lexer->token);
+}
+
+t_token	*get_token(t_lexer *lexer)
+{
+	t_token	*ret;
+
+	ret = lexer->token;
+	if (lexer->token)
+		lexer->token = NULL;
+	return (ret);
 }
 
 void	delete_token(void *token_void)

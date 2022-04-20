@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/20 11:02:36 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:05:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum e_type {
 	NLINE,
 	ENDOF,
 	EXPANSION,
-	ERROR
+	UNINITIALIZED
 }	t_type;
 
 typedef struct s_token {
@@ -43,7 +43,7 @@ typedef struct s_token {
 }	t_token;
 
 typedef struct s_lexer {
-	t_token	token;
+	t_token	*token;
 	int		index;
 	char	*str;
 }	t_lexer;
@@ -52,9 +52,9 @@ int		is_in_set(char c, char *str);
 int		is_special(char c);
 int		search_for_char(char c, char *str);
 int		search_for_special(char *str);
-t_token	get_token(t_lexer *lexer);
+t_token	*get_token(t_lexer *lexer);
 void	feed_lexer(t_lexer *lexer, char *str);
-void	tokenize_input(char *str);
 void	delete_token(void *token);
+t_token	*pick_token(t_lexer	*lexer);
 
 #endif
