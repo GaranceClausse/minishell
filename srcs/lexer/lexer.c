@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 11:49:34 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:48:21 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	feed_lexer(t_lexer *lexer, char *str)
 {
+	if (lexer->str)
+		free(lexer->str);
+	if (lexer->token)
+		free(lexer->token);
 	lexer->str = str;
 	lexer->index = 0;
 	lexer->token = NULL;

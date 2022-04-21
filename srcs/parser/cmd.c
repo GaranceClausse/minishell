@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 11:37:19 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:41:43 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int	add_token(t_list **token_list, t_token *token)
 
 	new = ft_lstnew((void *)token);
 	if (!new)
+	{
+		delete_token(token);
 		return (1);
+	}
 	ft_lstadd_back(token_list, new);
 	return (0);
 }

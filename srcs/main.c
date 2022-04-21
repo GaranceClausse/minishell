@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 13:19:50 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:25:47 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	main(int argc, char	*argv[], char *envp[])
 		free_env(&env);
 		return (1);
 	}
+	lexer->str = NULL;
+	lexer->token = NULL;
 	feed_lexer(lexer, NULL);
 	parser = NULL;
 	ret = 0;
@@ -77,9 +79,7 @@ int	main(int argc, char	*argv[], char *envp[])
 		if (argc == 1 || (argc == 2 && !ft_strcmp(argv[1], "-")))
 			ret = interactive_shell(lexer, &parser, &env);
 	//readfile arg 1 ou arg 2 (-)
-	if (lexer->token)
-		delete_token(lexer);
-	free(lexer);
+	free_lexer(lexer);
 	free_env(&env);
 	return (ret);
 }

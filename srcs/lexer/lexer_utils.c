@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 11:42:41 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 17:48:56 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:20:05 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+void	free_lexer(t_lexer *lexer)
+{
+	if (lexer->str)
+		free(lexer->str);
+	if (lexer->token)
+		delete_token(lexer->token);
+	free(lexer);
+}
+
 
 int	is_in_set(char c, char *str)
 {

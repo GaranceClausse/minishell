@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 11:34:18 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:27:58 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	t_token	*cur;
 	int		ret;
 	t_cmd	*cmd;
+	char	*err_msg;
 
 	cur = pick_token(lexer);
 	if (!cur)
@@ -48,12 +49,15 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	if (!cmd)
 		return (ERROR);
 	ret = command(lexer, cmd);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
-		return (ERROR);
-	if (ret == NOT_VALIDATED)
-	{
-		//print syntax error
-		printf("Syntax Error\n");
+	if (ret != VALIDATED)
+	{	
+		delete_cmd(cmd);
+		if (ret == ERROR || ret == SYNTAX_ERROR)
+			return (ret);
+		cur = pick_token(lexer);	
+		err_msg = ft_strjoin3("Syntax error near unexpected token \'", cur->content, "\'\n");
+		write(2, err_msg, ft_strlen(err_msg));
+		free(err_msg);
 		return (SYNTAX_ERROR);
 	}
 	if (add_cmd(parser, cmd))
@@ -70,13 +74,24 @@ int	complete_command(t_lexer *lexer, t_list **parser)
 {
 	int		ret;
 	t_cmd	*cmd;
+	char	*err_msg;
 
 	cmd = init_cmd();
 	if (!cmd)
 		return (ERROR);
 	ret = command(lexer, cmd);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
+	if (ret != VALIDATED)
+	{
+		if (ret == NOT_VALIDATED && pick_token(lexer)->content)
+		{
+			err_msg = ft_strjoin3("Syntax error near unexpected token \'",
+				pick_token(lexer)->content, "\'\n");
+			write(2, err_msg, ft_strlen(err_msg));
+			free(err_msg);
+		}
+		delete_cmd(cmd);
 		return (ret);
+	}
 	if (add_cmd(parser, cmd))
 		return (ERROR);
 	if (linebreak(lexer, 1) == VALIDATED)

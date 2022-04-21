@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 11:45:17 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:20:08 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,13 @@ int	linebreak(t_lexer *lexer, int is_final)
 	if (cur_token->type == NLINE)
 	{
 		ret = VALIDATED;
+		cur_token = get_token(lexer);
+		delete_token(cur_token);
 		if (!is_final)
 		{
 			feed_lexer(lexer, readline("pipe > "));
-			linebreak(lexer, is_final);
-		}
-		else
-		{
-			cur_token = get_token(lexer);
-			delete_token(cur_token);
+			if (linebreak(lexer, is_final) == ERROR)
+				return (ERROR);
 		}
 	}
 	return (ret);
@@ -68,30 +66,34 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 {
 	t_token	*redir;
 	t_token	*word;
+	char	*err_msg;
 
 	redir = pick_token(lexer);
 	if (!redir)
 		return (ERROR);
-	if (redir->type >= REDIR_IN && redir->type <= APPEND)
+	if (redir->type < REDIR_IN || redir->type > APPEND)
+		return (NOT_VALIDATED);
+	redir = get_token(lexer);
+	word = pick_token(lexer);
+	if (!word)
 	{
-		redir = get_token(lexer);
-		word = pick_token(lexer);
-		if (!word)
-			return (ERROR);
-		if (word->type == WORD)
-		{
-			word = get_token(lexer); //error?
-			ft_swap_ptr((void **)&redir->content, (void **)&word->content);
-			delete_token(word);
-			if (add_token(&cmd->token_list, redir))
-				return (ERROR);
-			return (VALIDATED);
-		}
-		printf("Syntax Error\n");
-		//print syntax error "parse error near <content>"
-		return (SYNTAX_ERROR);
+		delete_token(redir);
+		return (ERROR);
 	}
-	return (NOT_VALIDATED);
+	if (word->type == WORD)
+	{
+		word = get_token(lexer);
+		ft_swap_ptr((void **)&redir->content, (void **)&word->content);
+		delete_token(word);
+		if (add_token(&cmd->token_list, redir))
+			return (ERROR);
+		return (VALIDATED);
+	}
+	err_msg = ft_strjoin3("Syntax error near unexpected token \'", word->content, "\'\n");
+	write(2, err_msg, ft_strlen(err_msg));
+	delete_token(redir);
+	free(err_msg);
+	return (SYNTAX_ERROR);
 }
 
 int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
@@ -108,7 +110,7 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 		list = &cmd->word_list;
 	if (cur->type == WORD || cur->type == ASSIGNMENT)
 	{
-		cur = get_token(lexer); //syntax error?
+		cur = get_token(lexer);
 		if (add_token(list, cur))
 			return (ERROR);
 		return (VALIDATED);
