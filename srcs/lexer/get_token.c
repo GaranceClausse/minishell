@@ -6,7 +6,7 @@
 /*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:23:20 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 11:23:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:19:26 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	extract_token(t_lexer *lexer)
 		j = search_for_char(*str, str) + 1;
 		if (is_special(*str) == 0)
 			j = search_for_special(str);
-		if (j != 0)
-			return (fill_token(lexer->token, *str, j, lexer));
+		return (fill_token(lexer->token, *str, j, lexer));
 	}
 	else if (*str == '>' || *str == '<')
 		return (fill_token(lexer->token, *str,
@@ -48,7 +47,7 @@ t_token	*pick_token(t_lexer	*lexer)
 		lexer->token = malloc(sizeof(t_token));
 		if (!lexer->token)
 			return (NULL);
-		lexer->token->type = UNINITIALIZED;
+		lexer->token->type = NOT_FINISHED;
 		lexer->token->content = NULL;
 		if (extract_token(lexer))
 		{

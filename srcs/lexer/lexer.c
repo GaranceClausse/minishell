@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 11:49:34 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:46:16 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,22 @@ int	fill_token(t_token *token, char c, int j, t_lexer *lexer)
 {
 	char	*str;
 
-	if (c != '\0')
+	if (j == 0)
+	{
+		token->type = NOT_FINISHED;
+		token->content = NULL;
+		return (1);
+	}
+	else if (c != '\0')
 	{
 		str = lexer->str + lexer->index;
 		token->content = ft_substr(str, 0, j);
 		if (!token->content)
 			return (1);
-		lexer->index += j;
+		lexer->index += j - 1;
+		get_token_type(token, c);
+
 	}
-	get_token_type(token, c);
 	return (0);
 }
 
