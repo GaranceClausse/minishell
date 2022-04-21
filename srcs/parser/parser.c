@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:27:00 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 16:05:32 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:36:00 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ void	delete_parser(t_list **parser)
 
 void	print_parser(t_list	**parser)
 {
-	t_list *list;
+	t_list	*list;
 	t_cmd	*cmd;
 
 	list = *parser;
 	while (list)
 	{
 		cmd = (t_cmd *)list->content;
-
 		printf("words:\n");
 		print_token(&cmd->word_list);
 		printf("tokens:\n");

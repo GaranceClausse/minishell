@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:13:52 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 12:33:34 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:41:01 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**realloc_str(char **ptr, size_t nb_elms)
 		while (ptr[i] && i < nb_elms)
 		{
 			new_ptr[i] = ptr[i];
-			i++;	
+			i++;
 		}
 	}
 	free(ptr);

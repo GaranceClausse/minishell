@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 12:26:48 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 16:08:58 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/21 11:54:16 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "lexer.h"
+#ifndef PARSER_H
+# define PARSER_H
+# include "libft.h"
+# include "lexer.h"
 
-typedef struct	s_cmd {
+typedef struct s_cmd {
 	t_list	*word_list;
 	t_list	*token_list;
 	int		is_in_pipe;
@@ -26,13 +28,19 @@ typedef enum e_ret {
 	ERROR,
 	VALIDATED,
 	NOT_VALIDATED
-} t_ret;
+}	t_ret;
 
 void	delete_parser(t_list **parser);
 int		add_cmd(t_list **parser, t_cmd *cmd);
 void	delete_cmd(void *cmd);
 int		add_token(t_list **token_list, t_token *token);
-int 	complete_command(t_lexer *lexer, t_list **parser);
 void	print_parser(t_list	**parser);
 void	print_token(t_list	**token_list);
 t_cmd	*init_cmd(void);
+int	linebreak(t_lexer *lexer, int is_final);
+int	io_redirect(t_lexer *lexer, t_cmd *cmd);
+int	word_or_assign(t_lexer *lexer, t_cmd *cmd);
+int	command(t_lexer *lexer, t_cmd *cmd);
+int	pipeline(t_lexer *lexer, t_list **parser);
+int		complete_command(t_lexer *lexer, t_list **parser);
+#endif

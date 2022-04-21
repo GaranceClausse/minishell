@@ -6,13 +6,15 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/20 14:09:00 by vkrajcov         ###   ########.fr        #
+#    Updated: 2022/04/21 11:53:51 by gclausse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, lexer.o lexer_utils.o env.o env_utils.o main.o\
-	   $(addprefix parser/, cmd.o parser.o grammar.o))
+OBJS = $(addprefix srcs/, env.o env_utils.o main.o\
+	   $(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
+		 $(addprefix lexer/, lexer.o lexer_utils.o get_token.o))
+
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o free_char_tab.o \
 	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:05:27 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 12:27:44 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:19:31 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_var_list	*init_var_list(t_var_list *list, int max)
 	return (list);
 }
 
-static t_var_list *copy_var_list(t_env *env, int max, char *envp[])
+static t_var_list	*copy_var_list(t_env *env, int max, char *envp[])
 {
 	int	i;
 
