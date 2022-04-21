@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 17:19:51 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:30:44 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	linebreak(t_lexer *lexer, int is_final)
 	cur_token = pick_token(lexer);
 	if (!cur_token)
 		return (ERROR);
-	if (cur_token->type == NOT_TERMINATED)
+	if (cur_token->type == NOT_FINISHED)
 		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (cur_token->type == NLINE)
 	{
@@ -71,7 +71,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 	redir = pick_token(lexer);
 	if (!redir)
 		return (ERROR);
-	if (redir->type == NOT_TERMINATED)
+	if (redir->type == NOT_FINISHED)
 		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
 	if (redir->type < REDIR_IN || redir->type > APPEND)
 		return (NOT_VALIDATED);
@@ -82,7 +82,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 		delete_token(redir);
 		return (ERROR);
 	}
-	if (word->type == NOT_TERMINATED)
+	if (word->type == NOT_FINISHED)
 		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
 	if (word->type == WORD)
 	{
@@ -106,7 +106,7 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 	cur = pick_token(lexer);
 	if (!cur)
 		return (ERROR);
-	if (cur->type == NOT_TERMINATED)
+	if (cur->type == NOT_FINISHED)
 		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
 	if (cur->type == ASSIGNMENT)
 		list = &cmd->token_list;

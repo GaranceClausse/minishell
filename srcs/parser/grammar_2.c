@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 17:20:49 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:30:42 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	cur = pick_token(lexer);
 	if (!cur)
 		return (ERROR);
-	if (cur->type == NOT_TERMINATED)
+	if (cur->type == NOT_FINISHED)
 		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (cur->type != PIPE)
 		return (NOT_VALIDATED);
