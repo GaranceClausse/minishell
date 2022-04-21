@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 16:47:41 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:19:51 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 		return (VALIDATED);
 	}
 	delete_token(redir);
-	return (syntax_error(ft_strjoin3("Syntax error near" \
+	return (syntax_error(ft_strjoin3("Syntax error near"
 		"unexpected token \'", word->content, "\'\n"), 1));
 }
 

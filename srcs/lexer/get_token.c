@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:23:20 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 16:23:09 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:15:11 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*pick_token(t_lexer	*lexer)
 		lexer->token = malloc(sizeof(t_token));
 		if (!lexer->token)
 			return (NULL);
-		lexer->token->type = UNINITIALIZED;
+		lexer->token->type = NOT_TERMINATED;
 		lexer->token->content = NULL;
 		if (extract_token(lexer))
 		{

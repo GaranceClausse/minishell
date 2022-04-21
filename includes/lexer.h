@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 13:25:06 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:15:22 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ typedef enum e_type {
 	PIPE,
 	WORD,
 	NLINE,
-	ENDOF,
-	EXPANSION,
-	UNINITIALIZED
+	NOT_TERMINATED
 }	t_type;
 
 typedef struct s_token {
