@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 11:54:16 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:41:12 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,6 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd);
 int	command(t_lexer *lexer, t_cmd *cmd);
 int	pipeline(t_lexer *lexer, t_list **parser);
 int		complete_command(t_lexer *lexer, t_list **parser);
+int	syntax_error(char *err_msg, int is_freable);
+
 #endif

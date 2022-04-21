@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 14:48:21 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:28:20 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	feed_lexer(t_lexer *lexer, char *str)
 	if (lexer->str)
 		free(lexer->str);
 	if (lexer->token)
-		free(lexer->token);
+		delete_token(lexer->token);
 	lexer->str = str;
 	lexer->index = 0;
 	lexer->token = NULL;
@@ -49,7 +49,10 @@ void	get_token_type(t_token *token, char c)
 	i = 1;
 	eq = 0;
 	if (c == '\n' || c == '\0')
+	{
 		token->type = NLINE;
+		token->content = ft_strdup("newline");
+	}
 	else if (c == '|')
 		token->type = PIPE;
 	else if (c == '\"' || c == '\'' || is_special(c) == 0 || is_special(c) == 2)

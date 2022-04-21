@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 15:20:08 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:47:41 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ int	linebreak(t_lexer *lexer, int is_final)
 	cur_token = pick_token(lexer);
 	if (!cur_token)
 		return (ERROR);
+	if (cur_token->type == NOT_TERMINATED)
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (cur_token->type == NLINE)
 	{
 		ret = VALIDATED;
-		cur_token = get_token(lexer);
-		delete_token(cur_token);
+		delete_token(get_token(lexer));
 		if (!is_final)
 		{
 			feed_lexer(lexer, readline("pipe > "));
@@ -66,11 +67,12 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 {
 	t_token	*redir;
 	t_token	*word;
-	char	*err_msg;
 
 	redir = pick_token(lexer);
 	if (!redir)
 		return (ERROR);
+	if (redir->type == NOT_TERMINATED)
+		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
 	if (redir->type < REDIR_IN || redir->type > APPEND)
 		return (NOT_VALIDATED);
 	redir = get_token(lexer);
@@ -80,6 +82,8 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 		delete_token(redir);
 		return (ERROR);
 	}
+	if (word->type == NOT_TERMINATED)
+		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
 	if (word->type == WORD)
 	{
 		word = get_token(lexer);
@@ -89,11 +93,9 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 			return (ERROR);
 		return (VALIDATED);
 	}
-	err_msg = ft_strjoin3("Syntax error near unexpected token \'", word->content, "\'\n");
-	write(2, err_msg, ft_strlen(err_msg));
 	delete_token(redir);
-	free(err_msg);
-	return (SYNTAX_ERROR);
+	return (syntax_error(ft_strjoin3("Syntax error near" \
+		"unexpected token \'", word->content, "\'\n"), 1));
 }
 
 int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
@@ -104,6 +106,8 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 	cur = pick_token(lexer);
 	if (!cur)
 		return (ERROR);
+	if (cur->type == NOT_TERMINATED)
+		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
 	if (cur->type == ASSIGNMENT)
 		list = &cmd->token_list;
 	else if (cur->type == WORD)
