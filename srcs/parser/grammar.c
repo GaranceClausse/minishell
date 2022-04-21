@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 16:02:24 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:11:49 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 				return (ERROR);
 			return (VALIDATED);
 		}
-		printf("Syntax Error");
+		printf("Syntax Error\n");
 		//print syntax error "parse error near <content>"
 		return (SYNTAX_ERROR);
 	}
@@ -110,7 +110,6 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 	if (cur->type == WORD || cur->type == ASSIGNMENT)
 	{
 		cur = get_token(lexer); //syntax error?
-		//printf("cmd %p, list = %p, word = %p, token= %p\n", cmd, list, cmd->word_list, cmd->token_list);
 		if (add_token(list, cur))
 			return (ERROR);
 		return (VALIDATED);
@@ -159,7 +158,7 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	if (ret == NOT_VALIDATED)
 	{
 		//print syntax error
-		printf("Syntax Error");
+		printf("Syntax Error\n");
 		return (SYNTAX_ERROR);
 	}
 	if (add_cmd(parser, cmd))
