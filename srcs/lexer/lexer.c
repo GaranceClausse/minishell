@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 14:46:16 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:36:18 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ void	get_token_type(t_token *token, char c)
 {
 	int	i;
 	int	eq;
+	int	dol;
 
 	i = 1;
 	eq = 0;
+	dol = 0;
 	if (c == '\n' || c == '\0')
 		token->type = NLINE;
 	else if (c == '|')
@@ -52,11 +54,13 @@ void	get_token_type(t_token *token, char c)
 	{
 		while (token->content[i])
 		{
+			if (token->content[i] == '$' && eq == 0)
+				dol++;
 			if (is_special(token->content[i]) == 2)
 				eq++;
 			i++;
 		}
-		if (eq != 0)
+		if (eq != 0 && dol == 0)
 			token->type = ASSIGNMENT;
 		else
 			token->type = WORD;
