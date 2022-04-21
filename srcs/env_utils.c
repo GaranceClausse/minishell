@@ -6,16 +6,16 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/18 12:38:53 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:29:15 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char *search(t_env *env, char *var)
+char	*search(t_env *env, char *var)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*haystack;
 
 	i = 0;

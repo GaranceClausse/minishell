@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 16:05:05 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:30:30 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ void	tokenize_input(char *str)
 		//parse input
 }*/
 
-
 int	interactive_shell(t_lexer *lexer, t_list **parser)
 {
 	char	*usr_input;
 	//t_cmd	*cmd;
-
 	//signal(SIGINT, sighandler); //issue with infinite loop
 	signal(SIGQUIT, SIG_IGN);
 	usr_input = readline(PS1);

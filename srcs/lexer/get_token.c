@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_token.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/21 11:23:20 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/21 11:23:50 by gclausse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lexer.h"
+
+int	extract_token(t_lexer *lexer)
+{
+	int		j;
+	char	*str;
+
+	str = lexer->str + lexer->index;
+	while (*str == ' ')
+	{
+		str++;
+		lexer->index++;
+	}
+	if (*str == '\n' || *str == '|' || *str == '\0')
+		return (fill_token(lexer->token, *str, 1, lexer));
+	else if (*str == '\"' || *str == '\'' || is_special(*str) == 0)
+	{
+		j = search_for_char(*str, str) + 1;
+		if (is_special(*str) == 0)
+			j = search_for_special(str);
+		if (j != 0)
+			return (fill_token(lexer->token, *str, j, lexer));
+	}
+	else if (*str == '>' || *str == '<')
+		return (fill_token(lexer->token, *str,
+				1 + (*str + 1 && (*str == *(str + 1))), lexer));
+	else if (*str == '=' && (*str + 1 && is_special(*(str + 1)) == 0))
+		return (fill_token(lexer->token, *str, search_for_special(str), lexer));
+	return (0);
+}
+
+t_token	*pick_token(t_lexer	*lexer)
+{
+	if (!lexer->token)
+	{
+		lexer->token = malloc(sizeof(t_token));
+		if (!lexer->token)
+			return (NULL);
+		lexer->token->type = UNINITIALIZED;
+		lexer->token->content = NULL;
+		if (extract_token(lexer))
+		{
+			free(lexer->token);
+			lexer->token = NULL;
+		}
+	}
+	return (lexer->token);
+}
+
+t_token	*get_token(t_lexer *lexer)
+{
+	t_token	*ret;
+
+	ret = lexer->token;
+	if (lexer->token)
+		lexer->token = NULL;
+	return (ret);
+}

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/20 16:11:49 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:45:17 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 int	linebreak(t_lexer *lexer, int is_final)
 {
-	int	ret;
+	int		ret;
 	t_token	*cur_token;
 
 	ret = NOT_VALIDATED;
@@ -72,9 +72,8 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 	redir = pick_token(lexer);
 	if (!redir)
 		return (ERROR);
-	if (redir->type == REDIR_IN || redir->type == REDIR_OUT ||redir->type == HERE_DOC ||  redir->type == APPEND)
+	if (redir->type >= REDIR_IN && redir->type <= APPEND)
 	{
-
 		redir = get_token(lexer);
 		word = pick_token(lexer);
 		if (!word)
@@ -97,7 +96,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 
 int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 {
-	t_token *cur;
+	t_token	*cur;
 	t_list	**list;
 
 	cur = pick_token(lexer);
@@ -115,80 +114,4 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 		return (VALIDATED);
 	}
 	return (NOT_VALIDATED);
-}
-
-int	command(t_lexer *lexer, t_cmd *cmd)
-{
-	int		ret;
-
-	ret = io_redirect(lexer, cmd);
-	if (ret == SYNTAX_ERROR || ret == ERROR)
-		return (ret);
-	if (ret != VALIDATED)
-		ret = word_or_assign(lexer, cmd);
-	if (ret == VALIDATED)
-	{
-		ret = command(lexer, cmd); 
-		if (ret == SYNTAX_ERROR || ret == ERROR)
-			return (ret);
-		return (VALIDATED);
-	}
-	return (NOT_VALIDATED);
-}
-
-int	pipeline(t_lexer *lexer, t_list **parser)
-{
-	t_token *cur;
-	int		ret;
-	t_cmd	*cmd;
-
-	cur = pick_token(lexer);
-	if (!cur)
-		return (ERROR);
-	if (cur->type != PIPE)
-		return (NOT_VALIDATED);
-	delete_token(get_token(lexer));
-	linebreak(lexer, 0);
-	cmd = init_cmd();
-	if (!cmd)
-		return (ERROR);
-	ret = command(lexer, cmd);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
-		return (ERROR);
-	if (ret == NOT_VALIDATED)
-	{
-		//print syntax error
-		printf("Syntax Error\n");
-		return (SYNTAX_ERROR);
-	}
-	if (add_cmd(parser, cmd))
-		return (ERROR);
-	if (linebreak(lexer, 1) == VALIDATED)
-		return (VALIDATED);
-	ret = pipeline(lexer, parser);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
-		return (ret);
-	return (VALIDATED); //make tests
-}
-
-int complete_command(t_lexer *lexer, t_list **parser)
-{
-	int	ret;
-	t_cmd	*cmd;
-
-	cmd = init_cmd();
-	if (!cmd)
-		return (ERROR);
-
-	ret = command(lexer, cmd);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
-		return (ret);
-	if (add_cmd(parser, cmd))
-		return (ERROR);
-	if (linebreak(lexer, 1) == VALIDATED)
-	{
-		cmd->is_in_pipe = 0;
-		return (VALIDATED);
-	}
-	return (pipeline(lexer, parser));
 }
