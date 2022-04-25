@@ -33,7 +33,7 @@ void	sighandler(int signo)
 //exec only when no syntax error
 //exit error on error
 //stop traping the signal when not interactive
-int	interactive_shell(t_lexer *lexer, t_list **parser,  t_env *env)
+int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 {
 	char	*usr_input;
 	(void)env;
@@ -45,10 +45,11 @@ int	interactive_shell(t_lexer *lexer, t_list **parser,  t_env *env)
 	{
 		add_history(usr_input);
 		feed_lexer(lexer, usr_input);
-		complete_command(lexer, parser);
-		print_parser(parser);
-		usr_input = readline(PS1);
+		if (complete_command(lexer, parser) == VALIDATED)
+			print_parser(parser);
+	//	signal(SIGINT, sighandler);
 		delete_parser(parser);
+		usr_input = readline(PS1);
 	}
 	clear_history();
 	write(1, "exit\n", 5);

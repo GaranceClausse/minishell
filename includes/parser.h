@@ -43,6 +43,6 @@ int		word_or_assign(t_lexer *lexer, t_cmd *cmd);
 int		command(t_lexer *lexer, t_cmd *cmd);
 int		pipeline(t_lexer *lexer, t_list **parser);
 int		complete_command(t_lexer *lexer, t_list **parser);
-int	syntax_error(char *err_msg, int is_freable);
+int		syntax_error(char *err_msg, int is_freable);
 
 #endif

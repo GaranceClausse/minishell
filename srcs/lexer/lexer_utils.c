@@ -21,7 +21,6 @@ void	free_lexer(t_lexer *lexer)
 	free(lexer);
 }
 
-
 int	is_in_set(char c, char *str)
 {
 	int	i;

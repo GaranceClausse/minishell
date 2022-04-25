@@ -52,6 +52,7 @@ int		search_for_char(char c, char *str);
 int		search_for_special(char *str);
 int		fill_token(t_token *token, char c, int j, t_lexer *lexer);
 t_token	*get_token(t_lexer *lexer);
+void	get_token_type(t_token *token, char c);
 void	feed_lexer(t_lexer *lexer, char *str);
 void	delete_token(void *token);
 t_token	*pick_token(t_lexer	*lexer);

@@ -36,12 +36,14 @@
 //					: newline_list NEWLINE
 //         
 
+#include <signal.h>
 #include "parser.h"
 
 int	linebreak(t_lexer *lexer, int is_final)
 {
 	int		ret;
 	t_token	*cur_token;
+	char	*usr_input;
 
 	ret = NOT_VALIDATED;
 	cur_token = pick_token(lexer);
@@ -55,9 +57,13 @@ int	linebreak(t_lexer *lexer, int is_final)
 		delete_token(get_token(lexer));
 		if (!is_final)
 		{
-			feed_lexer(lexer, readline("pipe > "));
-			if (linebreak(lexer, is_final) == ERROR)
-				return (ERROR);
+			usr_input = readline("pipe > ");
+			while (!usr_input)
+				usr_input = readline(NULL);
+			feed_lexer(lexer, usr_input);
+			ret = linebreak(lexer, is_final);
+			if (ret == ERROR || ret == SYNTAX_ERROR)
+				return (ret);
 		}
 	}
 	return (ret);
@@ -72,7 +78,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 	if (!redir)
 		return (ERROR);
 	if (redir->type == NOT_FINISHED)
-		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (redir->type < REDIR_IN || redir->type > APPEND)
 		return (NOT_VALIDATED);
 	redir = get_token(lexer);
@@ -83,7 +89,10 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 		return (ERROR);
 	}
 	if (word->type == NOT_FINISHED)
-		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
+	{
+		delete_token(redir);
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
+	}
 	if (word->type == WORD)
 	{
 		word = get_token(lexer);
@@ -94,8 +103,8 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 		return (VALIDATED);
 	}
 	delete_token(redir);
-	return (syntax_error(ft_strjoin3("Syntax error near"
-		"unexpected token \'", word->content, "\'\n"), 1));
+	return (syntax_error(ft_strjoin3("Syntax error near "
+				"unexpected token \'", word->content, "\'\n"), 1));
 }
 
 int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
@@ -107,7 +116,7 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 	if (!cur)
 		return (ERROR);
 	if (cur->type == NOT_FINISHED)
-		return syntax_error("Syntax error: Unterminated quoted string\n", 0);
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (cur->type == ASSIGNMENT)
 		list = &cmd->token_list;
 	else if (cur->type == WORD)

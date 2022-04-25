@@ -51,11 +51,13 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	if (!cur)
 		return (ERROR);
 	if (cur->type == NOT_FINISHED)
-		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
+		return (SYNTAX_ERROR);
 	if (cur->type != PIPE)
 		return (NOT_VALIDATED);
 	delete_token(get_token(lexer));
-	linebreak(lexer, 0);
+	ret = linebreak(lexer, 0);
+	if (ret == ERROR || ret == SYNTAX_ERROR)
+		return (ret);
 	cmd = init_cmd();
 	if (!cmd)
 		return (ERROR);
@@ -67,16 +69,17 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 			return (ret);
 		cur = pick_token(lexer);
 		return (syntax_error(ft_strjoin3("Syntax error near unexpected"
-			"token \'", cur->content, "\'\n"), 1));
+					"token \'", cur->content, "\'\n"), 1));
 	}
 	if (add_cmd(parser, cmd))
 		return (ERROR);
-	if (linebreak(lexer, 1) == VALIDATED)
-		return (VALIDATED);
+	ret = linebreak(lexer, 1);
+	if (ret != NOT_VALIDATED)
+		return (ret);
 	ret = pipeline(lexer, parser);
 	if (ret == ERROR || ret == SYNTAX_ERROR)
 		return (ret);
-	return (VALIDATED); //make tests
+	return (VALIDATED);
 }
 
 int	complete_command(t_lexer *lexer, t_list **parser)
@@ -93,15 +96,18 @@ int	complete_command(t_lexer *lexer, t_list **parser)
 		delete_cmd(cmd);
 		if (ret == NOT_VALIDATED && pick_token(lexer)->type != NLINE)
 			return (syntax_error(ft_strjoin3("Syntax error near unexpected"
-				"token \'", pick_token(lexer)->content, "\'\n"), 1));
+						"token \'", pick_token(lexer)->content, "\'\n"), 1));
 		return (ret);
 	}
 	if (add_cmd(parser, cmd))
 		return (ERROR);
-	if (linebreak(lexer, 1) == VALIDATED)
+	ret = linebreak(lexer, 1);
+	if (ret == ERROR || ret == SYNTAX_ERROR)
+		return (ret);
+	if (ret == VALIDATED)
 	{
 		cmd->is_in_pipe = 0;
-		return (VALIDATED);
+		return (ret);
 	}
 	return (pipeline(lexer, parser));
 }

@@ -13,7 +13,7 @@
 NAME = minishell
 OBJS = $(addprefix srcs/, env.o env_utils.o main.o\
 	   $(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
-		 $(addprefix lexer/, lexer.o lexer_utils.o get_token.o))
+		 $(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o))
 
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o free_char_tab.o \
