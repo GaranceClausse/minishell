@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 14:19:01 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:30:43 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ t_token	*get_token(t_lexer *lexer);
 void	feed_lexer(t_lexer *lexer, char *str);
 void	delete_token(void *token);
 t_token	*pick_token(t_lexer	*lexer);
+void	free_lexer(t_lexer *lexer);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/25 11:40:07 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/25 11:43:49 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	feed_lexer(t_lexer *lexer, char *str)
 {
+	if (lexer->str)
+		free(lexer->str);
+	if (lexer->token)
+		delete_token(lexer->token);
 	lexer->str = str;
 	lexer->index = 0;
 	lexer->token = NULL;
@@ -75,13 +79,18 @@ static void	get_assign_or_word(t_token *token)
 void	get_token_type(t_token *token, char c)
 {
 	if (c == '\n' || c == '\0')
+	{
 		token->type = NLINE;
+		token->content = ft_strdup("newline");
+	}
 	else if (c == '|')
 		token->type = PIPE;
 	else if (c == '\"' || c == '\'' || is_special(c) == 0 || is_special(c) == 2)
 		get_assign_or_word(token);
 	else if (c == '<' || c == '>')
 		get_redir_type(token, c);
+			printf("token type = %u \n", token->type);
+
 }
 
 int	fill_token(t_token *token, char c, int j, t_lexer *lexer)
@@ -92,6 +101,7 @@ int	fill_token(t_token *token, char c, int j, t_lexer *lexer)
 	{
 		str = lexer->str + lexer->index;
 		token->content = ft_substr(str, 0, j);
+		printf("token content = %s \n", token->content);
 		if (!token->content)
 			return (1);
 		lexer->index += j;

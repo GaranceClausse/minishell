@@ -6,11 +6,21 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 11:34:18 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:30:42 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int	syntax_error(char *err_msg, int is_freable)
+{
+	if (!err_msg)
+		return (ERROR);
+	write(2, err_msg, ft_strlen(err_msg));
+	if (is_freable)
+		free(err_msg);
+	return (SYNTAX_ERROR);
+}
 
 int	command(t_lexer *lexer, t_cmd *cmd)
 {
@@ -40,6 +50,8 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	cur = pick_token(lexer);
 	if (!cur)
 		return (ERROR);
+	if (cur->type == NOT_FINISHED)
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (cur->type != PIPE)
 		return (NOT_VALIDATED);
 	delete_token(get_token(lexer));
@@ -48,13 +60,14 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	if (!cmd)
 		return (ERROR);
 	ret = command(lexer, cmd);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
-		return (ERROR);
-	if (ret == NOT_VALIDATED)
-	{
-		//print syntax error
-		printf("Syntax Error\n");
-		return (SYNTAX_ERROR);
+	if (ret != VALIDATED)
+	{	
+		delete_cmd(cmd);
+		if (ret == ERROR || ret == SYNTAX_ERROR)
+			return (ret);
+		cur = pick_token(lexer);
+		return (syntax_error(ft_strjoin3("Syntax error near unexpected"
+			"token \'", cur->content, "\'\n"), 1));
 	}
 	if (add_cmd(parser, cmd))
 		return (ERROR);
@@ -75,8 +88,14 @@ int	complete_command(t_lexer *lexer, t_list **parser)
 	if (!cmd)
 		return (ERROR);
 	ret = command(lexer, cmd);
-	if (ret == ERROR || ret == SYNTAX_ERROR)
+	if (ret != VALIDATED)
+	{
+		delete_cmd(cmd);
+		if (ret == NOT_VALIDATED && pick_token(lexer)->type != NLINE)
+			return (syntax_error(ft_strjoin3("Syntax error near unexpected"
+				"token \'", pick_token(lexer)->content, "\'\n"), 1));
 		return (ret);
+	}
 	if (add_cmd(parser, cmd))
 		return (ERROR);
 	if (linebreak(lexer, 1) == VALIDATED)
