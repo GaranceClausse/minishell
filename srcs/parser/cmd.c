@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 14:41:43 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/25 11:46:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_token(t_list	**token_list)
 	while (cur)
 	{
 		cur_token = (t_token *)cur->content;
-		printf("token content = %s \n", cur_token->content);
+		printf("type = %d, content = \"%s\" \n", cur_token->type, cur_token->content);
 		cur = cur->next;
 	}
 }

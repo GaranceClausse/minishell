@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/25 11:43:49 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/25 11:46:31 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	get_token_type(t_token *token, char c)
 		get_assign_or_word(token);
 	else if (c == '<' || c == '>')
 		get_redir_type(token, c);
-			printf("token type = %u \n", token->type);
 
 }
 
@@ -101,7 +100,6 @@ int	fill_token(t_token *token, char c, int j, t_lexer *lexer)
 	{
 		str = lexer->str + lexer->index;
 		token->content = ft_substr(str, 0, j);
-		printf("token content = %s \n", token->content);
 		if (!token->content)
 			return (1);
 		lexer->index += j;
