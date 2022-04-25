@@ -48,7 +48,7 @@ t_token	*pick_token(t_lexer	*lexer)
 		lexer->token = malloc(sizeof(t_token));
 		if (!lexer->token)
 			return (NULL);
-		lexer->token->type = NOT_TERMINATED;
+		lexer->token->type = NOT_FINISHED;
 		lexer->token->content = NULL;
 		if (extract_token(lexer))
 		{
