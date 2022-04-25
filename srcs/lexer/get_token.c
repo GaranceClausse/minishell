@@ -30,8 +30,7 @@ int	extract_token(t_lexer *lexer)
 		j = search_for_char(*str, str) + 1;
 		if (is_special(*str) == 0)
 			j = search_for_special(str);
-		if (j != 0)
-			return (fill_token(lexer->token, *str, j, lexer));
+		return (fill_token(lexer->token, *str, j, lexer));
 	}
 	else if (*str == '>' || *str == '<')
 		return (fill_token(lexer->token, *str,

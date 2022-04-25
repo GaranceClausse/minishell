@@ -45,9 +45,11 @@ void	get_token_type(t_token *token, char c)
 {
 	int	i;
 	int	eq;
+	int	dol;
 
 	i = 1;
 	eq = 0;
+	dol = 0;
 	if (c == '\n' || c == '\0')
 	{
 		token->type = NLINE;
@@ -59,32 +61,38 @@ void	get_token_type(t_token *token, char c)
 	{
 		while (token->content[i])
 		{
+			if (token->content[i] == '$' && eq == 0)
+				dol++;
 			if (is_special(token->content[i]) == 2)
 				eq++;
 			i++;
 		}
-		if (eq != 0)
+		if (eq != 0 && dol == 0)
 			token->type = ASSIGNMENT;
 		else
 			token->type = WORD;
 	}
 	else if (c == '<' || c == '>')
 		get_redir_type(token, c);
+			printf("token type = %u \n", token->type);
+
 }
 
 int	fill_token(t_token *token, char c, int j, t_lexer *lexer)
 {
 	char	*str;
 
-	if (c != '\0')
+	if (j != 0)
 	{
 		str = lexer->str + lexer->index;
 		token->content = ft_substr(str, 0, j);
+		printf("token content = %s \n", token->content);
 		if (!token->content)
 			return (1);
 		lexer->index += j;
+		get_token_type(token, c);
+
 	}
-	get_token_type(token, c);
 	return (0);
 }
 

@@ -48,7 +48,7 @@ void	print_token(t_list	**token_list)
 	while (cur)
 	{
 		cur_token = (t_token *)cur->content;
-		printf("type = %d val = %s\n", cur_token->type, cur_token->content);
+		printf("token content = %s \n", cur_token->content);
 		cur = cur->next;
 	}
 }
