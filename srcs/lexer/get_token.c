@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:23:20 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 14:19:26 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/25 11:37:22 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	extract_token(t_lexer *lexer)
 	else if (*str == '>' || *str == '<')
 		return (fill_token(lexer->token, *str,
 				1 + (*str + 1 && (*str == *(str + 1))), lexer));
-	else if (*str == '=' && (*str + 1 && is_special(*(str + 1)) == 0))
+	else if (*str == '=')
 		return (fill_token(lexer->token, *str, search_for_special(str), lexer));
 	return (0);
 }
