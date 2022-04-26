@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 11:42:41 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 15:20:05 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 14:04:27 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_lexer(t_lexer *lexer)
 	free(lexer);
 }
 
-int	is_in_set(char c, char *str)
+int	ft_is_in_set(char c, char *str)
 {
 	int	i;
 
@@ -39,9 +39,9 @@ int	is_in_set(char c, char *str)
 
 int	is_special(char c)
 {
-	if (is_in_set(c, " |<>\n\t\v\r\f") == 1)
+	if (ft_is_in_set(c, " |<>\n\t\v\r\f") == 1)
 		return (1);
-	else if (is_in_set(c, " |<>\n\t\v\r\f") == 2)
+	else if (ft_is_in_set(c, " |<>\n\t\v\r\f") == 2)
 		return (2);
 	return (0);
 }

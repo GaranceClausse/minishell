@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 13:43:38 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 14:04:27 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
-char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
@@ -74,5 +73,6 @@ char	**realloc_str(char **ptr, size_t nb_elms);
 void	free_char_tab(char **tab);
 void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
+int	ft_is_in_set(int c, char const *set);
 
 #endif
