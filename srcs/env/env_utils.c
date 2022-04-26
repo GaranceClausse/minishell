@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/21 11:29:15 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:54:21 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,4 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 	dst->list[dst->size++] = var;
 	dst->list[dst->size] = NULL;
 	return (0);
-}
+}	

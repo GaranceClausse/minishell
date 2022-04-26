@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 17:30:44 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 12:10:11 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,35 @@
 //					: newline_list NEWLINE
 //         
 
-#include <signal.h>
 #include "parser.h"
+
+int	g_is_sigint = 0;
+
+int	multiline(t_lexer *lexer, char *delimiter)
+{
+	char	*usr_input;
+	void	*old_getc;
+	(void)	delimiter;
+
+	g_is_sigint = 0;
+	signal(SIGINT, sigint_handler);
+	old_getc = rl_getc_function;
+	rl_getc_function = getc;
+	write(1, "pipe > ", 8);
+	usr_input = readline(NULL);
+	while (!usr_input && !g_is_sigint)
+		usr_input = readline(NULL);
+	rl_getc_function = old_getc;
+	if (g_is_sigint)
+		return	(1);
+	feed_lexer(lexer, usr_input);
+	return (0);
+}
 
 int	linebreak(t_lexer *lexer, int is_final)
 {
 	int		ret;
 	t_token	*cur_token;
-	char	*usr_input;
 
 	ret = NOT_VALIDATED;
 	cur_token = pick_token(lexer);
@@ -57,10 +78,8 @@ int	linebreak(t_lexer *lexer, int is_final)
 		delete_token(get_token(lexer));
 		if (!is_final)
 		{
-			usr_input = readline("pipe > ");
-			while (!usr_input)
-				usr_input = readline(NULL);
-			feed_lexer(lexer, usr_input);
+			if (multiline(lexer, NULL))
+				return (ERROR);
 			ret = linebreak(lexer, is_final);
 			if (ret == ERROR || ret == SYNTAX_ERROR)
 				return (ret);

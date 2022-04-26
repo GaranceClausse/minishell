@@ -6,14 +6,15 @@
 #    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/21 13:38:13 by vkrajcov         ###   ########.fr        #
+#    Updated: 2022/04/26 11:32:59 by vkrajcov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-OBJS = $(addprefix srcs/, env.o env_utils.o main.o\
-	   $(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
-		 $(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o))
+OBJS = 	$(addprefix srcs/, main.o signal.o\
+	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
+		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
+		$(addprefix env/, env.o env_utils.o))
 
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o free_char_tab.o \
