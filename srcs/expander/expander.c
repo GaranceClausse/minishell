@@ -12,7 +12,7 @@
 
 #include "expand.h"
 
-int expand_commands(t_list **parser)
+int expand_commands(t_list **parser, t_env *env)
 {
 	t_list 	*cur;
 	t_cmd	*cmd;
@@ -21,7 +21,7 @@ int expand_commands(t_list **parser)
 	while (cur)
 	{
 		cmd = (t_cmd *)cur->content;
-		if (spliter(cmd))
+		if (expansion(cmd, env))
 			return (1);
 		cur = cur->next;
 	}

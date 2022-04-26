@@ -35,15 +35,14 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 
 int expand_var (t_token *token, t_env *env)
 {
-	char	*str;
 	char	*str_expand;
 	int		i;
 	int		j;
 
 	i = 0;
-	while(token->content[i])
+	while (token->content[i])
 	{
-		if(token->content[i] == '$')
+		if (token->content[i] == '$')
 		{
 			j = 1;
 			while (ft_isalnum(token->content[j]) == 1)

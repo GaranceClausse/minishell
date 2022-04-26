@@ -31,7 +31,7 @@ int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
 			print_parser(parser);
-			expand_commands(parser);
+			expand_commands(parser, env);
 			print_parser(parser);
 		}
 	//	signal(SIGINT, sighandler);
