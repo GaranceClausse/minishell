@@ -6,42 +6,72 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 10:54:21 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 13:38:38 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*search(t_env *env, char *var)
+int	search(t_var_list *dst, char *var_name)
 {
-	int		i;
-	int		len;
-	char	*haystack;
+	int	i;
+	int	len;
+	char	*ret;
 
 	i = 0;
-	len = ft_strlen(var);
-	while (env->shell_var.list[i])
+	len = ft_strlen(var_name);
+	while (dst->list[i])
 	{
-		haystack = env->shell_var.list[i];
-		if (ft_strncmp(var, haystack, len) == 0)
-			return (var);
+		ret = dst->list[i];
+		if (ft_strncmp(var_name, ret, len) == 0)
+			return (i);
 		i++;
 	}
+	return (-1);
+}
+
+char	*extract_name(char *var)
+{
+	int	i;
+
 	i = 0;
-	while (env->env_var.list[i])
-	{
-		haystack = env->env_var.list[i];
-		if (ft_strncmp(var, haystack, len) == 0)
-			return (var);
+	while (var[i] && var[i] != '=')
 		i++;
+	return (ft_substr(var, 0, i));
+}
+/* -1 == all good;
+   0 == error;
+   1 == not finished;
+   comme ca add_var return +1 quand c'est fini ou error */
+int	change_var(t_var_list *dst, char *var)
+{
+	char	*var_name;
+	int	index;
+
+	var_name = extract_name(var);
+	if (var_name == NULL)
+		return (0);
+	index = search(dst, var_name);
+	free(var_name);
+	if (index != -1)
+	{
+		free(dst->list[index]);
+		dst->list[index] = var;
+		return (-1);
 	}
-	return (NULL);
+	return (1);
 }
 
 int	add_var(t_env *env, t_var_list *dst, char *var)
 {
-	if (search(env, var) != NULL)
-		return (0);
+	int	ret;
+
+	ret = change_var(&env->shell_var, var);
+	if (ret != 1)
+		return (ret + 1);
+	ret = change_var(&env->env_var, var);
+	if (ret != 1)
+		return (ret + 1);
 	else if (dst->size + 1 > dst->max)
 	{
 		dst->max *= 2;
@@ -52,4 +82,30 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 	dst->list[dst->size++] = var;
 	dst->list[dst->size] = NULL;
 	return (0);
-}	
+}
+
+char	*delete_var(t_env *env, char *var_name)
+{
+	int	index;
+	t_var_list	*var_list;
+	char	*tmp;
+
+	index = search(&env->shell_var, var_name);
+	if (index == -1)
+	{
+		index = search(&env->env_var, var_name);
+		var_list = &env->env_var;
+		if (index == -1)
+			return (NULL);
+	}
+	else
+		var_list = &env->shell_var;
+	tmp = var_list->list[index];
+	while (index + 1 <= var_list->size)
+	{
+		var_list->list[index] = var_list->list[index + 1];
+		index++;
+	}
+	var_list->size -= 1;
+	return (tmp);
+}

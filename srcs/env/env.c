@@ -38,6 +38,8 @@ static t_var_list	*copy_var_list(t_env *env, int max, char *envp[])
 	if (!init_var_list(&env->env_var, max))
 		return (NULL);
 	i = 0;
+	if (!envp)
+		return (&env->env_var);
 	while (envp[i])
 	{
 		if (add_var(env, &env->env_var, ft_strdup(envp[i])))
