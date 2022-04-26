@@ -21,7 +21,7 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 	{
 		str = dst->list[i];
 	//	printf("str = %s, var_name = %s, j == %d\n", str, var_name, j);
-		if (ft_strncmp(var_name, str, j - 1) == 0)
+		if (j > 1 && (ft_strncmp(var_name, str, j - 1) == 0))
 		{
 			ret = extract_var_value(str);
 			return (ret);
@@ -40,7 +40,7 @@ int expand_var (t_token *token, t_env *env)
 	i = 0;
 	while (token->content[i])
 	{
-		printf("token->content[i] == %c, i == %d \n", token->content[i], i);
+	//	printf("token->content[i] == %c, i == %d \n", token->content[i], i);
 		if (token->content[i] == '$')
 		{
 			j = 1;
@@ -49,9 +49,9 @@ int expand_var (t_token *token, t_env *env)
 			str_expand = search_var(&env->env_var, &token->content[i + 1], j);
 			if (str_expand == NULL)
 				str_expand = search_var(&env->shell_var, &token->content[i + 1], j);
-			printf("ft_substr(token->content, 0, i) == %s, str_expand == %s, &token->content[j + i] = %s\n", ft_substr(token->content, 0, i), str_expand, &token->content[j + i]);
+	//		printf("ft_substr(token->content, 0, i) == %s, str_expand == %s, &token->content[j + i] = %s\n", ft_substr(token->content, 0, i), str_expand, &token->content[j + i]);
 			token->content = ft_strjoin3(ft_substr(token->content, 0, i), str_expand, token->content + (j + i));
-			printf("token->content = %s\n", token->content);
+	//		printf("token->content = %s\n", token->content);
 			i = 0;
 		}
 		else
