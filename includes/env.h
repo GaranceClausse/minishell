@@ -30,7 +30,8 @@ typedef struct s_env
 
 void	free_env(t_env *env);
 t_env	*init_env(t_env *env, int max, char *envp[]);
-char	*search(t_env *env, char *var);
-int		add_var(t_env *env, t_var_list *dst, char *var);
+int		search(t_var_list *dst, char *var_name);
+int		add_var(t_env *env, t_var_list *dst, char *var); 
+char	*delete_var(t_env *env, char *var_name);
 
 #endif

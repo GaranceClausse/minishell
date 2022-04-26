@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/21 13:38:13 by vkrajcov         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
 OBJS = $(addprefix srcs/, env.o env_utils.o main.o\
 	   $(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
