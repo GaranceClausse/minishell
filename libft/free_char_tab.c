@@ -6,13 +6,13 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:44:17 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 16:18:17 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:23:50 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_char_tab(char	**tab)
+void	free_char_tab(char	**tab)
 {
 	int	i;
 
