@@ -73,6 +73,5 @@ char	**realloc_str(char **ptr, size_t nb_elms);
 void	free_char_tab(char **tab);
 void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
-int	ft_is_in_set(int c, char const *set);
 
 #endif
