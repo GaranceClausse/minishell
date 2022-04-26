@@ -7,10 +7,8 @@ char	*extract_var_value(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	if (var[i + 1])
-		return (ft_strdup(&var[i + 1]));
-	else
-		return ("");
+	printf("var == %s\n", ft_strdup(&var[i + 1]));
+	return (ft_strdup(&var[i + 1]));
 }
 
 char	*search_var(t_var_list *dst, char *var_name, int j)
@@ -23,9 +21,11 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 	while (dst->list[i])
 	{
 		str = dst->list[i];
-		if (ft_strncmp(var_name, str, j) == 0)
+	//	printf("str = %s, var_name = %s, j == %d\n", str, var_name, j);
+		if (ft_strncmp(var_name, str, j - 1) == 0)
 		{
 			ret = extract_var_value(str);
+			printf("ret == %s\n", ret);
 			return (ret);
 		}
 		i++;
@@ -50,6 +50,7 @@ int expand_var (t_token *token, t_env *env)
 			str_expand = search_var(&env->env_var, &token->content[i + 1], j);
 			if (str_expand == NULL)
 				str_expand = search_var(&env->shell_var, &token->content[i + 1], j);
+		//	printf("ft_substr(token->content, 0, i) == %s, str_expand == %s, &token->content[j] = %s\n", ft_substr(token->content, 0, i), str_expand, &token->content[j]);
 			token->content = ft_strjoin3(ft_substr(token->content, 0, i), str_expand, &token->content[j]);
 			i = 0;
 		}
@@ -62,12 +63,14 @@ int expand_var (t_token *token, t_env *env)
 int	expansion(t_cmd	*cmd, t_env *env)
 {
 	t_token	*token;
+	t_list	*list;
 
-	while (cmd->word_list)
+	list = cmd->word_list;
+	while (list)
 	{
-		token = cmd->word_list->content;
+		token = list->content;
 		expand_var(token, env);
-		cmd->word_list = cmd->word_list->next;
+		list = list->next;
 	}
 	return (0);
 }
