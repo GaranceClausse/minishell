@@ -1,25 +1,21 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/26 15:07:20 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 16:10:10 by vkrajcov         ###   ########.fr       */
+/*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
+/*   Updated: 2021/11/23 14:26:17 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
-#include "parser.h"
-#include "env.h"
-
-#include "parser.h"
-
-char	**ft_split(const char *str, char *iss);
-int		spliter(t_cmd *cmd);
-int 	expand_commands(t_list **parser);
-
-
-#endif
+int	ft_isalnum(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9') || c == '_')
+		return (1);
+	else
+		return (0);
+}
