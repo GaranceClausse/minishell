@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:06:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 15:06:57 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:17:50 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,12 @@ static int	count_words(const char *s, char *set)
 	return (cpt + 1);
 }
 
-static void	free_tab(char	**tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
-}
-
-
 static int	add_word(char **tab, int i, char *word)
 {
 	tab[i] = word;
 	if (!word)
 	{
-		free_tab(tab);
+		free_char_tab(tab);
 		return (0);
 	}
 	return (1);
