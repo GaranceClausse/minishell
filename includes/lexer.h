@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 14:04:40 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:10:22 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_lexer {
 	char	*str;
 }	t_lexer;
 
-int		ft_is_in_set(char c, char *str);
 int		is_special(char c);
 int		search_for_char(char c, char *str);
 int		search_for_special(char *str);

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 11:42:41 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 14:04:27 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:10:54 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,6 @@ void	free_lexer(t_lexer *lexer)
 	if (lexer->token)
 		delete_token(lexer->token);
 	free(lexer);
-}
-
-int	ft_is_in_set(char c, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (c == str[i])
-			return (1);
-		if (c == '=')
-			return (2);
-		i++;
-	}
-	return (0);
 }
 
 int	is_special(char c)
