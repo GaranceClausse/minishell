@@ -9,8 +9,6 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 	
 	i = 0;
 	index = search_in_env(dst, var_name, j - 1);
-	printf("j = %d\n", j);
-	
 	if (j == 1)
 		return (ft_strdup("$"));
 	else if (index == -1)
