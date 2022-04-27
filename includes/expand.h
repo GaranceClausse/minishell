@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:07:20 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 16:10:10 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:08:20 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include "parser.h"
 
 char	**ft_split(const char *str, char *iss);
-int		spliter(t_cmd *cmd);
+int		split_list(t_list **list);
 int 	expand_commands(t_list **parser, t_env *env);
-int	expansion(t_cmd	*cmd, t_env *env);
+int		expansion(t_cmd	*cmd, t_env *env);
 
 #endif
