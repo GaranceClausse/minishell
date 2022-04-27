@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 11:15:59 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 16:50:55 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_env	*init_env(t_env *env, int max, char *envp[]);
 int		search_in_env(t_var_list *dst, char *var_name, int len);
 char	*extract_name(char *var);
 char	*extract_var_value(char *var);
-int	change_var(t_var_list *dst, char *var);
-int		add_var(t_env *env, t_var_list *dst, char *var); 
+int		change_var(t_var_list *dst, char *var);
+int		add_var(t_env *env, t_var_list *dst, char *var);
 char	*delete_var(t_env *env, char *var_name);
 
 #endif

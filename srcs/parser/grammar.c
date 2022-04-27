@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 15:24:44 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 16:49:00 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	multiline(t_lexer *lexer, char *delimiter)
 {
 	char	*usr_input;
 	void	*old_getc;
-	(void)	delimiter;
 	int		tmp;
 
+	(void)delimiter;
 	tmp = g_last_return;
 	g_last_return = 0;
 	signal(SIGINT, sigint_handler);
@@ -58,7 +58,7 @@ int	multiline(t_lexer *lexer, char *delimiter)
 		usr_input = readline(NULL);
 	rl_getc_function = old_getc;
 	if (g_last_return)
-		return	(1);
+		return (1);
 	feed_lexer(lexer, usr_input);
 	g_last_return = tmp;
 	return (0);

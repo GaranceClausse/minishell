@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 17:32:06 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 16:49:56 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 {
 	char	*usr_input;
-	(void)env;
 
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -36,7 +35,6 @@ int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 		feed_lexer(lexer, usr_input);
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
-			print_parser(parser);
 			expand_commands(parser, env);
 			print_parser(parser);
 		}

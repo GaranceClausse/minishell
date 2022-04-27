@@ -6,13 +6,17 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/04/27 16:58:13 by gclausse         ###   ########.fr       */
+=======
+/*   Updated: 2022/04/27 16:32:40 by vkrajcov         ###   ########.fr       */
+>>>>>>> 77e8e55b162dfeb7ad3efee2559c8cafae0f9188
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-void	remove_empties(t_list **list)
+void	remove_empty_tokens(t_list **list)
 {
 	t_list	*cur;
 	t_list	*next;
@@ -48,7 +52,48 @@ void	remove_empties(t_list **list)
 	}
 }
 
+<<<<<<< HEAD
 void	delete_quotes_token(t_token *token, int i)
+=======
+void	remove_empty_cmds(t_list **list)
+{
+	t_list	*cur;
+	t_list	*next;
+	t_cmd	*cmd;
+
+	while (*list)
+	{
+		cmd = (t_cmd *)(*list)->content;
+		if (!cmd->token_list && !cmd->word_list)
+		{
+			cur = (*list);
+			*list = (*list)->next;
+			free(cmd);
+			free(cur);
+		}
+		else
+			break;
+	}
+
+	cur = *list;
+	while (cur && cur->next)
+	{
+		cmd = (t_cmd *)cur->next->content;
+		while (cur->next && !cmd->token_list && !cmd->word_list)
+		{
+			next = cur->next;
+			cur->next = cur->next->next;
+			free(cmd);
+			free(next);
+			if (cur->next)
+				cmd = (t_cmd *)cur->next->content;
+		}
+		cur = cur->next;
+	}
+}
+
+static int	remove_quotes_from_token(t_token	*token)
+>>>>>>> 77e8e55b162dfeb7ad3efee2559c8cafae0f9188
 {
 	char	*tmp;
 	char	*start;

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/27 16:50:11 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/27 17:00:41 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,13 @@ int	create_new_token(t_token *token, t_env *env, int i, int j)
 	else
 	{
 		str_expand = search_var(&env->env_var, &token->content[i + 1], j);
-		if (str_expand == NULL)
+		if (str_expand && ft_strcmp(str_expand, "") == 0)
+		{
+			free(str_expand);
 			str_expand = search_var(&env->shell_var, &token->content[i + 1], j);
+		}
+		//if (!str_expand)
+		//	return (-1);
 	}
 	str_base = ft_substr(token->content, 0, i);
 	tmp = token->content;
@@ -80,6 +85,7 @@ void	expand_var(t_token *token, t_env *env)
 			while (token->content[j + i]
 				&& ft_isalnum(token->content[j + i]) == 1)
 				j++;
+			//check output of create_new_token
 			i += create_new_token(token, env, i, j);
 		}
 		else
