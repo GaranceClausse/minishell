@@ -10,7 +10,7 @@ OBJS = 	$(addprefix srcs/, main.o signal.o\
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o \
 	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \
 	   ft_lstdelone.o ft_lstlast.o ft_lstnew.o ft_swap.o ft_strjoin.o ft_is_in_set.o \
-	   free_char_tab.o ft_strtrim.o ft_isalnum.o)
+	   free_char_tab.o ft_strtrim.o ft_isalnum.o ft_itoa.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3

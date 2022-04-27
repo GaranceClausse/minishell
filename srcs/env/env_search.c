@@ -9,7 +9,8 @@ int	search_in_env(t_var_list *dst, char *var_name, int len)
 	while (dst->list[i])
 	{
 		ret = dst->list[i];
-		if (ft_strncmp(var_name, ret, len) == 0)
+		if (ft_strncmp(var_name, ret, len) == 0
+				&& ret[len] && ret[len] == '=')
 			return (i);
 		i++;
 	}

@@ -38,7 +38,7 @@
 
 #include "parser.h"
 
-int	g_is_sigint = 0;
+int	g_last_return = 0;
 
 int	multiline(t_lexer *lexer, char *delimiter)
 {
@@ -46,16 +46,16 @@ int	multiline(t_lexer *lexer, char *delimiter)
 	void	*old_getc;
 	(void)	delimiter;
 
-	g_is_sigint = 0;
+	g_last_return = 0;
 	signal(SIGINT, sigint_handler);
 	old_getc = rl_getc_function;
 	rl_getc_function = getc;
 	write(1, "pipe > ", 8);
 	usr_input = readline(NULL);
-	while (!usr_input && !g_is_sigint)
+	while (!usr_input && !g_last_return)
 		usr_input = readline(NULL);
 	rl_getc_function = old_getc;
-	if (g_is_sigint)
+	if (g_last_return)
 		return	(1);
 	feed_lexer(lexer, usr_input);
 	return (0);
