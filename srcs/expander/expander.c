@@ -22,7 +22,7 @@ int expand_commands(t_list **parser, t_env *env)
 	while (cur)
 	{
 		cmd = (t_cmd *)cur->content;
-		if (expansion(cmd, env))
+		if (search_and_expand(cmd, env))
 			return (1);
 		if (split_list(&cmd->word_list) || split_list(&cmd->token_list))
 			return (1);

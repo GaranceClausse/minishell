@@ -3,7 +3,7 @@ NAME = minishell
 OBJS = 	$(addprefix srcs/, main.o signal.o\
 	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
 		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
-		$(addprefix env/, env.o env_utils.o)\
+		$(addprefix env/, env.o env_change.o env_search.o)\
 		$(addprefix expander/, expander.o expansion.o ft_split.o spliter.o))
 
 
