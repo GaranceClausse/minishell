@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:24:21 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 14:04:27 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:17:53 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	get_end_index(char const *s, char const *set)
 	int	end;
 
 	end = ft_strlen(s) - 1;
-	while (end && ft_is_in_set(s[end], set))
+	while (end > 0 && ft_is_in_set(s[end], set))
 		end--;
 	if (end >= 0)
 		end++;

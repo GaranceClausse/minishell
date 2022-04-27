@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:33:45 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 17:07:12 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:31:31 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int expand_commands(t_list **parser, t_env *env)
 {
 	t_list 	*cur;
 	t_cmd	*cmd;
+	(void)env;
 
 	cur = *parser;
 	while (cur)
