@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/27 16:50:11 by gclausse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
 
 extern int	g_last_return;
@@ -6,9 +18,9 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 {
 	int	i;
 	int	index;
-	
+
 	i = 0;
-	index = search_in_env(dst, var_name, j - 1);	
+	index = search_in_env(dst, var_name, j - 1);
 	if (j == 1)
 		return (ft_strdup("$"));
 	else if (index == -1)
@@ -37,7 +49,8 @@ int	create_new_token(t_token *token, t_env *env, int i, int j)
 	}
 	str_base = ft_substr(token->content, 0, i);
 	tmp = token->content;
-	token->content = ft_strjoin3(str_base, str_expand, token->content + (j + i));
+	token->content = ft_strjoin3(str_base, str_expand,
+			token->content + (j + i));
 	free(tmp);
 	ret = ft_strlen(str_expand);
 	free(str_base);
@@ -64,10 +77,10 @@ void	expand_var(t_token *token, t_env *env)
 		if (token->content[i] == '$' && (s_quote % 2 == 0))
 		{
 			j = 1;
-			while (token->content[j + i] && ft_isalnum(token->content[j + i]) == 1)
+			while (token->content[j + i]
+				&& ft_isalnum(token->content[j + i]) == 1)
 				j++;
 			i += create_new_token(token, env, i, j);
-			
 		}
 		else
 			i++;

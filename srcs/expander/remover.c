@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remover.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 15:39:51 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 16:58:13 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ void	remove_empties(t_list **list)
 			free(cur);
 		}
 		else
-			break;
+			break ;
 	}
-
 	cur = *list;
 	while (cur && cur->next)
 	{
@@ -49,10 +48,20 @@ void	remove_empties(t_list **list)
 	}
 }
 
-static int	remove_quotes_from_token(t_token	*token)
+void	delete_quotes_token(t_token *token, int i)
 {
 	char	*tmp;
 	char	*start;
+
+	tmp = token->content;
+	start = ft_substr(token->content, 0, i);
+	token->content = ft_strjoin(start, token->content + i + 1);
+	free(start);
+	free(tmp);
+}
+
+static int	remove_quotes_from_token(t_token	*token)
+{
 	int		s_quote;
 	int		d_quote;
 	int		i;
@@ -66,13 +75,10 @@ static int	remove_quotes_from_token(t_token	*token)
 			s_quote = !s_quote;
 		else if (token->content[i] == '"' && !s_quote)
 			d_quote = !d_quote;
-		if ((token->content[i] == '\'' && !d_quote) || (token->content[i] == '"' && !s_quote))
+		if ((token->content[i] == '\'' && !d_quote)
+			|| (token->content[i] == '"' && !s_quote))
 		{
-			tmp = token->content;
-			start = ft_substr(token->content, 0, i);
-			token->content = ft_strjoin(start, token->content + i + 1);
-			free(start);
-			free(tmp);
+			delete_quotes_token(token, i);
 			if (!token->content)
 				return (1);
 		}
@@ -84,7 +90,6 @@ static int	remove_quotes_from_token(t_token	*token)
 
 int	remove_quotes(t_list **list)
 {
-
 	t_list	*cur;
 	t_token	*token;
 

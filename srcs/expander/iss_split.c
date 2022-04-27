@@ -30,7 +30,8 @@ static int	count_words(const char *s, char *set)
 		else if (ft_is_in_set(*s, set) && !is_d_quote && !is_s_quote)
 		{
 			cpt++;
-			while (ft_is_in_set(*(++s), set));
+			while (ft_is_in_set(*s, set))
+				s++;
 			s--;
 		}
 		s++;
@@ -70,7 +71,8 @@ static char	**spliter(char **split, const char *s, char *iss)
 		{
 			if (!add_word(split, count_word++, ft_substr(s, 0, i)))
 				return (NULL);
-			while (ft_is_in_set(s[++i], iss));
+			while (ft_is_in_set(s[i], iss))
+				i++;
 			s += i;
 			i = -1;
 		}
@@ -94,7 +96,7 @@ char	**iss_split(const char *str, char *iss)
 	if (!split)
 	{
 		free(tmp);
-		return(NULL);
+		return (NULL);
 	}
 	spliter(split, tmp, iss);
 	free(tmp);

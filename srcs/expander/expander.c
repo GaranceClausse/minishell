@@ -12,11 +12,10 @@
 
 #include "expand.h"
 
-int expand_commands(t_list **parser, t_env *env)
+int	expand_commands(t_list **parser, t_env *env)
 {
-	t_list 	*cur;
+	t_list	*cur;
 	t_cmd	*cmd;
-	(void)env;
 
 	cur = *parser;
 	while (cur)
