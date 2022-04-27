@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_change.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/27 16:43:36 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/27 16:43:38 by vkrajcov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "env.h"
 
 /* -1 == all good;
@@ -7,7 +19,7 @@
 int	change_var(t_var_list *dst, char *var)
 {
 	char	*var_name;
-	int	index;
+	int		index;
 
 	var_name = extract_name(var);
 	if (var_name == NULL)
@@ -47,9 +59,9 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 
 char	*delete_var(t_env *env, char *var_name)
 {
-	int	index;
 	t_var_list	*var_list;
-	char	*tmp;
+	char		*tmp;
+	int			index;
 
 	index = search_in_env(&env->shell_var, var_name, ft_strlen(var_name));
 	if (index == -1)

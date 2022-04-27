@@ -6,13 +6,13 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 15:39:51 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 16:32:40 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-void	remove_empties(t_list **list)
+void	remove_empty_tokens(t_list **list)
 {
 	t_list	*cur;
 	t_list	*next;
@@ -44,6 +44,43 @@ void	remove_empties(t_list **list)
 			free(next);
 			if (cur->next)
 				token = (t_token *)cur->next->content;
+		}
+		cur = cur->next;
+	}
+}
+
+void	remove_empty_cmds(t_list **list)
+{
+	t_list	*cur;
+	t_list	*next;
+	t_cmd	*cmd;
+
+	while (*list)
+	{
+		cmd = (t_cmd *)(*list)->content;
+		if (!cmd->token_list && !cmd->word_list)
+		{
+			cur = (*list);
+			*list = (*list)->next;
+			free(cmd);
+			free(cur);
+		}
+		else
+			break;
+	}
+
+	cur = *list;
+	while (cur && cur->next)
+	{
+		cmd = (t_cmd *)cur->next->content;
+		while (cur->next && !cmd->token_list && !cmd->word_list)
+		{
+			next = cur->next;
+			cur->next = cur->next->next;
+			free(cmd);
+			free(next);
+			if (cur->next)
+				cmd = (t_cmd *)cur->next->content;
 		}
 		cur = cur->next;
 	}
