@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:39:48 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 11:37:55 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:01:56 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,48 +64,6 @@ int	add_token_to_command(t_list **list, char **contents)
 	return (0);
 }
 
-static void	ft_free_char_tab(char **tab, int start)
-{
-	while (tab[start])
-		free(tab[start++]);
-	free(tab);
-}
-
-static void	remove_empties(t_list **list)
-{
-	t_list	*cur;
-	t_list	*next;
-	t_token	*token;
-
-	while (*list)
-	{
-		token = (t_token *)(*list)->content;
-		if (!ft_strcmp(token->content, ""))
-		{
-			cur = (*list);
-			*list = (*list)->next;
-			delete_token(token);
-			free(cur);
-		}
-		else
-			break;
-	}
-
-	cur = *list;
-	while (cur && cur->next)
-	{
-		token = (t_token *)cur->next->content;
-		if (!ft_strcmp(token->content, ""))
-		{
-			next = cur->next;
-			cur->next = next->next;
-			delete_token(token);
-			free(cur->next);
-		}
-		cur = cur->next;
-	}
-}
-
 int	split_list(t_list **list)
 {
 	t_list	*cur;
@@ -117,18 +75,17 @@ int	split_list(t_list **list)
 	while (cur)
 	{
 		token = cur->content;
-		split_token = ft_split(token->content, " \n\r\v\t\f");
+		split_token = iss_split(token->content, " \n\r\v\t\f");
 		if (!split_token)
 			return (1);
 		ret = add_token_to_command(&cur, split_token);
 		if (ret)
 		{
-			ft_free_char_tab(split_token, ret);
+			free_char_tab(split_token, ret);
 			return (1);
 		}
 		cur = cur->next;
 		free(split_token);
 	}
-	remove_empties(list);
 	return (0);
 }

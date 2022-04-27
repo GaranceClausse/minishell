@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   iss_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/26 15:06:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 16:17:50 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/27 14:20:03 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/27 14:50:34 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	add_word(char **tab, int i, char *word)
 	tab[i] = word;
 	if (!word)
 	{
-		free_char_tab(tab);
+		free_char_tab(tab, 0);
 		return (0);
 	}
 	return (1);
@@ -82,10 +82,10 @@ static char	**spliter(char **split, const char *s, char *iss)
 	return (split);
 }
 
-char	**ft_split(const char *str, char *iss)
+char	**iss_split(const char *str, char *iss)
 {
-	char	**split;
 	char	*tmp;
+	char	**split;
 
 	tmp = ft_strtrim(str, iss);
 	if (!tmp)

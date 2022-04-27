@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 17:07:27 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 13:57:50 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	**realloc_str(char **ptr, size_t nb_elms);
-void	free_char_tab(char **tab);
+void	free_char_tab(char **tab, int start);
 void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
-void	free_char_tab(char **tab);
 #endif

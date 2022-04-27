@@ -6,7 +6,6 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 	int	index;
 	
 	i = 0;
-	printf("j == %d\n", j);
 	index = search_in_env(dst, var_name, j - 1);
 	if (index == -1)
 		return (ft_strdup(""));
