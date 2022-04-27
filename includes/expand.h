@@ -19,7 +19,7 @@
 
 char	**ft_split(const char *str, char *iss);
 int		split_list(t_list **list);
-int 	expand_commands(t_list **parser, t_env *env);
-int		expansion(t_cmd	*cmd, t_env *env);
+int    expand_commands(t_list **parser, t_env *env);
+void	search_and_expand(t_cmd	*cmd, t_env *env);
 
 #endif
