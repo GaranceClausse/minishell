@@ -6,11 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/04/27 16:58:13 by gclausse         ###   ########.fr       */
-=======
-/*   Updated: 2022/04/27 16:32:40 by vkrajcov         ###   ########.fr       */
->>>>>>> 77e8e55b162dfeb7ad3efee2559c8cafae0f9188
+/*   Updated: 2022/04/27 17:03:41 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +48,6 @@ void	remove_empty_tokens(t_list **list)
 	}
 }
 
-<<<<<<< HEAD
-void	delete_quotes_token(t_token *token, int i)
-=======
 void	remove_empty_cmds(t_list **list)
 {
 	t_list	*cur;
@@ -92,8 +85,7 @@ void	remove_empty_cmds(t_list **list)
 	}
 }
 
-static int	remove_quotes_from_token(t_token	*token)
->>>>>>> 77e8e55b162dfeb7ad3efee2559c8cafae0f9188
+void	delete_quotes_token(t_token *token, int i)
 {
 	char	*tmp;
 	char	*start;
