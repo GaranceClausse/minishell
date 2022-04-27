@@ -12,13 +12,13 @@
 
 #include "signal_handling.h"
 
-extern int	g_is_sigint;
+extern int	g_last_return;
 
 void	sigint_handler(int signo)
 {
 	(void)signo;
 
-	g_is_sigint = 1;
+	g_last_return = 1;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

@@ -8,9 +8,7 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 	int	index;
 	
 	i = 0;
-	index = search_in_env(dst, var_name, j - 1);
-	printf("j = %d\n", j);
-	
+	index = search_in_env(dst, var_name, j - 1);	
 	if (j == 1)
 		return (ft_strdup("$"));
 	else if (index == -1)
@@ -49,17 +47,21 @@ int	create_new_token(t_token *token, t_env *env, int i, int j)
 
 void	expand_var(t_token *token, t_env *env)
 {
-	int		quote;
+	int		s_quote;
+	int		d_quote;
 	int		i;
 	int		j;
 
 	i = 0;
-	quote = 0;
+	s_quote = 0;
+	d_quote = 0;
 	while (token->content[i])
 	{
-		if (token->content[i] == '\'')
-			quote++;
-		if (token->content[i] == '$' && (quote % 2 == 0))
+		if (token->content[i] == '\"' && s_quote % 2 == 0)
+			d_quote++;
+		else if (token->content[i] == '\'' && d_quote % 2 == 0)
+			s_quote++;
+		if (token->content[i] == '$' && (s_quote % 2 == 0))
 		{
 			j = 1;
 			while (token->content[j + i] && ft_isalnum(token->content[j + i]) == 1)
