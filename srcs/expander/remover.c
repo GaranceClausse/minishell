@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 14:59:32 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:39:51 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	remove_empties(t_list **list)
 	while (cur && cur->next)
 	{
 		token = (t_token *)cur->next->content;
-		if (!ft_strcmp(token->content, ""))
+		while (cur->next && !ft_strcmp(token->content, ""))
 		{
 			next = cur->next;
 			cur->next = cur->next->next;
 			delete_token(token);
 			free(next);
+			if (cur->next)
+				token = (t_token *)cur->next->content;
 		}
 		cur = cur->next;
 	}

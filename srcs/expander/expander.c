@@ -6,13 +6,11 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:33:45 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 15:04:42 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:23:22 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
-
-
 
 int expand_commands(t_list **parser, t_env *env)
 {

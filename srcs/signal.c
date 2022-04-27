@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 11:26:52 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 11:52:47 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:25:09 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sigint_handler(int signo)
 {
 	(void)signo;
 
-	g_last_return = 1;
+	g_last_return = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
