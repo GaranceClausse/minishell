@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:39:48 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/26 17:35:27 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/27 11:37:55 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,41 @@ static void	ft_free_char_tab(char **tab, int start)
 	free(tab);
 }
 
+static void	remove_empties(t_list **list)
+{
+	t_list	*cur;
+	t_list	*next;
+	t_token	*token;
+
+	while (*list)
+	{
+		token = (t_token *)(*list)->content;
+		if (!ft_strcmp(token->content, ""))
+		{
+			cur = (*list);
+			*list = (*list)->next;
+			delete_token(token);
+			free(cur);
+		}
+		else
+			break;
+	}
+
+	cur = *list;
+	while (cur && cur->next)
+	{
+		token = (t_token *)cur->next->content;
+		if (!ft_strcmp(token->content, ""))
+		{
+			next = cur->next;
+			cur->next = next->next;
+			delete_token(token);
+			free(cur->next);
+		}
+		cur = cur->next;
+	}
+}
+
 int	split_list(t_list **list)
 {
 	t_list	*cur;
@@ -94,5 +129,6 @@ int	split_list(t_list **list)
 		cur = cur->next;
 		free(split_token);
 	}
+	remove_empties(list);
 	return (0);
 }
