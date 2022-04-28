@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 10:54:02 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 10:54:16 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/26 15:44:17 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/26 16:18:17 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 void	free_char_tab(char **tab)
 {

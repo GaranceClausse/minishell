@@ -12,33 +12,6 @@
 
 #include "env.h"
 
-int	search(t_var_list *dst, char *var_name)
-{
-	int		i;
-	int		len;
-	char	*ret;
-
-	i = 0;
-	len = ft_strlen(var_name);
-	while (dst->list[i])
-	{
-		ret = dst->list[i];
-		if (ft_strncmp(var_name, ret, len) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-char	*extract_name(char *var)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] && var[i] != '=')
-		i++;
-	return (ft_substr(var, 0, i));
-}
 /* -1 == all good;
    0 == error;
    1 == not finished;

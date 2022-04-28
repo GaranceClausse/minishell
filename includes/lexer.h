@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 16:08:22 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:10:22 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,36 @@
 
 typedef enum e_type {
 	ASSIGNMENT,
-	REDIRECTION,
+	REDIR_IN,
+	REDIR_OUT,
+	HERE_DOC,
+	APPEND,
 	PIPE,
 	WORD,
 	NLINE,
-	ENDOF,
-	EXPANSION,
-	ERROR
+	NOT_FINISHED
 }	t_type;
 
 typedef struct s_token {
-	t_type	type;
-	char	*content;
+	t_type			type;
+	char			*content;
 }	t_token;
 
 typedef struct s_lexer {
-	t_token	token;
+	t_token	*token;
 	int		index;
 	char	*str;
 }	t_lexer;
 
-int		is_in_set(char c, char *str);
 int		is_special(char c);
 int		search_for_char(char c, char *str);
 int		search_for_special(char *str);
-t_token	get_token(t_lexer *lexer);
+int		fill_token(t_token *token, char c, int j, t_lexer *lexer);
+t_token	*get_token(t_lexer *lexer);
+void	get_token_type(t_token *token, char c);
 void	feed_lexer(t_lexer *lexer, char *str);
-void	tokenize_input(char *str);
+void	delete_token(void *token);
+t_token	*pick_token(t_lexer	*lexer);
+void	free_lexer(t_lexer *lexer);
 
 #endif

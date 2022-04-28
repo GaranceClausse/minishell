@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/14 10:23:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 16:29:37 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/26 11:26:52 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/26 11:52:47 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "signal_handling.h"
 
-size_t	ft_strlen(const char *s)
+extern int	g_is_sigint;
+
+void	sigint_handler(int signo)
 {
-	int	i;
+	(void)signo;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	g_is_sigint = 1;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }

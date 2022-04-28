@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/14 10:23:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 16:29:37 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/26 15:33:45 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/26 16:06:18 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "expand.h"
 
-size_t	ft_strlen(const char *s)
+int expand_commands(t_list **parser, t_env *env)
 {
-	int	i;
+	t_list 	*cur;
+	t_cmd	*cmd;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	cur = *parser;
+	while (cur)
+	{
+		cmd = (t_cmd *)cur->content;
+		if (expansion(cmd, env))
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
 }

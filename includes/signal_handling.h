@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signal_handling.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/14 10:23:26 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/15 16:29:37 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/26 11:28:16 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/26 11:52:57 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SIGNAL_HANDLING_H
+# define SIGNAL_HANDLING_H
 
-size_t	ft_strlen(const char *s)
-{
-	int	i;
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
+#include <unistd.h>
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+void	sigint_handler(int signo);
+
+#endif

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -13,9 +14,21 @@
 NAME = minishell
 OBJS = $(addprefix srcs/, lexer.o lexer_utils.o env.o env_utils.o main.o)
 	 $(addprefix builtins/, echo.o))
+=======
 
-LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o free_char_tab.o \
-	   ft_strncmp.o ft_realloc_str.o ft_strdup.o)
+NAME = minishell
+OBJS = 	$(addprefix srcs/, main.o signal.o\
+	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
+		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
+		$(addprefix env/, env.o env_utils.o)\
+		$(addprefix expander/, expander.o expansion.o))
+>>>>>>> expand
+
+
+LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o \
+	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \
+	   ft_lstdelone.o ft_lstlast.o ft_lstnew.o ft_swap.o ft_strjoin.o ft_is_in_set.o \
+	   free_char_tab.o ft_isalnum.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3
