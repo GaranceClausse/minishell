@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 11:08:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/28 17:13:39 by gclausse         ###   ########.fr       */
+/*   Created: 2022/04/28 15:32:03 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/28 15:53:53 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	pwd(char **args)
+int	unset(char **args, t_env *env)
 {
-	char	*cur_dir;
-	char	*buf;
+	int		i;
+	int		index;
+	char	*del_var;
 
-	buf = NULL;
-	if (*args)
+	i = 0;
+	while (*args && args[i])
 	{
-		write (2, "pwd: too many arguments\n", 25);
-		return (1);
+		index = search_in_env(&env->env_var, args[i], ft_strlen(args[i]));
+		if (index == -1)
+		{
+			index = search_in_env(&env->shell_var, args[i], ft_strlen(args[i]));
+			if (index == -1)
+				return (1);
+		}
+		del_var = delete_var(env, args[i]);
+		i++;
 	}
-	cur_dir = getcwd(buf, 4096);
-	if (cur_dir == NULL)
-	{
-		write (2, "pwd: path not found\n", 21);
-		return (1);
-	}
-	write (1, cur_dir, ft_strlen(cur_dir));
-	write(1, "\n", 2);
 	return (0);
 }
