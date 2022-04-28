@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:54:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/15 16:31:53 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/28 11:13:25 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	echo(char **args)
 	if (args)
 	{
 		i = 0;
-		if (args[0] && !ft_strcmp(args[0], "-n"))
+		while (args[i] && !ft_strcmp(args[i], "-n"))
 		{
 			new_line = 0;
-			i = 1;
+			i++;
 		}
 		if (args[i])
 		{
