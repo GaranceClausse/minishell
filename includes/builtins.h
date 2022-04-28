@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc_str.c                                   :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 11:13:52 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/28 11:17:44 by gclausse         ###   ########.fr       */
+/*   Created: 2022/04/28 11:29:53 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/28 11:31:12 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-char	**realloc_str(char **ptr, size_t nb_elms)
-{
-	char	**new_ptr;
-	size_t	i;
+#include "env.h"
 
-	new_ptr = malloc(nb_elms * sizeof(char *));
-	if (!ptr)
-		return (new_ptr);
-	if (new_ptr)
-	{
-		i = 0;
-		while (ptr[i] && i < nb_elms)
-		{
-			new_ptr[i] = ptr[i];
-			i++;
-		}
-	}
-	free(ptr);
-	return (new_ptr);
-}
+int	pwd(char **args, t_env *env);
+
+#endif

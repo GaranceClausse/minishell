@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   env_change.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
-<<<<<<< HEAD:srcs/env/env_utils.c
-/*   Updated: 2022/04/18 16:00:55 by gclausse         ###   ########.fr       */
-=======
-/*   Updated: 2022/04/28 10:56:33 by vkrajcov         ###   ########.fr       */
->>>>>>> 389b86cfeea02e75acfa317795ee486962150b8e:srcs/env/env_change.c
+/*   Created: 2022/04/28 11:26:44 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/28 11:26:48 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "env.h"
 

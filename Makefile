@@ -1,20 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/13 17:17:49 by vkrajcov          #+#    #+#              #
-#    Updated: 2022/04/18 15:54:24 by gclausse         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
-OBJS = $(addprefix srcs/, lexer.o lexer_utils.o env.o env_utils.o main.o)
-	 $(addprefix builtins/, echo.o))
+OBJS = $(addprefix srcs/, signal.o main.o \
+		$(addprefix builtins/, echo.o pwd.o) \
 	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
 		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
 		$(addprefix env/, env.o env_change.o env_search.o)\
