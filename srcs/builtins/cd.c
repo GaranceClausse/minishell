@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/28 17:32:31 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:55:11 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,28 @@ static int	go_and_change_var(t_var_list *env_var, char *pwd, char *curpath)
 	return (ret);
 }
 
-static check_max_length(t_env *env, char *curpath)
+canonical_conversion(curpath)
 {
-	char	*path_max;
-	int		max;
+	int		i;
+	char	*tmp;
+	char	*start;
 
-	path_max = get_value(env, "PATH_MAX");
-	if (!path_max)
-		return;
-	max = ft_atoi(path_max);
-	
+	while (curpath[i])
+	{
+		if (curpath[i] == '.' && curpath[i + 1] == '/')
+		{
+			start = ft_substr(curpath, 0, i);
+			tmp = ft_strjoin(start, curpath + i + 2);
+			free(start);
+			free(curpath);
+			curpath = tmp;
+		}
+		if (curpath[i] == '.' && curpath[i + 1] == '.')
+		{
+
+		}
+		i++;
+	}
 }
 
 int	cd(t_env *env, char	**args)
