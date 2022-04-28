@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:05:27 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 16:01:35 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/28 10:55:44 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	free_env(t_env *env)
 {
-	free_char_tab(env->shell_var.list);
-	free_char_tab(env->env_var.list);
+	free_char_tab(env->shell_var.list, 0);
+	free_char_tab(env->env_var.list, 0);
 }
 
 static t_var_list	*init_var_list(t_var_list *list, int max)
@@ -44,7 +44,7 @@ static t_var_list	*copy_var_list(t_env *env, int max, char *envp[])
 	{
 		if (add_var(env, &env->env_var, ft_strdup(envp[i])))
 		{
-			free_char_tab(env->env_var.list);
+			free_char_tab(env->env_var.list, 0);
 			return (NULL);
 		}
 		i++;
@@ -60,7 +60,7 @@ t_env	*init_env(t_env *env, int max, char *envp[])
 		return (NULL);
 	if (!copy_var_list(env, max, envp))
 	{
-		free_char_tab(env->shell_var.list);
+		free_char_tab(env->shell_var.list, 0);
 		return (NULL);
 	}
 	return (env);

@@ -5,18 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 10:54:02 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 10:54:16 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/04/26 15:44:17 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/04/27 13:57:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-void	free_char_tab(char **tab)
+void	free_char_tab(char **tab, int i)
 {
-	int	i;
-
-	i = 0;
 	while (tab[i])
 		free(tab[i++]);
 	free(tab);

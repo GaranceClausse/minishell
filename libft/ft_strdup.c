@@ -6,11 +6,10 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:00:34 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/18 12:24:10 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/21 11:40:13 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strdup(const char *s)
