@@ -1,12 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env_change.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:34:26 by gclausse          #+#    #+#             */
+<<<<<<< HEAD:srcs/env/env_utils.c
 /*   Updated: 2022/04/18 16:00:55 by gclausse         ###   ########.fr       */
+=======
+/*   Updated: 2022/04/28 10:56:33 by vkrajcov         ###   ########.fr       */
+>>>>>>> 389b86cfeea02e75acfa317795ee486962150b8e:srcs/env/env_change.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +29,7 @@ int	change_var(t_var_list *dst, char *var)
 	var_name = extract_name(var);
 	if (var_name == NULL)
 		return (0);
-	index = search(dst, var_name);
+	index = search_in_env(dst, var_name, ft_strlen(var_name));
 	free(var_name);
 	if (index != -1)
 	{
@@ -60,14 +64,14 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 
 char	*delete_var(t_env *env, char *var_name)
 {
-	int			index;
 	t_var_list	*var_list;
 	char		*tmp;
+	int			index;
 
-	index = search(&env->shell_var, var_name);
+	index = search_in_env(&env->shell_var, var_name, ft_strlen(var_name));
 	if (index == -1)
 	{
-		index = search(&env->env_var, var_name);
+		index = search_in_env(&env->env_var, var_name, ft_strlen(var_name));
 		var_list = &env->env_var;
 		if (index == -1)
 			return (NULL);

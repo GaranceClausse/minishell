@@ -6,7 +6,11 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/04/18 16:07:09 by gclausse         ###   ########.fr       */
+=======
+/*   Updated: 2022/04/28 10:55:42 by vkrajcov         ###   ########.fr       */
+>>>>>>> 389b86cfeea02e75acfa317795ee486962150b8e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +74,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	**realloc_str(char **ptr, size_t nb_elms);
-void	free_char_tab(char **tab);
+void	free_char_tab(char **tab, int start);
 void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
-void	free_char_tab(char **tab);
 #endif

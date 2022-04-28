@@ -1,66 +1,99 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
+/*   Updated: 2022/04/27 17:00:41 by gclausse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
 
-char	*extract_var_value(char *var)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] && var[i] != '=')
-		i++;
-	return (ft_strdup(&var[i + 1]));
-}
+extern int	g_last_return;
 
 char	*search_var(t_var_list *dst, char *var_name, int j)
 {
 	int	i;
-	char	*ret;
-	char	*str;
+	int	index;
 
 	i = 0;
-	while (dst->list[i])
-	{
-		str = dst->list[i];
-	//	printf("str = %s, var_name = %s, j == %d\n", str, var_name, j);
-		if (j > 1 && (ft_strncmp(var_name, str, j - 1) == 0))
-		{
-			ret = extract_var_value(str);
-			return (ret);
-		}
-		i++;
-	}
-	return ("");
+	index = search_in_env(dst, var_name, j - 1);
+	if (j == 1)
+		return (ft_strdup("$"));
+	else if (index == -1)
+		return (ft_strdup(""));
+	else
+		return (extract_var_value(dst->list[index]));
 }
 
-int expand_var (t_token *token, t_env *env)
+int	create_new_token(t_token *token, t_env *env, int i, int j)
 {
+	char	*tmp;
 	char	*str_expand;
+	char	*str_base;
+	int		ret;
+
+	if (token->content[i + 1] && token->content[i + 1] == '?')
+	{
+		str_expand = ft_itoa(g_last_return);
+		j++;
+	}
+	else
+	{
+		str_expand = search_var(&env->env_var, &token->content[i + 1], j);
+		if (str_expand && ft_strcmp(str_expand, "") == 0)
+		{
+			free(str_expand);
+			str_expand = search_var(&env->shell_var, &token->content[i + 1], j);
+		}
+		//if (!str_expand)
+		//	return (-1);
+	}
+	str_base = ft_substr(token->content, 0, i);
+	tmp = token->content;
+	token->content = ft_strjoin3(str_base, str_expand,
+			token->content + (j + i));
+	free(tmp);
+	ret = ft_strlen(str_expand);
+	free(str_base);
+	free(str_expand);
+	return (ret);
+}
+
+void	expand_var(t_token *token, t_env *env)
+{
+	int		s_quote;
+	int		d_quote;
 	int		i;
 	int		j;
 
 	i = 0;
+	s_quote = 0;
+	d_quote = 0;
 	while (token->content[i])
 	{
-	//	printf("token->content[i] == %c, i == %d \n", token->content[i], i);
-		if (token->content[i] == '$')
+		if (token->content[i] == '\"' && s_quote % 2 == 0)
+			d_quote++;
+		else if (token->content[i] == '\'' && d_quote % 2 == 0)
+			s_quote++;
+		if (token->content[i] == '$' && (s_quote % 2 == 0))
 		{
 			j = 1;
-			while (ft_isalnum(token->content[j + i]) == 1)
+			while (token->content[j + i]
+				&& ft_isalnum(token->content[j + i]) == 1)
 				j++;
-			str_expand = search_var(&env->env_var, &token->content[i + 1], j);
-			if (str_expand == NULL)
-				str_expand = search_var(&env->shell_var, &token->content[i + 1], j);
-	//		printf("ft_substr(token->content, 0, i) == %s, str_expand == %s, &token->content[j + i] = %s\n", ft_substr(token->content, 0, i), str_expand, &token->content[j + i]);
-			token->content = ft_strjoin3(ft_substr(token->content, 0, i), str_expand, token->content + (j + i));
-	//		printf("token->content = %s\n", token->content);
-			i = 0;
+			//check output of create_new_token
+			i += create_new_token(token, env, i, j);
 		}
 		else
 			i++;
 	}
-	return (0);
 }
 
-int	expansion(t_cmd	*cmd, t_env *env)
+void	search_and_expand(t_cmd	*cmd, t_env *env)
 {
 	t_token	*token;
 	t_list	*list;
@@ -72,5 +105,4 @@ int	expansion(t_cmd	*cmd, t_env *env)
 		expand_var(token, env);
 		list = list->next;
 	}
-	return (0);
 }
