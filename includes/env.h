@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/29 16:00:40 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:45:50 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int		change_var(t_var_list *dst, char *var);
 int		add_var(t_env *env, t_var_list *dst, char *var);
 char	*delete_var(t_env *env, char *var_name);
 char	*get_value(t_env *env, char *value);
-int change_var_by_val(t_var_list *dst, char *var, char *val);
+int 	change_var_by_val(t_env *env,t_var_list *dst, char *var, char *val);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:26:44 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/29 15:33:12 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:45:41 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,14 @@ int	change_var(t_var_list *dst, char *var)
 	return (1);
 }
 
-int change_var_by_val(t_var_list *dst, char *var, char *val)
+int change_var_by_val(t_env *env,t_var_list *dst, char *var, char *val)
 {
 	char	*tmp;
-	int		ret;
 
 	tmp = ft_strjoin3(var, "=", val);
 	if (!tmp)
 		return (1);
-	ret = change_var(dst, tmp);
-	free(tmp);
-	if (ret)
-		return (1);
-	return (0);
+	return (add_var(env, dst, tmp));
 }
 
 int	add_var(t_env *env, t_var_list *dst, char *var)

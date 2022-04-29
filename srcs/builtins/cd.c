@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/29 18:10:48 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:47:01 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,13 +177,16 @@ char	*canonical_conversion(char	*curpath)
 	canon_path = ft_strdup("/");
 	while (split[i])
 	{
-		printf("%s\n", split[i]);
 		if (!ft_strcmp(split[i], ".."))
 		{
-			if (!i && ft_strcmp(canon_path, "/"))
-			{
-				free(canon_path);
-				canon_path = ft_strdup("/");
+			if (!i)
+			{ 
+				if (ft_strcmp(canon_path, "/"))
+				{
+					free(canon_path);
+					canon_path = ft_strdup("/");
+				}
+				delete_from_char_tab(split, i);
 				continue;
 			}
 			ret = check_folder_exists(canon_path, curpath);
@@ -219,8 +222,7 @@ char	*canonical_conversion(char	*curpath)
 	return (canon_path);
 }
 
-/*
-int	go_and_change_var(t_var_list *env_var, char *pwd, char *curpath)
+int	go_and_change_var(t_env *env, char *pwd, char *curpath)
 {
 	int	ret;
 
@@ -229,23 +231,21 @@ int	go_and_change_var(t_var_list *env_var, char *pwd, char *curpath)
 	{
 		perror("cd");
 		free(pwd);
-		free(cur_path);
+		free(curpath);
 		return (ret);
 	}
-	ret = change_var_by_val(env_var, "OLDPWD", pwd);
+	ret = change_var_by_val(env, &env->env_var, "OLDPWD", pwd);
 	free(pwd);
 	if (ret)
 	{
 		free(curpath);
 		return (1);
 	}
-	ret = change_var_by_val(env_var, "PWD", curpath);
+	ret = change_var_by_val(env, &env->env_var, "PWD", curpath);
 	free(curpath);
 	return (ret);
 }
 
-
-*/
 int	cd(t_env *env, char	**args)
 {
 	char	*directory;
@@ -268,16 +268,11 @@ int	cd(t_env *env, char	**args)
 	if (!curpath)
 		return (1);
 	directory = canonical_conversion(curpath);
-	if (!directory)
-	{
-		free(curpath);
-		return (1);
-	}
-	curpath = directory;
-	printf("curpath = %s\n", curpath);
-	//return (go_and_change_var(env->env_var, pwd, curpath));
 	free(curpath);
-	return (0);
+	if (!directory)
+		return (1);
+	curpath = directory;
+	return (go_and_change_var(env, pwd, curpath));
 }
 
 int main(int argc, char **argv, char **envp)
@@ -287,5 +282,10 @@ int main(int argc, char **argv, char **envp)
 
 	init_env(&env, 10, envp);
 	cd(&env, argv + 1);
+	char *pwd = get_value(&env, "PWD");
+	char *oldpwd = get_value(&env, "OLDPWD");
+	printf("pwd  = %s, oldpwd = %s\n", pwd, oldpwd);
+	free(pwd);
+	free(oldpwd);
 	free_env(&env);
 }
