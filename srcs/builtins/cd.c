@@ -6,118 +6,221 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/28 17:55:11 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:10:48 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys.types.h>
+#include <sys/types.h>
 #include <dirent.h>
 #include <error.h>
 #include <unistd.h>
 #include "env.h"
 #include "libft.h"
-//cd uniquement avec un chemin relatif ou absolu
-//getcw -> relatif 
-//get current working directory as absolute path
-// chdir
-// change current working directory of the calling process to the directory specifiied
-// stat, fstat, lstat
 
-
-// cd [directory] or cd -
-
-// 5. IF curpath does not begin with /
-	// set curpath to PWD/curpath (if PWD does not end with /)
-// 6. Delete any ./ that separates components
-// 7. FOREACH .., if there is a preceding component and it is neither root nor ..
-	// IF the preceding component is not a directory, then ERROR
-	// the preceding component, all / separating the preceding component, .. and all / 
-	// 		separating .. from the following component shall be deleted
-	// remove any trailing / that are not also leading /. replace multiple non-leading
-	//		consecutive / with a simple slash and replace 3 or more leading / by a single /
-	//  IF curpath is then NULL -> STOP
-// 8. If cupart is longueur than PATH_MAX bytes (including the terminating null) and the
-//		<directory> is not longer than PATH_MAX. then curpath shall be converted from absolute pathname to relative if possible.
-//		This conversion is possible if PWD with / is an initial substring of curpath
-//	  Implementations  may  also  apply this conversion if curpath is not
-//           longer than {PATH_MAX} bytes or the directory  operand  was  longer
-//          than {PATH_MAX} bytes.
-//what about removed folder?
-
-static char	*get_directory_name(t_var *env, char **args)
+char	*get_directory_name(t_env *env, char **args)
 {
-	int		i;
 	char	*directory;
 
 	if (args[0])
 	{
 		if (args[1])
 		{
-			write (2, "cd: too many arguments\n", 24);
+			write (2, "cd : too many arguments\n", 24);
 			return (NULL);
 		}
-		return (args[0]);
+		return (ft_strdup(args[0]));
 	}
-	directory = get_value(env, HOME);
+	directory = get_value(env, "HOME");
 	if (!directory)
-		write(2, "cd: HOME not set");
-	return (ft_strdup(directory));
+		write(2, "cd : HOME not set\n", 18);
+	return (directory);
 }
 
-static char *try_all_cdpaths(char **cdpath, char *directory)
+//	0 : Not found
+//	-1 : Found but not accessible
+//	1 : Found
+int	check_folder_exists(char *curpath, char *directory)
+{
+	DIR		*dir;
+	char	*prompt;
+
+	dir = opendir(curpath);
+	if (errno && errno != ENOENT)
+	{
+		prompt = ft_strjoin("cd: ", directory);
+		if (!prompt)
+			return (-1);
+		perror(prompt);
+		free(prompt);
+		return (-1);
+	}
+	if (!errno)
+	{
+		closedir(dir);
+		return (1);
+	}
+	return (0);
+}
+
+char *try_all_cdpaths(char **cdpath, char *directory)
 {
 	char	*curpath;
-	DIR		*dir;
+	int		ret;
 
 	while (*cdpath)
 	{
-		curpath = ft_strjoin3(cdpath, "/", directory);
-		dir = opendir(curpath);
-		if (errno && errno != ENOENT)
+		curpath = ft_strjoin3(*cdpath, "/", directory);
+		ret = check_folder_exists(curpath, directory);
+		if (ret == -1 || ret == 1)
 		{
-			perror(directory);
+			if (ret == 1)
+				return (curpath);
 			free(curpath);
-			return (NULL)
-		}
-		if (!errno)
-		{
-			closedir(dir);
-			return (curpath);
+			return (NULL);
 		}
 		free(curpath);
 		cdpath++;
 	}
-	curpath = ft_strjoin("./", directory));
-	dir = opendir(curpath);
-	if (errno && errno != ENOENT)
-	{
-		perror(directory);
-		free(curpath);
-		return (NULL)
-	}
-	closedir(dir);
-	return (curpath);
+	curpath = ft_strjoin("./", directory);
+	ret = check_folder_exists(curpath, directory);
+	if (ret == 1)
+		return (curpath);
+	free(curpath);
+	if (ret == 0)
+		return (ft_strdup(directory));
+	return (NULL);
 }
 
-static char	*get_curpath_from_cdpath(t_env *env, char *directory)
+char	*get_curpath_from_cdpath(t_env *env, char *directory)
 {
-	int	i;
 	char	**cdpath;
 	char	*ret;
 
-	ret = get_value(env, "CDPATH");
+	ret = get_value(env, "CDPATH"); //how can we know it failed
 	if (!ret)
 		return (NULL);
+	if (ret[0] == '\0')
+	{
+		free(ret);
+		return (ft_strdup(directory));
+	}
 	cdpath = ft_split(ret, ':');
 	free(ret);
 	if (!cdpath)
 		return (NULL);
-	ret = try_all_cdpaths(cdpath, directory));
-	free_char_tab(cdpath);
+	ret = try_all_cdpaths(cdpath, directory);
+	free_char_tab(cdpath, 0);
 	return (ret);
 }
 
-static int	go_and_change_var(t_var_list *env_var, char *pwd, char *curpath)
+char *join_pwd_to_path(char *pwd, char *curpath)
+{
+	char	*tmp;
+
+	if (curpath[0] != '/' && pwd)
+	{
+		tmp = ft_strjoin3(pwd, "/", curpath);
+		free(curpath);
+		curpath = tmp;
+		if (!curpath)
+		{
+			free(pwd);
+			return (NULL);
+		}
+	}
+	return (curpath);
+}
+
+int	remove_substr(char **str, int start, int end)
+{
+	char	*new;
+	char	*first;
+	
+	first = ft_substr(*str, 0, start);
+	if (!first)
+		return (1);
+	new = ft_strjoin(first, *str + end);
+	free(first);
+	if (!new)
+		return (1);
+	free(*str);
+	*str = new;
+	return (0);
+}
+
+void delete_from_char_tab(char **tab, int index)
+{
+	int	i;
+
+	free(tab[index]);
+	i = index;
+	while (tab[i + 1])
+	{
+		tab[i] = tab[i + 1];
+		i++;
+	}
+	tab[i] = tab[i + 1];
+}
+
+char	*canonical_conversion(char	*curpath)
+{
+	char	**split;
+	char	*canon_path;
+	char	*tmp;
+	int		i;
+	int		ret;
+
+	split = ft_split(curpath, '/');
+	if (!split)
+		return (NULL);
+	i = 0;
+	canon_path = ft_strdup("/");
+	while (split[i])
+	{
+		printf("%s\n", split[i]);
+		if (!ft_strcmp(split[i], ".."))
+		{
+			if (!i && ft_strcmp(canon_path, "/"))
+			{
+				free(canon_path);
+				canon_path = ft_strdup("/");
+				continue;
+			}
+			ret = check_folder_exists(canon_path, curpath);
+			if ( ret != 1)
+			{
+				if (!ret)
+					perror(curpath);
+				free(canon_path);
+				free_char_tab(split, 0);
+				return (NULL);
+			}
+			canon_path[ft_strlen(canon_path) - ft_strlen(split[i - 1]) - 1] = '\0';
+			delete_from_char_tab(split, i);
+			delete_from_char_tab(split, i - 1);
+			i--;
+		}
+		else if (!ft_strcmp(split[i], "."))
+			delete_from_char_tab(split, i);
+		else
+		{
+			tmp = ft_strjoin3(canon_path, split[i], "/");
+			free(canon_path);
+			if (!tmp)
+			{
+				free_char_tab(split, 0);
+				return (NULL);
+			}
+			canon_path = tmp;
+			i++;
+		}
+	}
+	free_char_tab(split, 0);
+	return (canon_path);
+}
+
+/*
+int	go_and_change_var(t_var_list *env_var, char *pwd, char *curpath)
 {
 	int	ret;
 
@@ -141,61 +244,48 @@ static int	go_and_change_var(t_var_list *env_var, char *pwd, char *curpath)
 	return (ret);
 }
 
-canonical_conversion(curpath)
-{
-	int		i;
-	char	*tmp;
-	char	*start;
 
-	while (curpath[i])
-	{
-		if (curpath[i] == '.' && curpath[i + 1] == '/')
-		{
-			start = ft_substr(curpath, 0, i);
-			tmp = ft_strjoin(start, curpath + i + 2);
-			free(start);
-			free(curpath);
-			curpath = tmp;
-		}
-		if (curpath[i] == '.' && curpath[i + 1] == '.')
-		{
-
-		}
-		i++;
-	}
-}
-
+*/
 int	cd(t_env *env, char	**args)
 {
 	char	*directory;
 	char	*curpath;
 	char	*pwd;
-	int		ret;
 
-	directory = get_directory_name(args, env);
+	directory = get_directory_name(env, args);
 	if (!directory)
 		return (1);
 	curpath = directory;
 	if (directory[0] != '/' && directory[0] != '.')
 	{
-		curpath = get_curpath_from_cdpath(directory, env);
+		curpath = get_curpath_from_cdpath(env, directory);
 		free(directory);
-		if (!cur_path)
+		if (!curpath)
 			return (1);
 	}
 	pwd = get_value(env, "PWD");
-	if (curpath[0] != '/' && pwd)
-	{
-		directory = ft_strjoin3(pwd, "/", curpath);
-		free(curpath);
-		curpath = directory;
-		if (!directory)
-		{
-			free(pwd);
-			return (1);
-		}
-	}
+	curpath = join_pwd_to_path(pwd, curpath);
+	if (!curpath)
+		return (1);
 	directory = canonical_conversion(curpath);
-	//path_max
-	return (go_and_change_var(env->env_var, pwd, curpath));
+	if (!directory)
+	{
+		free(curpath);
+		return (1);
+	}
+	curpath = directory;
+	printf("curpath = %s\n", curpath);
+	//return (go_and_change_var(env->env_var, pwd, curpath));
+	free(curpath);
+	return (0);
+}
+
+int main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	t_env	env;
+
+	init_env(&env, 10, envp);
+	cd(&env, argv + 1);
+	free_env(&env);
 }
