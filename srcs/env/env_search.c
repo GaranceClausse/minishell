@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:41:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/28 11:50:22 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/29 14:50:48 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ char	*extract_var_value(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
+	if (var[i] != '=')
+		return (NULL); 
 	return (ft_strdup(&var[i + 1]));
 }
