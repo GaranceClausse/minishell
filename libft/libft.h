@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/28 11:17:48 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:41:42 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,5 @@ void	free_char_tab(char **tab, int start);
 void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
+char	**ft_split(char const *str, char c);
 #endif

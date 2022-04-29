@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 16:49:00 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:30:26 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 //					| '|' linebreak command pipeline
 //					| '|' command pipeline
 //                  ;
-// cmd_cpl          : io_redirect 	  cmd_cpl
+// cmmand           : io_redirect 	  cmd_cpl
 //                  | ASSIGNMENT_WORD cmd_cpl
 //                  | WORD		      cmd_cpl
 //					| io_redirect
