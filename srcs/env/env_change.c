@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_change.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:26:44 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/28 11:26:48 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:24:07 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ int	change_var(t_var_list *dst, char *var)
 		return (-1);
 	}
 	return (1);
+}
+
+int change_var_by_val(t_var_list *dst, char *var, char *val)
+{
+	char	*tmp;
+	int		ret;
+
+	tmp = ft_strjoin3(var_name, "=", val);
+	if (!tmp)
+		return (1);
+	ret = change_var(dst, tmp);
+	free(tmp);
+	if (ret)
+		return (1);
+	return (0);
 }
 
 int	add_var(t_env *env, t_var_list *dst, char *var)
