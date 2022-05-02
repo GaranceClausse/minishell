@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 11:32:21 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:40:57 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void	print_parser(t_list	**parser);
 void	print_token(t_list	**token_list);
 t_cmd	*init_cmd(void);
 int		linebreak(t_lexer *lexer, int is_final);
-int		io_redirect(t_lexer *lexer, t_cmd *cmd);
-int		word_or_assign(t_lexer *lexer, t_cmd *cmd);
-int		command(t_lexer *lexer, t_cmd *cmd);
-int		pipeline(t_lexer *lexer, t_list **parser);
+int		prefix_suffix(t_lexer *lexer, t_cmd *cmd, int is_prefix);
 int		complete_command(t_lexer *lexer, t_list **parser);
 int		syntax_error(char *err_msg, int is_freable);
 

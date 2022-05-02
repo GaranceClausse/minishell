@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 16:09:08 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 17:41:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,14 @@ int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 #include "builtins.h"
 int	main(int argc, char	*argv[], char *envp[])
 {
-	//t_lexer	*lexer;
-	//t_list	*parser;
+	t_lexer	*lexer;
+	t_list	*parser;
 	t_env	env;
 	int		ret;
 
 	if (!init_env(&env, 10, envp))
 		return (1);
-	(void)argc;
-	ret = 0;
-	exit_builtin(argv + 1);
-	/*lexer = malloc(sizeof(t_lexer));
+	lexer = malloc(sizeof(t_lexer));
 	if (!lexer)
 	{
 		free_env(&env);
@@ -74,7 +71,7 @@ int	main(int argc, char	*argv[], char *envp[])
 		if (argc == 1 || (argc == 2 && !ft_strcmp(argv[1], "-")))
 			ret = interactive_shell(lexer, &parser, &env);
 	//readfile arg 1 ou arg 2 (-)
-	free_lexer(lexer);*/
+	free_lexer(lexer);
 	free_env(&env);
 	return (ret);
 }
