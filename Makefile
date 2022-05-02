@@ -1,6 +1,7 @@
 NAME = minishell
 OBJS = $(addprefix srcs/, signal.o \
-		$(addprefix builtins/, echo.o pwd.o env.o unset.o cd.o) \
+		$(addprefix builtins/, echo.o pwd.o env.o unset.o \
+		$(addprefix cd/, cd.o cdpath.o convert.o))\
 	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\
 		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
 		$(addprefix env/, env.o env_change.o env_search.o)\
