@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/29 18:47:01 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 10:29:48 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ char *try_all_cdpaths(char **cdpath, char *directory)
 		if (ret == -1 || ret == 1)
 		{
 			if (ret == 1)
+			{
+				write(1, curpath, ft_strlen(curpath)); 
 				return (curpath);
+			}
 			free(curpath);
 			return (NULL);
 		}
@@ -84,7 +87,10 @@ char *try_all_cdpaths(char **cdpath, char *directory)
 	curpath = ft_strjoin("./", directory);
 	ret = check_folder_exists(curpath, directory);
 	if (ret == 1)
+	{
+		write(1, curpath, ft_strlen(curpath));
 		return (curpath);
+	}
 	free(curpath);
 	if (ret == 0)
 		return (ft_strdup(directory));
@@ -284,7 +290,8 @@ int main(int argc, char **argv, char **envp)
 	cd(&env, argv + 1);
 	char *pwd = get_value(&env, "PWD");
 	char *oldpwd = get_value(&env, "OLDPWD");
-	printf("pwd  = %s, oldpwd = %s\n", pwd, oldpwd);
+	printf("pwd  = %s, oldpwd = %s\n",
+		get_value(&env, "PWD"), get_value(&env, "OLDPWD"));
 	free(pwd);
 	free(oldpwd);
 	free_env(&env);
