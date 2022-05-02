@@ -11,11 +11,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_isalnum(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
-		|| (c >= '0' && c <= '9') || c == '_')
-		return (1);
-	else
+		|| (c >= '0' && c <= '9'))
 		return (0);
+	else
+		return (1);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (0);
+	else
+		return (1);
+}
+
+
+int	ft_isunderscore(int c)
+{
+	if (c == '_')
+		return (0);
+	else
+		return (1);
+}
+
+int	is_valid_identifier(char *str, char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i] && arg[i] != '=')
+	{
+		if ((ft_isalnum(arg[i]) && ft_isdigit(arg[i])
+		&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0)
+		{
+			ft_printf("%s: '%s' : not a valid identifier\n", str, arg);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

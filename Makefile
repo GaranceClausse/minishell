@@ -11,8 +11,8 @@ OBJS = $(addprefix srcs/, signal.o main.o\
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o \
 	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \
 	   ft_lstdelone.o ft_lstlast.o ft_lstnew.o ft_swap.o ft_strjoin.o ft_is_in_set.o \
-	   free_char_tab.o ft_strtrim.o ft_isalnum.o ft_itoa.o ft_split.o ft_putchar_fd.o \
-	   ft_putnbr_base.o ft_printf.o ft_strchr.o ft_atoi.o ft_isdigit.o)
+	   free_char_tab.o ft_strtrim.o is_what_kind.o ft_itoa.o ft_split.o ft_putchar_fd.o \
+	   ft_putnbr_base.o ft_printf.o ft_strchr.o ft_atoi.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3

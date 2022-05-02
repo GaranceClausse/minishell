@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:41:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 14:28:30 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 17:08:53 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ char	*extract_var_value(char *var)
 	while (var[i] && var[i] != '=')
 		i++;
 	if (var[i] != '=' || !var[i + 1])
-		return (NULL); 
+		return (ft_strdup("")); 
 	return (ft_strdup(&var[i + 1]));
 }
 
-char	*get_value(t_env *env, char *value)
+char	*get_value(t_env *env, char *name)
 {
 	int		i;
-	i = search_in_env(&env->env_var, value, ft_strlen(value));
+	i = search_in_env(&env->env_var, name, ft_strlen(name));
 	if (i > 0)
 		return (extract_var_value(env->env_var.list[i]));
-	search_in_env(&env->shell_var,  value, ft_strlen(value));
+	search_in_env(&env->shell_var,  name, ft_strlen(name));
 	if (i > 0)
 		return (extract_var_value(env->shell_var.list[i]));
 	return (ft_strdup(""));
