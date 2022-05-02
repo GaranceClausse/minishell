@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:41:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 11:17:11 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 14:28:30 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	search_in_env(t_var_list *dst, char *var_name, int len)
 	{
 		ret = dst->list[i];
 		if (ft_strncmp(var_name, ret, len) == 0
-			&& ret[len] && ret[len] == '=')
+			&& ((ret[len] && ret[len] == '=') || !ret[len]))
 			return (i);
 		i++;
 	}

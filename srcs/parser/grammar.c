@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/29 15:30:26 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:15:37 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,22 @@
 //					| '|' linebreak command pipeline
 //					| '|' command pipeline
 //                  ;
-// cmmand           : io_redirect 	  cmd_cpl
-//                  | ASSIGNMENT_WORD cmd_cpl
-//                  | WORD		      cmd_cpl
+// command          : prefix WORD suffix
+//                  | prefix WORD
+//                  | prefix
+//					| WORD
+//                  | WORD suffix
+//                  | suffix
+//					;
+// suffix			: io_redirect suffix
+//					| WORD	      suffix
 //					| io_redirect
-//                  | ASSIGNMENT_WORD
-//                  | WORD
+//					| WORD
+//					;
+// prefix           : io_redirect prefix
+//					| ASSIGNMENT_WORD prefix
+//					| ASSIGNMENT_WORD
+//					| io_redirect
 //					;
 // io_redirect      : '<'       WORD
 //                  | '>'       WORD

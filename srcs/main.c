@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 13:44:27 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:09:08 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	main(int argc, char	*argv[], char *envp[])
 	if (!init_env(&env, 10, envp))
 		return (1);
 	(void)argc;
-	ret = export(argv + 1, &env);
+	ret = 0;
+	exit_builtin(argv + 1);
 	/*lexer = malloc(sizeof(t_lexer));
 	if (!lexer)
 	{

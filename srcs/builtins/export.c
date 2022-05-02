@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 13:02:27 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:51:18 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**order_list(t_var_list *env_var)
 	while (i < env_var->size)
 	{
 		j = i + 1;
-		while (order_env[j])
+		while (j < env_var->size && order_env[j])
 		{
 			if (ft_strcmp(order_env[i], order_env[j]) > 0)
 			{
@@ -60,9 +60,12 @@ int	print_export(t_var_list *env_var)
 		var_value = extract_var_value(env_list[i]);
 		var_name = extract_name(env_list[i]);
 		if (!var_value)
-			ft_printf("export %s\n", var_name);
-		else if (ft_strcmp(var_value, "\"\"") == 0)
-			 ft_printf("export %s=\"\"\n", var_name);
+		{
+			if (ft_strchr(env_list[i],'='))
+				 ft_printf("export %s=\"\"\n", var_name);
+			else
+				ft_printf("export %s\n", var_name);
+		}
 		else
 			ft_printf("export %s=\"%s\"\n", var_name, var_value);
 		free(var_value);
@@ -85,7 +88,7 @@ int	export(char **args, t_env *env)
 	i = 0;
 	if (!*args)
 		print_export(&env->env_var);
-	while (*args && args[i])
+	while (args[i])
 	{
 		j = 0;
 		var_name = extract_name(args[i]);
@@ -93,7 +96,7 @@ int	export(char **args, t_env *env)
 		{
 			if (ft_isalnum(var_name[j]) == 0)
 			{
-				ft_printf("export: '%s' : not a valid identifier", args[i]);
+				ft_printf("export: '%s' : not a valid identifier\n", args[i]);
 				free(var_name);
 				return (1);
 			}
@@ -101,24 +104,17 @@ int	export(char **args, t_env *env)
 		}
 		index = search_in_env(&env->env_var, var_name, ft_strlen(var_name));
 		var_value = extract_var_value(args[i]);
-		if (index == -1 && args[i][ft_strlen(args[i]) - 1] && args[i][ft_strlen(args[i]) - 1] != '=')
-			add_var(env, &env->env_var, args[i]);
-		else if (index == -1)
-		{		
-			if (!var_value)
-				var_value = ft_strdup("\"\"");
-			var = ft_strjoin3(var_name, "=", var_value);
-			add_var(env, &env->env_var, var);
-		}
+		if (index == -1 && args[i][ft_strlen(args[i]) - 1] != '=')
+			add_var(env, &env->env_var, ft_strdup(args[i]));
 		else
 		{
 			if (!var_value)
-				var_value = ft_strdup("\"\"");
-			var = ft_strjoin3(var_name, "=", var_value);
-			change_var(&env->env_var, var);
-		}
-		if (var_value)
+				var = ft_strjoin(var_name, "=");
+			else
+				var = ft_strjoin3(var_name, "=", var_value);
+			add_var(env, &env->env_var, var);
 			free(var_value);
+		}
 		free(var_name);
 		i++;
 	}

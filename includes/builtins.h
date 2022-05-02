@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:29:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 13:37:51 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:06:59 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ char	*get_curpath_from_cdpath(t_env *env, char *directory);
 int		check_folder_exists(char *curpath, char *directory);
 char	*canonical_conversion(char	*curpath);
 int		cd(t_env *env, char	**args);
+void	exit_builtin(char **args);
 
 #endif
