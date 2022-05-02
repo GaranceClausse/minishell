@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 11:42:16 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 11:59:00 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	print_export(t_var_list *env_var)
 		var_name = extract_name(env_list[i]);
 		if (!var_value)
 			ft_printf("export %s\n", var_name);
-		else if (ft_strcmp(var_value, "''") == 0)
+		else if (ft_strcmp(var_value, "\"\"") == 0)
 			 ft_printf("export %s=\"\"\n", var_name);
 		else
 			ft_printf("export %s=\"%s\"\n", var_name, var_value);
@@ -106,14 +106,16 @@ int	export(char **args, t_env *env)
 		else if (index == -1)
 		{		
 			if (!var_value)
-				var_value = ft_strdup("''");
+				var_value = ft_strdup("\"\"");
 			var = ft_strjoin3(var_name, "=", var_value);
 			add_var(env, &env->env_var, var);
 		}
 		else
 		{
-			if (var_value)
-				change_var(&env->env_var, args[i]);
+			if (!var_value)
+				var_value = ft_strdup("\"\"");
+			var = ft_strjoin3(var_name, "=", var_value);
+			change_var(&env->env_var, var);
 		}
 		if (var_value)
 			free(var_value);
@@ -123,7 +125,7 @@ int	export(char **args, t_env *env)
 	print_export(&env->env_var);
 	return (0);
 }
-
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	env;
@@ -134,4 +136,4 @@ int	main(int argc, char **argv, char **envp)
 		export(&argv[1], &env);
 	}
 	return (0);
-}
+}*/
