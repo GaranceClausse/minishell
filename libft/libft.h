@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/29 15:41:42 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 09:50:05 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
+int		ft_putnbr_base(int nbr, char *base);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
@@ -75,4 +76,6 @@ void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
 char	**ft_split(char const *str, char c);
+int		ft_printf(const char *str, ...);
+
 #endif

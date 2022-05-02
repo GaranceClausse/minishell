@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:41:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/29 18:11:30 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 11:17:11 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*extract_var_value(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	if (var[i] != '=')
+	if (var[i] != '=' || !var[i + 1])
 		return (NULL); 
 	return (ft_strdup(&var[i + 1]));
 }
