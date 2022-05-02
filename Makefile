@@ -1,5 +1,5 @@
 NAME = minishell
-OBJS = $(addprefix srcs/, signal.o \
+OBJS = $(addprefix srcs/, signal.o main.o\
 		$(addprefix builtins/, echo.o pwd.o export.o env.o unset.o\
 		$(addprefix cd/, cd.o cdpath.o convert.o))\
 	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o)\

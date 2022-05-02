@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:29:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 11:09:45 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 13:37:51 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "env.h"
 
+int		echo(char **args);
 int		pwd(char **args);
 int		print_env(char **args, t_var_list *env_var);
 int		unset(char **args, t_env *env);

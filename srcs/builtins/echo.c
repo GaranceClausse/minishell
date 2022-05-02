@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:54:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/28 11:32:12 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 13:10:46 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	echo(char **args)
 		args++;
 	}
 	if (new_line)
-		if (write(1, "\n", 1))
+		if (write(1, "\n", 1) == -1)
 			return (1);
 	return (0);
 }
