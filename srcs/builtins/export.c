@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/29 18:32:52 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/02 11:51:06 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**order_list(t_var_list *env_var)
 	return (order_env);
 }
 
-int	print_export(char **args, t_var_list *env_var)
+int	print_export(t_var_list *env_var)
 {
 	int		i;
 	char	*var_value;
@@ -59,11 +59,12 @@ int	print_export(char **args, t_var_list *env_var)
 	{
 		var_value = extract_var_value(env_list[i]);
 		var_name = extract_name(env_list[i]);
-		write(1, "export ", 8);
-		write (1, var_name, ft_strlen(var_name));
-		write(1, "=\"", 2);
-		write (1, var_value, ft_strlen(var_value));
-		write (1, "\"\n", 2);
+		if (!var_value)
+			ft_printf("export %s\n", var_name);
+		else if (ft_strcmp(var_value, "''") == 0)
+			 ft_printf("export %s=\"\"\n", var_name);
+		else
+			ft_printf("export %s=\"%s\"\n", var_name, var_value);
 		free(var_value);
 		free(var_name);
 		i++;
@@ -83,7 +84,7 @@ int	export(char **args, t_env *env)
 
 	i = 0;
 	if (!*args)
-		print_export(args, &env->env_var);
+		print_export(&env->env_var);
 	while (*args && args[i])
 	{
 		j = 0;
@@ -92,9 +93,7 @@ int	export(char **args, t_env *env)
 		{
 			if (ft_isalnum(var_name[j]) == 0)
 			{
-				write(2, "export: '", 10);
-				write(2, args[i], ft_strlen(args[i]));
-				write (2, "' : not a valid identifier", 27);
+				ft_printf("export: '%s' : not a valid identifier", args[i]);
 				free(var_name);
 				return (1);
 			}
@@ -102,13 +101,14 @@ int	export(char **args, t_env *env)
 		}
 		index = search_in_env(&env->env_var, var_name, ft_strlen(var_name));
 		var_value = extract_var_value(args[i]);
-		if (index == -1)
+		if (index == -1 && args[i][ft_strlen(args[i]) - 1] && args[i][ft_strlen(args[i]) - 1] != '=')
+			add_var(env, &env->env_var, args[i]);
+		else if (index == -1)
 		{		
 			if (!var_value)
 				var_value = ft_strdup("''");
 			var = ft_strjoin3(var_name, "=", var_value);
 			add_var(env, &env->env_var, var);
-			free(var);
 		}
 		else
 		{
@@ -120,18 +120,6 @@ int	export(char **args, t_env *env)
 		free(var_name);
 		i++;
 	}
-//	print_export(&args[1], &env->env_var);
+	print_export(&env->env_var);
 	return (0);
 }
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_env	env;
-
-	if (argc != 0)
-	{
-		init_env(&env, 10, envp);
-		export(&argv[1], &env);
-	}
-	return (0);
-}*/

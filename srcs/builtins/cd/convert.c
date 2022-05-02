@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:54:25 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 11:41:24 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 11:59:13 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	dot_dot(int *i, char **canon_path, char *curpath, char **split)
 		free_char_tab(split, 0);
 		return (1);
 	}
-	(*canon_path)[ft_strlen(*canon_path) - ft_strlen(split[(*i) - 1]) - 1] = '\0';
+	(*canon_path)[ft_strlen(*canon_path)
+		- ft_strlen(split[(*i) - 1]) - 1] = '\0';
 	delete_from_char_tab(split, *i);
 	delete_from_char_tab(split, *i - 1);
 	(*i)--;
