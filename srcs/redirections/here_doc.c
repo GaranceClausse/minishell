@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 16:49:54 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:48:33 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ extern int	g_last_return;
 
 char	*remove_quotes_heredoc(char *delimiter)
 {
-	
 	int		i;
 	char	*cpy;
 
@@ -38,64 +37,57 @@ char	*remove_quotes_heredoc(char *delimiter)
 	return (cpy);
 }
 
-char	*expand_heredoc(char *input, t_env *env)
+char	*create_expanded_string(t_env *env, char *input, int *i, int j)
 {
-	int		i;
-	int		j;
 	char	*str_expand;
 	char	*str_base;
 	char	*tmp;
 
+	if (input[*i + 1] && input[*i + 1] == '?')
+	{
+		str_expand = ft_itoa(g_last_return);
+		j += 1;
+	}
+	else
+	{				
+		while (input[j + *i]
+			&& (ft_isalnum(input[j + *i]) == 0
+				|| ft_isunderscore(input[j + *i]) == 0))
+			j++;
+		str_expand = search_var(&env->env_var, &input[*i + 1], j);
+	}
+	str_base = ft_substr(input, 0, *i);
+	tmp = input;
+	input = ft_strjoin3(str_base, str_expand, input + (j + *i));
+	free(tmp);
+	i += ft_strlen(str_expand);
+	free(str_base);
+	free(str_expand);
+	return (input);
+}
+
+char	*expand_heredoc(char *input, t_env *env)
+{
+	int		i;
+	int		j;
+	
 	i = 0;
+	j = 1;
 	while (input[i])
 	{
 		if (input[i] == '$')
-		{
-			j = 1;
-			if (input[i + 1] && input[i + 1] == '?')
-			{
-				str_expand = ft_itoa(g_last_return);
-				j += 1;
-			}
-			else
-			{				
-				while (input[j + i]
-				&& (ft_isalnum(input[j + i]) == 0
-					|| ft_isunderscore(input[j + i]) == 0))
-					j++;
-				str_expand = search_var(&env->env_var, &input[i + 1], j);
-			}
-			str_base = ft_substr(input, 0, i);
-			tmp = input;
-			input = ft_strjoin3(str_base, str_expand, input + (j + i));
-			free(tmp);
-			i += ft_strlen(str_expand);
-			free(str_base);
-			free(str_expand);
-		}
+			input = create_expanded_string(env, input, &i, j);
 		else
 			i++;
 	}
 	return (input);
 }
 
-int	here_doc(t_env *env, char *delimiter, int fd)
+char	*execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 {
 	char	*usr_input;
 	void	*old_getc;
-	int		tmp;
-	int		expand;
 
-	tmp = g_last_return;
-	g_last_return = 0;
-	expand = 1;
-	if (fd == -1)
-		return (1);
-	if (ft_strchr(delimiter, '\'') != NULL || ft_strchr(delimiter, '\"') != NULL)
-	{
-		delimiter = remove_quotes_heredoc(delimiter);
-		expand = 0;
-	}
 	signal(SIGINT, sigint_handler);
 	old_getc = rl_getc_function;
 	rl_getc_function = getc;
@@ -114,6 +106,27 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 	}
 	free(usr_input);
 	rl_getc_function = old_getc;
+	return (usr_input);
+}
+
+int	here_doc(t_env *env, char *delimiter, int fd)
+{
+	char	*usr_input;
+	int		tmp;
+	int		expand;
+
+	tmp = g_last_return;
+	g_last_return = 0;
+	expand = 1;
+	if (fd == -1)
+		return (1);
+	if (ft_strchr(delimiter, '\'') != NULL
+		|| ft_strchr(delimiter, '\"') != NULL)
+	{
+		delimiter = remove_quotes_heredoc(delimiter);
+		expand = 0;
+	}
+	usr_input = execute_heredoc(env, delimiter, fd, expand);
 	if (g_last_return)
 		return (1);
 	g_last_return = tmp;
@@ -124,7 +137,6 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 	}
 	return (0);
 }
-
 /*
 int	main(int argc, char **argv, char **envp)
 {
