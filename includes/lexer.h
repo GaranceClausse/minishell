@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 16:10:22 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 11:54:18 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum e_type {
 	REDIR_IN,
 	REDIR_OUT,
 	HERE_DOC,
+	LIMITER,
 	APPEND,
 	PIPE,
 	WORD,

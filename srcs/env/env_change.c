@@ -6,10 +6,9 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:26:44 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 18:04:49 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/02 18:06:12 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "env.h"
 
@@ -37,7 +36,7 @@ int	change_var(t_var_list *dst, char *var)
 	return (1);
 }
 
-int change_var_by_val(t_env *env,t_var_list *dst, char *var, char *val)
+int	change_var_by_val(t_env *env, t_var_list *dst, char *var, char *val)
 {
 	char	*tmp;
 

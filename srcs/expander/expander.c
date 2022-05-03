@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:33:45 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 16:33:10 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:03:38 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	expand_commands(t_list **parser, t_env *env)
 			return (1);
 		remove_empty_tokens(&cmd->word_list);
 		if (remove_quotes(&cmd->word_list) || remove_quotes(&cmd->token_list))
-			return (1);		
+			return (1);
 		cur = cur->next;
 	}
 	remove_empty_cmds(parser);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remover.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 17:03:41 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:02:46 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,11 @@ int	remove_quotes(t_list **list)
 	while (cur)
 	{
 		token = cur->content;
-		if (remove_quotes_from_token(token))
-			return (1);
+		if (token->type != HERE_DOC)
+		{
+			if (remove_quotes_from_token(token))
+				return (1);
+		}
 		cur = cur->next;
 	}
 	return (0);

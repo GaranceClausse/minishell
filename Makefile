@@ -6,7 +6,8 @@ OBJS = $(addprefix srcs/, signal.o main.o\
 		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
 		$(addprefix env/, env.o env_change.o env_search.o)\
 		$(addprefix expander/, expander.o expansion.o remover.o\
-		iss_split.o spliter.o))
+		iss_split.o spliter.o)\
+		$(addprefix redirections/, redir_and_assign.o))
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o \
 	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \

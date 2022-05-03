@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/27 17:00:41 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:01:36 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	search_and_expand(t_cmd	*cmd, t_env *env)
 	while (list)
 	{
 		token = list->content;
-		expand_var(token, env);
+		if (token->type != HERE_DOC)
+			expand_var(token, env);
 		list = list->next;
 	}
 }
