@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 14:25:00 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:32:11 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	expand_var(t_token *token, t_env *env)
 		{
 			j = 1;
 			while (token->content[j + i]
-				&& ft_isalnum(token->content[j + i]) == 1)
+				&& (ft_isalnum(token->content[j + i]) == 0
+					|| ft_isunderscore(token->content[j + i]) == 0))
 				j++;
 			//check output of create_new_token
 			i += create_new_token(token, env, i, j);
