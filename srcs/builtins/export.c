@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 18:04:29 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:55:58 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	print_export(t_var_list *env_var)
 	{		
 		var_name = extract_name(env_list[i]);
 		if (ft_strchr(env_list[i], '=') == 0)
-			ft_printf("export %s\n", var_name);
+			printf("export %s\n", var_name);
 		else
 		{
 			var_value = extract_var_value(env_list[i]);
-			ft_printf("export %s=\"%s\"\n", var_name, var_value);
+			printf("export %s=\"%s\"\n", var_name, var_value);
 			free(var_value);
 		}
 		free(var_name);

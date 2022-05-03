@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:07:30 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 15:49:53 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:55:58 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	print_env(char **args, t_var_list *env_var)
 	{
 		if (ft_strchr(env_var->list[i], '='))
 		{
-			ft_printf("%s\n", env_var->list[i]);
+			printf("%s\n", env_var->list[i]);
 			
 		}
 		i++;

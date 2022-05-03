@@ -49,7 +49,7 @@ int	is_valid_identifier(char *str, char *arg)
 		if ((ft_isalnum(arg[i]) && ft_isdigit(arg[i])
 		&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0)
 		{
-			ft_printf("%s: '%s' : not a valid identifier\n", str, arg);
+			printf("%s: '%s' : not a valid identifier\n", str, arg);
 			return (1);
 		}
 		i++;
