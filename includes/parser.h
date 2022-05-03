@@ -6,12 +6,13 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 11:32:21 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:20:20 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
 # include "libft.h"
 # include "lexer.h"
 # include "signal_handling.h"

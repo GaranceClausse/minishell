@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 16:50:47 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:24:02 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd	*init_cmd(void)
 	cmd->word_list = NULL;
 	cmd->token_list = NULL;
 	cmd->is_in_pipe = 1;
-	cmd->fd_in = 0;
-	cmd->fd_out = 1;
+	cmd->fd_in = -1;
+	cmd->fd_out = -1;
 	return (cmd);
 }
 
@@ -36,9 +36,9 @@ void	delete_cmd(void *cmd_void)
 		ft_lstclear(&cmd->word_list, delete_token);
 	if (cmd->token_list)
 		ft_lstclear(&cmd->token_list, delete_token);
-	if (cmd->fd_in > -1)
+	if (cmd->fd_in > 0)
 		close(cmd->fd_in);
-	if (cmd->fd_out > -1)
+	if (cmd->fd_out > 1)
 		close(cmd->fd_out);
 	free(cmd);
 }
@@ -52,8 +52,7 @@ void	print_token(t_list	**token_list)
 	while (cur)
 	{
 		cur_token = (t_token *)cur->content;
-		printf("type = %d, content = %s \n",
-			cur_token->type, cur_token->content);
+		printf("type = %d, content = %s \n", cur_token->type, cur_token->content);
 		cur = cur->next;
 	}
 }

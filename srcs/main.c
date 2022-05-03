@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 16:33:23 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:29:58 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "minishell.h"
 
 //update last return
-int	exec_parser(t_list **parser, t_env *env)
-{
+int	expand_and_exec_commands(t_list **parser, t_env *env){
 	t_list	*cur;
 	t_cmd	*cmd;
 
@@ -37,7 +36,6 @@ int	exec_parser(t_list **parser, t_env *env)
 	remove_empty_cmds(parser);
 	return (0);
 }
-
 //exit error on error
 //stop traping the signal when not interactive
 static int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
@@ -52,12 +50,11 @@ static int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 		add_history(usr_input);
 		(void)env;
 		feed_lexer(lexer, usr_input);
-		complete_command(lexer, parser);
-		/*if (complete_command(lexer, parser) == VALIDATED)
+		if (complete_command(lexer, parser) == VALIDATED)
 		{
-			exec_parser(parser, env);
+			expand_and_exec_commands(parser, env);
 			print_parser(parser);
-		}*/
+		}
 		delete_parser(parser);
 		usr_input = readline(PS1);
 	}
