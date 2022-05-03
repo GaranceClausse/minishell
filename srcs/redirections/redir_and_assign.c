@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 16:34:21 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:50:36 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "env.h"
 #include "redirection.h"
 
-static int	redir(int *fd_to_change, int new_fd)
+int	redir(int *fd_to_change, int new_fd)
 {
 	if (new_fd == -1)
 		return (1);
@@ -26,7 +26,7 @@ static int	redir(int *fd_to_change, int new_fd)
 
 static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
-	int	fd;
+	(void)env;
 
 	if (token->type == REDIR_IN)
 		return (redir(&(cmd->fd_in),
@@ -34,12 +34,12 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 	if (token->type == REDIR_OUT)
 		return (redir(&(cmd->fd_out),
 				open(token->content, O_CREAT | O_WRONLY | O_TRUNC, 0644)));
-	if (token->type == HERE_DOC)
+	/*if (token->type == HERE_DOC)
 	{
 		fd = open("/tmp", __O_TMPFILE | O_RDWR | O_APPEND);
 		if (here_doc(env, token->content, fd) || redir(&cmd->fd_in, fd))
 			return (1);
-	}
+	}*/
 	return (redir(&(cmd->fd_out),
 			open(token->content, O_CREAT | O_WRONLY | O_APPEND, 0644)));
 }

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 16:31:53 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:50:54 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,3 @@ int	export(char **args, t_env *env)
 	}
 	return (0);
 }
-
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_env	env;
-
-	if (argc != 0)
-	{
-		init_env(&env, 10, envp);
-		export(&argv[1], &env);
-	}
-	return (0);
-}*/

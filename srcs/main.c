@@ -6,23 +6,41 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 18:07:38 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:33:23 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
 #include <readline/history.h>
-#include <signal.h>
-#include <stdio.h>
-#include "parser.h"
-#include "env.h"
 #include "minishell.h"
 
 //update last return
-//exec only when no syntax error
+int	exec_parser(t_list **parser, t_env *env)
+{
+	t_list	*cur;
+	t_cmd	*cmd;
+
+	cur = *parser;
+	while (cur)
+	{
+		cmd = (t_cmd *)cur->content;
+		search_and_expand(cmd, env);
+		if (split_list(&cmd->word_list) || split_list(&cmd->token_list))
+			return (1);
+		remove_empty_tokens(&cmd->word_list);
+		if (remove_quotes(&cmd->word_list) || remove_quotes(&cmd->token_list))
+			return (1);
+		if (redir_and_assign(env, cmd)) // may be done in fork!!
+			return (1);
+		//exec
+		cur = cur->next;
+	}
+	remove_empty_cmds(parser);
+	return (0);
+}
+
 //exit error on error
 //stop traping the signal when not interactive
-int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
+static int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 {
 	char	*usr_input;
 
@@ -32,12 +50,14 @@ int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 	while (usr_input)
 	{
 		add_history(usr_input);
+		(void)env;
 		feed_lexer(lexer, usr_input);
-		if (complete_command(lexer, parser) == VALIDATED)
+		complete_command(lexer, parser);
+		/*if (complete_command(lexer, parser) == VALIDATED)
 		{
-			expand_commands(parser, env);
+			exec_parser(parser, env);
 			print_parser(parser);
-		}
+		}*/
 		delete_parser(parser);
 		usr_input = readline(PS1);
 	}
