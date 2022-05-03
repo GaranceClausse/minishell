@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 15:05:17 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:32:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
+
 # include "libft.h"
-
-
 
 typedef struct s_var_list
 {

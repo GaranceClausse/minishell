@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 16:52:47 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:23:56 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,12 @@
 //					| '|' linebreak command pipeline
 //					| '|' command pipeline
 //                  ;
-// command          : prefix WORD suffix
-//                  | prefix WORD
-//                  | prefix
-//					| WORD
-//                  | WORD suffix
-//                  | suffix
-//					;
-// suffix			: io_redirect suffix
-//					| WORD	      suffix
+// cmmand           : io_redirect 	  cmd_cpl
+//                  | ASSIGNMENT_WORD cmd_cpl
+//                  | WORD		      cmd_cpl
 //					| io_redirect
-//					| WORD
-//					;
-// prefix           : io_redirect prefix
-//					| ASSIGNMENT_WORD prefix
-//					| ASSIGNMENT_WORD
-//					| io_redirect
+//                  | ASSIGNMENT_WORD
+//                  | WORD
 //					;
 // io_redirect      : '<'       WORD
 //                  | '>'       WORD
@@ -108,6 +98,7 @@ int	io_redirect(t_lexer *lexer, t_cmd *cmd)
 
 	redir = pick_token(lexer);
 	if (!redir)
+<<<<<<< HEAD
 		return (ERROR);
 	if (redir->type == NOT_FINISHED)
 		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
@@ -147,6 +138,47 @@ int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
 	cur = pick_token(lexer);
 	if (!cur)
 		return (ERROR);
+=======
+		return (ERROR);
+	if (redir->type == NOT_FINISHED)
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
+	if (redir->type < REDIR_IN || redir->type > APPEND)
+		return (NOT_VALIDATED);
+	redir = get_token(lexer);
+	word = pick_token(lexer);
+	if (!word)
+	{
+		delete_token(redir);
+		return (ERROR);
+	}
+	if (word->type == NOT_FINISHED)
+	{
+		delete_token(redir);
+		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
+	}
+	if (word->type == WORD)
+	{
+		word = get_token(lexer);
+		ft_swap_ptr((void **)&redir->content, (void **)&word->content);
+		delete_token(word);
+		if (add_token(&cmd->token_list, redir))
+			return (ERROR);
+		return (VALIDATED);
+	}
+	delete_token(redir);
+	return (syntax_error(ft_strjoin3("Syntax error near "
+				"unexpected token \'", word->content, "\'\n"), 1));
+}
+
+int	word_or_assign(t_lexer *lexer, t_cmd *cmd)
+{
+	t_token	*cur;
+	t_list	**list;
+
+	cur = pick_token(lexer);
+	if (!cur)
+		return (ERROR);
+>>>>>>> a5b592483f7348e1715922b40ab7646e14269ffd
 	if (cur->type == NOT_FINISHED)
 		return (syntax_error("Syntax error: Unterminated quoted string\n", 0));
 	if (cur->type == ASSIGNMENT)

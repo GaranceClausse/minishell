@@ -6,13 +6,14 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:15:48 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:25:29 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "redirection.h"
 
-static int	redir(int *fd_to_change, int new_fd, char *filename)
+int	redir(int *fd_to_change, int new_fd)
 {
 	if (new_fd == -1)
 	{
@@ -30,7 +31,7 @@ static int	redir(int *fd_to_change, int new_fd, char *filename)
 
 static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
-	int	fd;
+	(void)env;
 
 	if (token->type == REDIR_IN)
 		return (redir(&(cmd->fd_in),
@@ -66,7 +67,6 @@ int	redir_and_assign(t_env *env, t_cmd	*cmd)
 			if (add_var(env, &env->shell_var, token->content))
 				return (1);
 		}
-		printf("fdin = %d, fdout= %d\n", cmd->fd_in, cmd->fd_out);
 		cur = cur->next;
 	}
 	return (0);

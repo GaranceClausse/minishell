@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 16:52:34 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:24:18 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,20 +124,3 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 	}
 	return (0);
 }
-
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_env	env;
-	char	*delimiter;
-	int		fd;
-
-	init_env(&env, 10, envp);
-	delimiter = argv[1];
-	fd = open(argv[2], O_WRONLY | O_TRUNC, 0677);
-	if (argc != 0)
-	{
-		here_doc(&env, delimiter, fd);
-	}
-	return (0);
-}*/

@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:53:22 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 16:49:41 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:20:12 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define BOLD "\e[1;37m"
 # define FIRE 
 # define PS1 COLOR_ORANGE"minishell > "COLOR_RESET
-
 
 # include "expand.h"
 # include "redirection.h"
