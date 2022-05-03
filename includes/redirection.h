@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 10:39:31 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/29 16:02:56 by gclausse         ###   ########.fr       */
+/*   Created: 2022/05/03 10:39:55 by gclausse          #+#    #+#             */
+/*   Updated: 2022/05/03 10:54:55 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
+
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
+
+# include "signal_handling.h"
+# include "builtins.h"
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:35:18 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 13:35:42 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:55:58 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*check_curpath_cdpath(char *curpath, char *directory)
 	if (ret == 1)
 	{
 		clean_path = canonical_conversion(curpath);
-		ft_printf("%s\n", clean_path);
+		printf("%s\n", clean_path);
 		free(clean_path);
 		return (curpath);
 	}
