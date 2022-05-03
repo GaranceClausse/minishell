@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_and_assign.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 12:07:00 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:34:21 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "env.h"
+#include "redirection.h"
 
 static int	redir(int *fd_to_change, int new_fd)
 {
@@ -23,7 +24,7 @@ static int	redir(int *fd_to_change, int new_fd)
 	return (0);
 }
 
-static int	check_and_apply_redir(t_cmd *cmd, t_token *token)
+static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
 	int	fd;
 
@@ -36,7 +37,7 @@ static int	check_and_apply_redir(t_cmd *cmd, t_token *token)
 	if (token->type == HERE_DOC)
 	{
 		fd = open("/tmp", __O_TMPFILE | O_RDWR | O_APPEND);
-		if (here_doc(token->content, fd) || redir(&cmd->fd_in, fd))
+		if (here_doc(env, token->content, fd) || redir(&cmd->fd_in, fd))
 			return (1);
 	}
 	return (redir(&(cmd->fd_out),
@@ -54,7 +55,7 @@ int	redir_and_assign(t_env *env, t_cmd	*cmd)
 		token = (t_token *)cur->content;
 		if (token->type >= REDIR_IN && token->type <= APPEND)
 		{
-			if (check_and_apply_redir(cmd, token))
+			if (check_and_apply_redir(env, cmd, token))
 				return (1);
 		}
 		else if (token->type == ASSIGNMENT)
