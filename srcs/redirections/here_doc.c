@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 16:20:25 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:40:18 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 	return (0);
 }
 
-
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	env;
@@ -140,4 +140,4 @@ int	main(int argc, char **argv, char **envp)
 		here_doc(&env, delimiter, fd);
 	}
 	return (0);
-}
+}*/
