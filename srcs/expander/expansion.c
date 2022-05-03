@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 15:18:18 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 15:50:01 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*search_var(t_var_list *dst, char *var_name, int j)
 
 	i = 0;
 	index = search_in_env(dst, var_name, j - 1);
-	if (j == 1)
-		return (ft_strdup("$"));
-	else if (index == -1)
+	//if (j == 1)
+	//	return (ft_strdup("$"));
+	if (index == -1)
 		return (ft_strdup(""));
 	else
 		return (extract_var_value(dst->list[index]));

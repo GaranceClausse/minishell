@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 15:23:44 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 15:56:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,31 @@ char	*expand_heredoc(char *input, t_env *env)
 	{
 		if (input[i] == '$')
 		{
+			j = 1;
 			if (input[i + 1] && input[i + 1] == '?')
-				str_expand = ft_itoa(g_last_return);
-			else
 			{
-				j = 1;
+				str_expand = ft_itoa(g_last_return);
+				j += 1;
+			}
+			else
+			{				
 				while (input[j + i]
 				&& (ft_isalnum(input[j + i]) == 0
 					|| ft_isunderscore(input[j + i]) == 0))
 					j++;
 				str_expand = search_var(&env->env_var, &input[i + 1], j);
 			}
+			str_base = ft_substr(input, 0, i);
+			tmp = input;
+			input = ft_strjoin3(str_base, str_expand, input + (j + i));
+			free(tmp);
+			i += ft_strlen(str_expand);
 		}
-		i++;
+		else
+			i++;
 	}
-	str_base = ft_substr(input, 0, i);
-	tmp = input;
-	input = ft_strjoin3(str_base, str_expand,
-			input + (j + i));
-	free(tmp);
+	
+	
 	return (input);
 }
 
@@ -87,6 +93,7 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 		return (1);
 	if (ft_strchr(delimiter, '\'') != NULL || ft_strchr(delimiter, '\"') != NULL)
 	{
+		printf("no expand");
 		delimiter = remove_quotes_heredoc(delimiter);
 		expand = 0;
 	}
