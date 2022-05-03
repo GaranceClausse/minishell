@@ -6,14 +6,14 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:25:29 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:31:24 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "redirection.h"
 
-int	redir(int *fd_to_change, int new_fd)
+int	redir(int *fd_to_change, int new_fd, char *filename)
 {
 	if (new_fd == -1)
 	{
@@ -31,7 +31,7 @@ int	redir(int *fd_to_change, int new_fd)
 
 static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
-	(void)env;
+	int	fd;
 
 	if (token->type == REDIR_IN)
 		return (redir(&(cmd->fd_in),
