@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 15:56:56 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:20:25 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ char	*expand_heredoc(char *input, t_env *env)
 			input = ft_strjoin3(str_base, str_expand, input + (j + i));
 			free(tmp);
 			i += ft_strlen(str_expand);
+			free(str_base);
+			free(str_expand);
 		}
 		else
 			i++;
 	}
-	
-	
 	return (input);
 }
 
@@ -93,7 +93,6 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 		return (1);
 	if (ft_strchr(delimiter, '\'') != NULL || ft_strchr(delimiter, '\"') != NULL)
 	{
-		printf("no expand");
 		delimiter = remove_quotes_heredoc(delimiter);
 		expand = 0;
 	}
