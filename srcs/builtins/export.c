@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 10:55:58 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 14:42:59 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**order_list(t_var_list *env_var)
 		while (j < env_var->size && order_env[j])
 		{
 			if (ft_strcmp(order_env[i], order_env[j]) > 0)
-				ft_swap_ptr(&order_env[i], &order_env[j]);
+				ft_swap_ptr((void **)&order_env[i], (void **)&order_env[j]);
 			j++;
 		}
 		i++;
@@ -104,16 +104,3 @@ int	export(char **args, t_env *env)
 	}
 	return (0);
 }
-
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_env	env;
-
-	if (argc != 0)
-	{
-		init_env(&env, 10, envp);
-		export(&argv[1], &env);
-	}
-	return (0);
-}*/

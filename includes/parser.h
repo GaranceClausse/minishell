@@ -6,16 +6,16 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 16:40:57 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 14:31:35 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
 # include "libft.h"
 # include "lexer.h"
 # include "signal_handling.h"
-
 typedef struct s_cmd {
 	t_list	*word_list;
 	t_list	*token_list;

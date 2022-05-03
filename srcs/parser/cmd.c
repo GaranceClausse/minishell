@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 11:24:32 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 14:42:45 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	delete_cmd(void *cmd_void)
 		ft_lstclear(&cmd->token_list, delete_token);
 	if (cmd->fd_in > -1)
 		close(cmd->fd_in);
-	if (comd->fd_out > -1)
+	if (cmd->fd_out > -1)
 		close(cmd->fd_out);
 	free(cmd);
 }

@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 18:03:56 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 17:56:49 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/03 14:42:15 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
+
 # include "libft.h"
-
-
 
 typedef struct s_var_list
 {
@@ -27,7 +26,7 @@ typedef struct s_env
 {
 	int			last_return;
 	t_var_list	shell_var;
-	t_var_list	*env_var;
+	t_var_list	env_var;
 }	t_env;
 
 void	free_env(t_env *env);

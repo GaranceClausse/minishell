@@ -6,14 +6,14 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 12:07:00 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 14:50:15 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "env.h"
 
-static int	redir(int *fd_to_change, int new_fd)
+int	redir(int *fd_to_change, int new_fd)
 {
 	if (new_fd == -1)
 		return (1);
@@ -23,9 +23,9 @@ static int	redir(int *fd_to_change, int new_fd)
 	return (0);
 }
 
-static int	check_and_apply_redir(t_cmd *cmd, t_token *token)
+int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
-	int	fd;
+	(void)env;
 
 	if (token->type == REDIR_IN)
 		return (redir(&(cmd->fd_in),
@@ -33,12 +33,12 @@ static int	check_and_apply_redir(t_cmd *cmd, t_token *token)
 	if (token->type == REDIR_OUT)
 		return (redir(&(cmd->fd_out),
 				open(token->content, O_CREAT | O_WRONLY | O_TRUNC, 0644)));
-	if (token->type == HERE_DOC)
+	/*if (token->type == HERE_DOC)
 	{
 		fd = open("/tmp", __O_TMPFILE | O_RDWR | O_APPEND);
-		if (here_doc(token->content, fd) || redir(&cmd->fd_in, fd))
+		if (here_doc(env, token->content, fd) || redir(&cmd->fd_in, fd))
 			return (1);
-	}
+	}*/
 	return (redir(&(cmd->fd_out),
 			open(token->content, O_CREAT | O_WRONLY | O_APPEND, 0644)));
 }
@@ -54,7 +54,7 @@ int	redir_and_assign(t_env *env, t_cmd	*cmd)
 		token = (t_token *)cur->content;
 		if (token->type >= REDIR_IN && token->type <= APPEND)
 		{
-			if (check_and_apply_redir(cmd, token))
+			if (check_and_apply_redir(env, cmd, token))
 				return (1);
 		}
 		else if (token->type == ASSIGNMENT)
