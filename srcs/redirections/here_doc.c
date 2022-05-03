@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 16:40:18 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:52:34 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "env.h"
 #include "expand.h"
 
-int	g_last_return = 0;
+extern int	g_last_return;
 
 char	*remove_quotes_heredoc(char *delimiter)
 {

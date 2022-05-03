@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/25 11:46:29 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:56:52 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd	*init_cmd(void)
 	cmd->word_list = NULL;
 	cmd->token_list = NULL;
 	cmd->is_in_pipe = 1;
-	cmd->fd_in = 0;
-	cmd->fd_out = 1;
+	cmd->fd_in = -1;
+	cmd->fd_out = -1;
 	return (cmd);
 }
 

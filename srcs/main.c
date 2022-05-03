@@ -6,19 +6,37 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 18:07:38 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:58:27 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <stdio.h>
 #include "parser.h"
-#include "env.h"
 #include "minishell.h"
 
 //update last return
+int	expand_and_exec_commands(t_list **parser, t_env *env)
+{
+	t_list	*cur;
+	t_cmd	*cmd;
+
+	cur = *parser;
+	while (cur)
+	{
+		cmd = (t_cmd *)cur->content;
+		search_and_expand(cmd, env);
+		if (split_list(&cmd->word_list) || split_list(&cmd->token_list))
+			return (1);
+		remove_empty_tokens(&cmd->word_list);
+		if (remove_quotes(&cmd->word_list) || remove_quotes(&cmd->token_list))
+			return (1);
+		if (redir_and_assign(env, cmd))
+			return (1);
+		cur = cur->next;
+	}
+	remove_empty_cmds(parser);
+	return (0);
+}
+
 //exec only when no syntax error
 //exit error on error
 //stop traping the signal when not interactive
@@ -35,7 +53,7 @@ int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 		feed_lexer(lexer, usr_input);
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
-			expand_commands(parser, env);
+			expand_and_exec_commands(parser, env);
 			print_parser(parser);
 		}
 		delete_parser(parser);
