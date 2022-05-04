@@ -7,7 +7,8 @@ OBJS = $(addprefix srcs/, signal.o main.o\
 		$(addprefix env/, env.o env_change.o env_search.o)\
 		$(addprefix expander/, expansion.o remover.o\
 		iss_split.o spliter.o)\
-		$(addprefix redirections/, redir_and_assign.o here_doc.o))
+		$(addprefix redirections/, redir_and_assign.o here_doc.o)\
+		$(addprefix exec/, exec.o get_cmd_info.o handle_builtins.o))
 
 LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o \
 	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \

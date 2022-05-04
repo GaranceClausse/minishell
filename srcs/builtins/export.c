@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 17:23:13 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:52:22 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*exported_var(char *arg)
 	return (var);
 }
 
-int	export(char **args, t_env *env)
+int	export(t_env *env, char **args)
 {
 	int		i;
 	char	*var;

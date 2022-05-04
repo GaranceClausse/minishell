@@ -6,13 +6,13 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:32:03 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 16:46:57 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:51:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	unset(char **args, t_env *env)
+int	unset(t_env *env, char **args)
 {
 	int		i;
 
