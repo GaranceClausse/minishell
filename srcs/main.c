@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 13:58:18 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:19:07 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
 			expand_and_exec_commands(env, parser);
-			print_parser(parser);
+		//	print_parser(parser);
 		}
 		delete_parser(parser);
 		usr_input = readline(PS1);

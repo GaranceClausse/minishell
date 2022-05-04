@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:56 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 13:58:52 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:16:38 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 
 #include "builtins.h"
 #include "parser.h"
+#include <fcntl.h>
+
+
+typedef struct s_combo {
+	t_list	**parser;
+	t_env	*env;
+	t_lexer	*lexer;
+}	t_combo;
+
 
 char	**token_to_wordlist(t_list *token_list);
 int		is_builtin(char *cmd_name);

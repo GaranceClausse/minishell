@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 14:06:37 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:12:34 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,25 @@ int	exec(t_env *env, t_cmd *cmd)
 	execve(wordlist[0], wordlist, env->env_var.list);
 	free_before_exit(env, cmd, wordlist); //handle command not found
 	exit(1);
+}
+
+int	redir_assign_exec(t_env *env, t_cmd *cmd)
+{
+	int	oldin;
+	int	oldout;
+	int	ret;
+
+	if (redir_and_assign(env, cmd))
+	{
+		//free_before_exit()
+		return (1);
+	}
+	oldin = dup(STDIN_FILENO);
+	oldout = dup(STDOUT_FILENO);
+	dup2(cmd->fd_in, STDIN_FILENO); //check?
+	dup2(cmd->fd_out, STDOUT_FILENO);
+	ret = exec(env, cmd);
+	dup2(STDIN_FILENO, oldin);
+	dup2(STDOUT_FILENO, oldout);
+	return (ret);
 }
