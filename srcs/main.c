@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 14:19:07 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:29:12 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 #include "minishell.h"
 
 //update last return
-int	expand_and_exec_commands(t_env *env, t_list **parser)
+int	expand_and_exec_commands(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	t_list	*cur;
 	t_cmd	*cmd;
+	t_combo *combo;
 
+	combo->env = env;
+	combo->lexer = lexer;
+	combo->parser = parser;
 	cur = *parser;
 	while (cur)
 	{
@@ -29,14 +33,14 @@ int	expand_and_exec_commands(t_env *env, t_list **parser)
 		remove_empty_tokens(&cmd->wordlist);
 		if (remove_quotes(&cmd->wordlist) || remove_quotes(&cmd->token_list))
 			return (1);
-		if (redir_and_assign(env, cmd)) // may be done in fork!!
+		if (redir_assign_exec(combo, cmd))
 			return (1);
-		exec(env, cmd);
 		cur = cur->next;
 	}
 	remove_empty_cmds(parser);
 	return (0);
 }
+
 //exit error on error
 //stop traping the signal when not interactive
 static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
@@ -53,7 +57,7 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 		feed_lexer(lexer, usr_input);
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
-			expand_and_exec_commands(env, parser);
+			expand_and_exec_commands(env, parser, lexer);
 		//	print_parser(parser);
 		}
 		delete_parser(parser);

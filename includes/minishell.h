@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:53:22 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 15:15:20 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:29:43 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,5 @@
 # include "expand.h"
 # include "redirection.h"
 # include "exec.h"
-
-typedef struct s_combo {
-	t_list	**parser;
-	t_env	*env;
-	t_lexer	*lexer;
-}	t_combo;
 
 #endif
