@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 14:19:05 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:31:24 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd	*init_cmd(void)
 	cmd->wordlist = NULL;
 	cmd->token_list = NULL;
 	cmd->is_in_pipe = 1;
-	cmd->fd_in = -1;
-	cmd->fd_out = -1;
+	cmd->fd_in = 0;
+	cmd->fd_out = 1;
 	return (cmd);
 }
 

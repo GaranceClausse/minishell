@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 14:00:06 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:57:16 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static int	get_list_len(t_list *list)
-{
-	int	i;
-
-	i = 0;
-	while (list)
-	{
-		list = list->next;
-		i++;
-	}
-	return (i);
-}
 
 static char	**get_paths(t_env *env)
 {
@@ -75,7 +63,7 @@ char	**token_to_wordlist(t_list *token_list)
 	int		i;
 
 	i= 0;
-	wordlist = malloc(sizeof(char *) * (get_list_len(token_list) + 1));
+	wordlist = malloc(sizeof(char *) * (ft_lstlen(token_list) + 1));
 	if (!wordlist)
 		return (NULL);
 	while (token_list)
