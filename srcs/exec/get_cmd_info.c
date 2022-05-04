@@ -6,13 +6,13 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 11:56:41 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:00:06 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	get_list_len(t_list *list)
+static int	get_list_len(t_list *list)
 {
 	int	i;
 
@@ -25,23 +25,71 @@ int	get_list_len(t_list *list)
 	return (i);
 }
 
+static char	**get_paths(t_env *env)
+{
+	char	*path;
+	char	**path_list;
+
+	path = get_value(env, "PATH");
+	if (!path)
+		return (NULL);
+	path_list = ft_split(path, ':');
+	free(path);
+	return (path_list);
+}
+
+char	*get_cmd_name(t_env *env, char *partial_cmd)
+{
+	char	**paths;
+	char	*cmd;
+	int		i;
+
+	i = 0;
+	paths = get_paths(env);
+	if (!paths)
+		return (NULL);
+	while (paths[i])
+	{
+		cmd = ft_strjoin3(paths[i], "/", partial_cmd);
+		if (!cmd)
+		{
+			free_char_tab(paths, 0);
+			return (NULL);
+		}
+		if (!access(cmd, F_OK))
+		{
+			free_char_tab(paths, 0);
+			return (cmd);
+		}
+		free(cmd);
+		i++;
+	}
+	free_char_tab(paths, 0);
+	return (NULL);
+}
+
 char	**token_to_wordlist(t_list *token_list)
 {
 	t_token	*cur;
-	char	**word_list;
+	char	**wordlist;
 	int		i;
 
 	i= 0;
-	word_list = malloc(sizeof(char *) * (get_list_len(token_list) + 1));
-	if (!word_list)
+	wordlist = malloc(sizeof(char *) * (get_list_len(token_list) + 1));
+	if (!wordlist)
 		return (NULL);
 	while (token_list)
 	{
 		cur = (t_token *)token_list->content;
-		word_list[i] = cur->content;
+		wordlist[i] = ft_strdup(cur->content);
+		if (!wordlist[i])
+		{
+			free_char_tab(wordlist, 0);
+			return (NULL);
+		}
 		token_list = token_list->next;
 		i++;
 	}
-	word_list[i] = NULL;
-	return (word_list);
+	wordlist[i] = NULL;
+	return (wordlist);
 }

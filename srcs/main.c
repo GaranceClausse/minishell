@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:29:58 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:58:18 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "minishell.h"
 
 //update last return
-int	expand_and_exec_commands(t_list **parser, t_env *env){
+int	expand_and_exec_commands(t_env *env, t_list **parser)
+{
 	t_list	*cur;
 	t_cmd	*cmd;
 
@@ -23,14 +24,14 @@ int	expand_and_exec_commands(t_list **parser, t_env *env){
 	{
 		cmd = (t_cmd *)cur->content;
 		search_and_expand(cmd, env);
-		if (split_list(&cmd->word_list) || split_list(&cmd->token_list))
+		if (split_list(&cmd->wordlist) || split_list(&cmd->token_list))
 			return (1);
-		remove_empty_tokens(&cmd->word_list);
-		if (remove_quotes(&cmd->word_list) || remove_quotes(&cmd->token_list))
+		remove_empty_tokens(&cmd->wordlist);
+		if (remove_quotes(&cmd->wordlist) || remove_quotes(&cmd->token_list))
 			return (1);
 		if (redir_and_assign(env, cmd)) // may be done in fork!!
 			return (1);
-		//exec
+		exec(env, cmd);
 		cur = cur->next;
 	}
 	remove_empty_cmds(parser);
@@ -38,7 +39,7 @@ int	expand_and_exec_commands(t_list **parser, t_env *env){
 }
 //exit error on error
 //stop traping the signal when not interactive
-static int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
+static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	char	*usr_input;
 
@@ -52,7 +53,7 @@ static int	interactive_shell(t_lexer *lexer, t_list **parser, t_env *env)
 		feed_lexer(lexer, usr_input);
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
-			expand_and_exec_commands(parser, env);
+			expand_and_exec_commands(env, parser);
 			print_parser(parser);
 		}
 		delete_parser(parser);
@@ -85,7 +86,7 @@ int	main(int argc, char	*argv[], char *envp[])
 	ret = 0;
 	if (isatty(STDIN_FILENO))
 		if (argc == 1 || (argc == 2 && !ft_strcmp(argv[1], "-")))
-			ret = interactive_shell(lexer, &parser, &env);
+			ret = interactive_shell(&env, &parser, lexer);
 	//readfile arg 1 ou arg 2 (-)
 	free_lexer(lexer);
 	free_env(&env);

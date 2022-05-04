@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:01:52 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 17:02:41 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:54:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	word_or_assign(t_lexer *lexer, t_cmd *cmd, int is_prefix)
 	if (cur->type == ASSIGNMENT)
 		list = &cmd->token_list;
 	else
-		list = &cmd->word_list;
+		list = &cmd->wordlist;
 	cur = get_token(lexer);
 	if (add_token(list, cur))
 		return (ERROR);

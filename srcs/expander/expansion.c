@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 17:23:25 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:54:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	search_and_expand(t_cmd	*cmd, t_env *env)
 	t_token	*token;
 	t_list	*list;
 
-	list = cmd->word_list;
+	list = cmd->wordlist;
 	while (list)
 	{
 		token = list->content;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:27:00 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/25 11:46:28 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:54:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_parser(t_list	**parser)
 	{
 		cmd = (t_cmd *)list->content;
 		printf("words:\n");
-		print_token(&cmd->word_list);
+		print_token(&cmd->wordlist);
 		printf("tokens:\n");
 		print_token(&cmd->token_list);
 		printf("\n\n\n");

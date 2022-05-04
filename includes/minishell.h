@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:53:22 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:20:12 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:59:27 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 
 # include "expand.h"
 # include "redirection.h"
+# include "exec.h"
 
 #endif

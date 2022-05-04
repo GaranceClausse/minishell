@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 17:20:20 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:54:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "signal_handling.h"
 
 typedef struct s_cmd {
-	t_list	*word_list;
+	t_list	*wordlist;
 	t_list	*token_list;
 	int		is_in_pipe;
 	int		fd_in;

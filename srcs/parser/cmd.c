@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:24:02 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:54:56 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*init_cmd(void)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->word_list = NULL;
+	cmd->wordlist = NULL;
 	cmd->token_list = NULL;
 	cmd->is_in_pipe = 1;
 	cmd->fd_in = -1;
@@ -32,8 +32,8 @@ void	delete_cmd(void *cmd_void)
 	t_cmd	*cmd;
 
 	cmd = (void *)cmd_void;
-	if (cmd->word_list)
-		ft_lstclear(&cmd->word_list, delete_token);
+	if (cmd->wordlist)
+		ft_lstclear(&cmd->wordlist, delete_token);
 	if (cmd->token_list)
 		ft_lstclear(&cmd->token_list, delete_token);
 	if (cmd->fd_in > 0)
