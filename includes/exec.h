@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:56 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 15:26:56 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:08:26 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-#include "builtins.h"
-#include "parser.h"
 #include <fcntl.h>
+#include "builtins.h"
+#include "redirection.h"
 
 typedef struct s_combo {
 	t_list	**parser;
@@ -28,5 +28,6 @@ int		is_builtin(char *cmd_name);
 int		exec_builtin(t_env *env, char **wordlist);
 char	*get_cmd_name(t_env *env, char *partial_cmd);
 int		redir_assign_exec(t_combo *combo, t_cmd *cmd);
+int 	exec_commands(t_env *env, t_list **parser, t_lexer *lexer);
 
 #endif

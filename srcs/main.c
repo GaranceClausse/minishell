@@ -3,43 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 15:29:12 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:09:17 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/history.h>
 #include "minishell.h"
 
-//update last return
-int	expand_and_exec_commands(t_env *env, t_list **parser, t_lexer *lexer)
-{
-	t_list	*cur;
-	t_cmd	*cmd;
-	t_combo *combo;
 
-	combo->env = env;
-	combo->lexer = lexer;
-	combo->parser = parser;
-	cur = *parser;
-	while (cur)
-	{
-		cmd = (t_cmd *)cur->content;
-		search_and_expand(cmd, env);
-		if (split_list(&cmd->wordlist) || split_list(&cmd->token_list))
-			return (1);
-		remove_empty_tokens(&cmd->wordlist);
-		if (remove_quotes(&cmd->wordlist) || remove_quotes(&cmd->token_list))
-			return (1);
-		if (redir_assign_exec(combo, cmd))
-			return (1);
-		cur = cur->next;
-	}
-	remove_empty_cmds(parser);
-	return (0);
-}
 
 //exit error on error
 //stop traping the signal when not interactive
@@ -53,11 +27,11 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 	while (usr_input)
 	{
 		add_history(usr_input);
-		(void)env;
 		feed_lexer(lexer, usr_input);
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
-			expand_and_exec_commands(env, parser, lexer);
+			if (!expand_commands(env, parser))
+				exec_commands(env, parser, lexer);
 		//	print_parser(parser);
 		}
 		delete_parser(parser);

@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_lstlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 15:07:30 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 16:31:53 by vkrajcov         ###   ########.fr       */
+/*   Created: 2022/05/04 15:56:10 by vkrajcov          #+#    #+#             */
+/*   Updated: 2022/05/04 15:59:16 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "libft.h"
 
-int	print_env(t_var_list *env_var, char **args)
+int	ft_lstlen(t_list *list)
 {
-	(void)args;
 	int	i;
 
 	i = 0;
-	if (*args)
+	while (list)
 	{
-		write (2, "env: too many arguments\n", 25);
-		return (1);
-	}
-	while (env_var->list[i])
-	{
-		if (ft_strchr(env_var->list[i], '='))
-		{
-			printf("%s\n", env_var->list[i]);
-			
-		}
+		list = list->next;
 		i++;
 	}
-	return (0);
+	return (i);
 }

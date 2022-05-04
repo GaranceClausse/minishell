@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 17:42:34 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:44:11 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 				| O_WRONLY | O_APPEND, 0644), token->content));
 }
 
-int	redir_and_assign(t_env *env, t_cmd	*cmd)
+int	redir_and_assign(t_env *env, t_cmd	*cmd, t_var_list *list)
 {
 	t_token	*token;
 	t_list	*cur;
+	char	*var;
 
 	cur = cmd->token_list;
 	while (cur)
@@ -65,7 +66,10 @@ int	redir_and_assign(t_env *env, t_cmd	*cmd)
 		}
 		else if (token->type == ASSIGNMENT)
 		{
-			if (add_var(env, &env->shell_var, token->content))
+			var = ft_strdup(token->content);
+			if (!var)
+				return (1);
+			if (add_var(env, list, var))
 				return (1);
 		}
 		cur = cur->next;
