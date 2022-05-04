@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 17:49:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:42:58 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*expand_heredoc(char *input, t_env *env)
 {
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	j = 1;
 	while (input[i])

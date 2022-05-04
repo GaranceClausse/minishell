@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 14:00:06 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:36:36 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**token_to_wordlist(t_list *token_list)
 	char	**wordlist;
 	int		i;
 
-	i= 0;
+	i = 0;
 	wordlist = malloc(sizeof(char *) * (get_list_len(token_list) + 1));
 	if (!wordlist)
 		return (NULL);

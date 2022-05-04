@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 13:54:56 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:39:51 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ void	remove_empty_cmds(t_list **list)
 			free(cur);
 		}
 		else
-			break;
+			break ;
 	}
-
 	cur = *list;
 	while (cur && cur->next)
 	{

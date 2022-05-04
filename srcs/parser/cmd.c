@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 14:19:05 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:37:26 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	print_token(t_list	**token_list)
 	while (cur)
 	{
 		cur_token = (t_token *)cur->content;
-		printf("type = %d, content = %s \n", cur_token->type, cur_token->content);
+		printf("type = %d, content = %s \n", cur_token->type,
+			cur_token->content);
 		cur = cur->next;
 	}
 }

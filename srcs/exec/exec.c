@@ -6,13 +6,13 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 15:26:39 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:34:43 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void free_before_exit(t_combo *combo, char **wordlist)
+void	free_before_exit(t_combo *combo, char **wordlist)
 {
 	free_env(combo->env);
 	delete_parser(combo->parser);

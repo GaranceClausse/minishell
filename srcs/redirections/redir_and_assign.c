@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_and_assign.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:31:24 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:42:34 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 				open(token->content, O_RDONLY | O_TRUNC), token->content));
 	if (token->type == REDIR_OUT)
 		return (redir(&(cmd->fd_out), open(token->content, O_CREAT
-				| O_WRONLY | O_TRUNC, 0644), token->content));
+					| O_WRONLY | O_TRUNC, 0644), token->content));
 	if (token->type == HERE_DOC)
 	{
 		fd = open("/tmp", __O_TMPFILE | O_RDWR | O_TRUNC);
-		return (here_doc(env, token->content, fd) || redir(&cmd->fd_in, fd, NULL));
+		return (here_doc(env, token->content, fd)
+			|| redir(&cmd->fd_in, fd, NULL));
 	}
 	return (redir(&(cmd->fd_out), open(token->content, O_CREAT
-			| O_WRONLY | O_APPEND, 0644), token->content));
+				| O_WRONLY | O_APPEND, 0644), token->content));
 }
 
 int	redir_and_assign(t_env *env, t_cmd	*cmd)
