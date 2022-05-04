@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 16:44:40 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:32:12 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,52 @@ int	redir_assign_exec(t_combo *combo, t_cmd *cmd)
 	return (ret);
 }
 
+//get return
 int exec_commands(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	t_combo combo;
 	t_list	*cur;
 	t_cmd	*cmd;
+	int		pipe_fd[2];
+	pid_t	pid;
 
 	combo.env = env;
 	combo.lexer = lexer;
 	combo.parser = parser;
 	cur = *parser;
+	if (ft_lstlen(*parser))
+	{
+		while (cur && cur->next)
+		{
+			pipe(pipe_fd); //check pipe_fd
+			cmd = (t_cmd *)cur->content;
+			cmd->fd_out = pipe[1];
+			pid = fork(); //stock and check
+			if (!pid)
+			{
+				if (ft_lstlen(cmd->wordlist) && redir_assign_exec(&combo, cmd))
+					return (1);
+					//truc avec assign
+			}
+
+			cur = cur->next;
+			cmd = (t_cmd *)cur->content;
+			cmd->fd_in = pipe[0];
+		}
+		if (cur)
+		{
+			//shall I fork?
+			pid = fork(); //stock and check
+			if (!pid)
+			{
+				if (ft_lstlen(cmd->wordlist) && redir_assign_exec(&combo, cmd))
+					return (1);
+						//truc avec assign
+			}
+		}
+	}
+	->waitpids
+/*
 	while (cur)
 	{
 		cmd = (t_cmd *)cur->content;
@@ -113,6 +149,6 @@ int exec_commands(t_env *env, t_list **parser, t_lexer *lexer)
 				return (1);// check output toussa
 		}
 		cur = cur->next;
-	}
+	}*/
 	return (0);
 }
