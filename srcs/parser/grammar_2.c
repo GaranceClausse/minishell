@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/21 17:30:42 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:36:46 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,17 @@ int	syntax_error(char *err_msg, int is_freable)
 
 int	command(t_lexer *lexer, t_cmd *cmd)
 {
-	int		ret;
+	int	ret_prefix;
+	int	ret_suffix;
 
-	ret = io_redirect(lexer, cmd);
-	if (ret == SYNTAX_ERROR || ret == ERROR)
-		return (ret);
-	if (ret != VALIDATED)
-		ret = word_or_assign(lexer, cmd);
-	if (ret == VALIDATED)
-	{
-		ret = command(lexer, cmd);
-		if (ret == SYNTAX_ERROR || ret == ERROR)
-			return (ret);
+	ret_prefix = (prefix_suffix(lexer, cmd, 1));
+	if (ret_prefix == ERROR || ret_prefix == SYNTAX_ERROR)
+		return (ret_prefix);
+	ret_suffix = (prefix_suffix(lexer, cmd, 0));
+	if (ret_suffix == ERROR || ret_suffix == SYNTAX_ERROR)
+		return (ret_suffix);
+	if (ret_prefix == VALIDATED || ret_suffix == VALIDATED)
 		return (VALIDATED);
-	}
 	return (NOT_VALIDATED);
 }
 
