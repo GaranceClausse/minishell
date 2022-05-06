@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 17:45:04 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:49:09 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	free_before_exit(t_combo *combo, char **wordlist)
 	free_lexer(combo->lexer);
 	if (wordlist)
 		free_char_tab(wordlist, 0);
-	ft_lstclear(&combo->pid_list, free);
 }
 
 int	command_not_found(t_combo *combo, char **wordlist)
@@ -69,6 +68,8 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 			wordlist[0] = cmd_name;
 		}		
 	}
+	dprintf(2, "%s :\n", wordlist[0]);
+	delete_parser(combo->parser);
 	execve(wordlist[0], wordlist, combo->env->env_var.list);
 	perror(wordlist[0]);
 	free_before_exit(combo, wordlist); //handle command not found
@@ -124,21 +125,18 @@ int	shall_i_fork(t_cmd	*cmd)
 
 int fork_and_exec(t_combo *combo, t_cmd *cmd)
 {
-	pid_t	*pid;
+	// pid = malloc(sizeof(pid_t));
+	// if (!pid)
+	// 	return (1);
+	cmd->pid = fork(); //stock and check
 
-	pid = malloc(sizeof(pid_t));
-	if (!pid)
+	if (cmd->pid == -1)
 		return (1);
-	*pid = fork(); //stock and check
-
-	if (add_pid(&combo->pid_list, pid) || *pid == -1)
-		return (wait_and_del_pid(combo->pid_list, 1));
-	if (!(*pid))
+	if (!(cmd->pid))
 		return (exec_or_assign_only(combo, cmd));
 	return (0);
 }
 
-//get return
 int exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 {
 	t_combo combo;
@@ -146,41 +144,57 @@ int exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 	int		pipe_fd[2];
 	int		ret;
 	t_list	*cur;
+	t_cmd	*next;
 
 	combo.env = env;
 	combo.lexer = lexer;
 	combo.parser = &parser;
 	combo.pid_list = NULL;
+	ret = 0;
 	if (ft_lstlen(parser))
 	{
 		cur = parser;
 		while (cur && cur->next)
 		{
 			if (pipe(pipe_fd))
-				return (wait_and_del_pid(combo.pid_list, 1));
+			{
+				wait_all_pids(parser);
+				return (1);
+			}
 			cmd = (t_cmd *)cur->content;
+			next = (t_cmd *)cur->next->content;
 			cmd->fd_out = pipe_fd[1];
+			next->fd_in = pipe_fd[0];
 			if (fork_and_exec(&combo, cmd))
-				return (wait_and_del_pid(combo.pid_list, 1));
-			if (cmd->fd_in)
+			{
+				wait_all_pids(parser);
+				return (1);
+			}
+			if (cmd->fd_in != 0)
+			{
+				dprintf(2,"Papa said I closed %d\n", cmd->fd_in);
 				close(cmd->fd_in);
+			}
 			if (cmd->fd_out != 1)
+			{
+				dprintf(2, "Papa said %d is dead now\n", cmd->fd_out);
 				close(cmd->fd_out);
+			}
 			cur = cur->next;
-			cmd = (t_cmd *)cur->content;
-			cmd->fd_in = pipe_fd[0];
 		}
 		cmd = (t_cmd *)cur->content;
 		if (shall_i_fork(cmd))
-		{
 			ret = fork_and_exec(&combo, cmd);
-			return (wait_and_del_pid(combo.pid_list, ret));
+		else 
+			ret = exec_or_assign_only(&combo, cmd);
+		if (cmd->fd_in != 0)
+		{
+			dprintf(2,"Papa said I closed %d\n", cmd->fd_in);
+			close(cmd->fd_in);
 		}
-		if (exec_or_assign_only(&combo, cmd))
-			return (wait_and_del_pid(combo.pid_list, 1));
-		return (wait_and_del_pid(combo.pid_list, 0));
+		wait_all_pids(parser);
 	}
-	return (0);
+	return (ret);
 }
 
 // --trace-children=yes --track-fds=<yes

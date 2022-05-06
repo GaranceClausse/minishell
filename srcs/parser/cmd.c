@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 17:44:26 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:20:09 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_cmd	*init_cmd(void)
 	cmd->is_in_pipe = 1;
 	cmd->fd_in = 0;
 	cmd->fd_out = 1;
+	cmd->pid = -1;
 	return (cmd);
 }
 
@@ -36,10 +37,16 @@ void	delete_cmd(void *cmd_void)
 		ft_lstclear(&cmd->wordlist, delete_token);
 	if (cmd->token_list)
 		ft_lstclear(&cmd->token_list, delete_token);
-	if (cmd->fd_in > 0)
+	if (cmd->fd_in != 0)
+	{
+		dprintf(2,"I closed %d\n", cmd->fd_in);
 		close(cmd->fd_in);
-	if (cmd->fd_out > 1)
+	}
+	if (cmd->fd_out != 1)
+	{
+		dprintf(2, "%d is dead now\n", cmd->fd_out);
 		close(cmd->fd_out);
+	}
 	free(cmd);
 }
 

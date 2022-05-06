@@ -6,7 +6,7 @@
 /*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 16:09:17 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:45:45 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 			}
 		//	print_parser(parser);
 		}
+		dprintf(2, "main: \n");
 		delete_parser(parser);
 		usr_input = readline(PS1);
 	}

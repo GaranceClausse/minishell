@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_and_assign.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 17:44:11 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:16:45 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	redir(int *fd_to_change, int new_fd, char *filename)
 			write(2, "Heredoc error\n", 14);
 		return (1);
 	}
-	if (*fd_to_change > 1)
+	if (*fd_to_change != 1)
 		close(*fd_to_change);
 	*fd_to_change = new_fd;
 	return (0);
@@ -41,7 +41,7 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 					| O_WRONLY | O_TRUNC, 0644), token->content));
 	if (token->type == HERE_DOC)
 	{
-		fd = open(TMP, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		fd = open(TMP, O_CREAT | O_RDWR | O_TRUNC, 0677);
 		return (here_doc(env, token->content, fd)
 			|| redir(&cmd->fd_in, fd, NULL));
 	}

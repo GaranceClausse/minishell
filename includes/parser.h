@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 14:16:42 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:49:44 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_cmd {
 	int		is_in_pipe;
 	int		fd_in;
 	int		fd_out;
+	int		pid;
 }			t_cmd;
 
 typedef enum e_ret {
