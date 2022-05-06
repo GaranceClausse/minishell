@@ -33,5 +33,6 @@ int 	exec_commands(t_env *env, t_list *parser, t_lexer *lexer);
 int		wait_and_del_pid(t_list *pid_list, int ret);
 void	delete_pidlist(t_list *pid_list);
 int		add_pid(t_list **pid_list, pid_t *pid);
+void	print_pid_list(t_list *pid_list);
 
 #endif

@@ -6,16 +6,18 @@ extern int g_last_return;
 
 void	wait_all_pids(t_list *pid_list)
 {
-	int	*cur;
-	int	wstatus;
+	pid_t	*pid;
+	int		wstatus;
 
 	wstatus = 1;
 	while (pid_list)
 	{
-		cur = (int *)pid_list->content;
+		pid = (pid_t *)pid_list->content;
 		//checker si ca intercepte les signaux
+		if (*pid != -1)
+			waitpid(*pid, &wstatus, 0);
 		//while (WIFSTOPPED(wstatus) || WIFCONTINUED(wstatus))
-		waitpid(*cur, &wstatus, 0);
+		//	waitpid(*cur, &wstatus, WUNTRACED | WCONTINUED);
 		pid_list = pid_list->next;
 	}
 	if (WIFEXITED(wstatus))
@@ -30,28 +32,17 @@ int	add_pid(t_list **pid_list, pid_t *pid)
 
 	new = ft_lstnew((void *)pid);
 	if (!new)
+	{
+		free(pid);
 		return (1);
+	}
 	ft_lstadd_back(pid_list, new);
 	return (0);
-}
-
-void	delete_pidlist(t_list *pid_list)
-{
-	t_list	*cur;
-	t_list	*next;
-
-	cur = pid_list;
-	while (cur)
-	{
-		next = cur->next;
-		free(cur);
-		cur = next;
-	}
 }
 
 int	wait_and_del_pid(t_list *pid_list, int ret)
 {
 	wait_all_pids(pid_list);
-	delete_pidlist(pid_list);
+	ft_lstclear(&pid_list, free);
 	return (ret);
 }

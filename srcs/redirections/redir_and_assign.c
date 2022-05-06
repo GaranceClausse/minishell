@@ -23,7 +23,7 @@ int	redir(int *fd_to_change, int new_fd, char *filename)
 			write(2, "Heredoc error\n", 14);
 		return (1);
 	}
-	if (*fd_to_change != -1)
+	if (*fd_to_change > 1)
 		close(*fd_to_change);
 	*fd_to_change = new_fd;
 	return (0);
