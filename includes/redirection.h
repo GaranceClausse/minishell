@@ -17,6 +17,8 @@
 # include "env.h"
 # include "parser.h"
 
+# define TMP "/tmp/fesjfijse;oe"
+
 int	redir_and_assign(t_env *env, t_cmd	*cmd, t_var_list *list);
 int	here_doc(t_env *env, char *delimiter, int fd);
 

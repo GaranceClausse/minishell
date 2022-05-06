@@ -11,27 +11,36 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "exec.h"
 
-void	exit_builtin(char **args)
+extern int g_last_return;
+
+void	exit_builtin(t_combo *combo, char **args)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
+	write(1, "exit\n", 6);
 	if (*args)
 	{
-		write(2, "exit\n", 6);
 		while (args[0][i])
 		{
-			if (ft_isdigit(args[0][i]) == 0)
+			if (ft_isdigit(args[0][i]) == 1)
 			{
 				write (2, "exit: numeric argument required\n", 32);
+				free_before_exit(combo, args - 1);
 				exit(2);
 			}
 			i++;
 		}
-		if (ft_atoi(args[0]) >= 0 && ft_atoi(args[0]) <= 255)
-			exit(ft_atoi(args[0]));
+		ret = ft_atoi(args[0]);
+		free_before_exit(combo, args - 1);
+		if (ret >= 0 && ret <= 255)
+			exit(ret);
 		else
 			exit(129);
 	}
+	free_before_exit(combo, args - 1);
+	exit(g_last_return);
 }

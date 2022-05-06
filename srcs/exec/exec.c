@@ -12,6 +12,7 @@
 
 #include "exec.h"
 
+extern int	g_last_return;
 void	free_before_exit(t_combo *combo, char **wordlist)
 {
 	free_env(combo->env);
@@ -27,7 +28,6 @@ int	command_not_found(t_combo *combo, char **wordlist)
 	char	*msg;
 
 	msg = ft_strjoin(wordlist[0], " : command not found\n");
-	(void)combo;
 	free_before_exit(combo, wordlist);
 	if (!msg)
 		return (1);
@@ -42,13 +42,15 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 	char	**wordlist;
 	char	*cmd_name;
 	int		ret;
+	int		is_in_pipe;
 
 	wordlist = token_to_wordlist(cmd->wordlist);
+	is_in_pipe = cmd->is_in_pipe;
 	if (!wordlist) //you not freiing
 		return (1);
 	if (is_builtin(wordlist[0]))
 	{
-		ret = exec_builtin(combo->env, wordlist);	
+		ret = exec_builtin(combo, wordlist);	
 		if (cmd->is_in_pipe)
 		{
 			free_before_exit(combo, wordlist);
@@ -60,14 +62,18 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 	if (wordlist[0][0] != '/')
 	{
 		cmd_name = get_cmd_name(combo->env, wordlist[0]);
-		if (!cmd_name)
-			exit(command_not_found(combo, wordlist));
-		free(wordlist[0]);
-		wordlist[0] = cmd_name;
+		if (cmd_name)
+		{
+			//exit(command_not_found(combo, wordlist));
+			free(wordlist[0]);
+			wordlist[0] = cmd_name;
+		}		
 	}
 	execve(wordlist[0], wordlist, combo->env->env_var.list);
 	perror(wordlist[0]);
 	free_before_exit(combo, wordlist); //handle command not found
+	if (errno == 2)
+		exit(127);
 	exit(1);
 }
 

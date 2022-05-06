@@ -41,7 +41,7 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 					| O_WRONLY | O_TRUNC, 0644), token->content));
 	if (token->type == HERE_DOC)
 	{
-		fd = open("/tmp", __O_TMPFILE | O_RDWR | O_TRUNC);
+		fd = open(TMP, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		return (here_doc(env, token->content, fd)
 			|| redir(&cmd->fd_in, fd, NULL));
 	}

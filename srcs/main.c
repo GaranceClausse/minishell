@@ -31,7 +31,9 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
 			if (!expand_commands(env, parser))
+			{
 				exec_commands(env, *parser, lexer);
+			}
 		//	print_parser(parser);
 		}
 		delete_parser(parser);

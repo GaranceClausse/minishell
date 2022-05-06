@@ -26,7 +26,7 @@ typedef struct s_combo {
 
 char	**token_to_wordlist(t_list *token_list);
 int		is_builtin(char *cmd_name);
-int		exec_builtin(t_env *env, char **wordlist);
+int		exec_builtin(t_combo *combo, char **wordlist);
 char	*get_cmd_name(t_env *env, char *partial_cmd);
 int		redir_assign_exec(t_combo *combo, t_cmd *cmd);
 int 	exec_commands(t_env *env, t_list *parser, t_lexer *lexer);
@@ -34,5 +34,6 @@ int		wait_and_del_pid(t_list *pid_list, int ret);
 void	delete_pidlist(t_list *pid_list);
 int		add_pid(t_list **pid_list, pid_t *pid);
 void	print_pid_list(t_list *pid_list);
+void	free_before_exit(t_combo *combo, char **wordlist);
 
 #endif

@@ -14,6 +14,10 @@
 # define BUILTINS_H
 
 #include "env.h"
+#include "exec.h"
+
+struct s_combo;
+typedef	struct s_combo t_combo;
 
 int		echo(char **args);
 int		pwd(char **args);
@@ -24,7 +28,7 @@ char	*get_curpath_from_cdpath(t_env *env, char *directory);
 int		check_folder_exists(char *curpath, char *directory);
 char	*canonical_conversion(char	*curpath);
 int		cd(t_env *env, char	**args);
-void	exit_builtin(char **args);
+void	exit_builtin(t_combo *combo, char **args);
 int		print_export(t_var_list *env_var);
 
 #endif

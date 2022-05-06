@@ -22,21 +22,21 @@ int	is_builtin(char *cmd_name)
 	return (0);
 }
 
-int	exec_builtin(t_env *env, char **wordlist)
+int	exec_builtin(t_combo *combo, char **wordlist)
 {
 	if (!ft_strcmp(wordlist[0], "echo"))
 		return (echo(&wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "cd"))
-		return (cd(env, &wordlist[1]));
+		return (cd(combo->env, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "env"))
-		return (print_env(&env->env_var, &wordlist[1]));
+		return (print_env(&combo->env->env_var, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "pwd"))
 		return (pwd(&wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "export"))
-		return (export(env, &wordlist[1]));
+		return (export(combo->env, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "unset"))
-		return (unset(env, &wordlist[1]));
+		return (unset(combo->env, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "exit"))
-		exit_builtin(&wordlist[1]);
+		exit_builtin(combo, &wordlist[1]);
 	return (0);
 }
