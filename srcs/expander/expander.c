@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 16:04:13 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 16:09:22 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 19:27:36 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	expand_commands(t_env *env, t_list **parser)
 {
 	t_list	*cur;
 	t_cmd	*cmd;
+
 	cur = *parser;
 	while (cur)
 	{

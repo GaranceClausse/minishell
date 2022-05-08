@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:39:48 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 15:01:56 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:11:06 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ int	add_token_to_command(t_list **list, char **contents)
 	t_list	*next;
 	t_list	*cur;
 	t_token	*token;
-	t_type	token_type;
 	int		i;
 
 	cur = *list;
 	next = cur->next;
 	token = (t_token *)cur->content;
-	token_type = token->type;
 	i = 0;
 	if (contents[i])
 	{
@@ -52,16 +50,13 @@ int	add_token_to_command(t_list **list, char **contents)
 	}
 	while (contents[i])
 	{
-		if (add_token_next(&cur, token_type, contents[i]))
-		{
-			cur->next = next;
-			return (i);
-		}
+		if (add_token_next(&cur, token->type, contents[i]))
+			break ;
 		cur = cur->next;
 		i++;
 	}
 	cur->next = next;
-	return (0);
+	return (i != 0 && content[i] != 0);
 }
 
 int	split_list(t_list **list)

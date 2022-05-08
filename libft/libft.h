@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 15:56:39 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 21:41:52 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/wait.h>
-
 
 typedef struct s_list
 {
@@ -79,7 +78,6 @@ void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
 char	**ft_split(char const *str, char c);
-int		ft_printf(const char *str, ...);
-int	ft_lstlen(t_list *list);
+int		ft_lstlen(t_list *list);
 
 #endif

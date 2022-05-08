@@ -6,11 +6,25 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 18:19:20 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 21:16:23 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+void	close_fds(int fd_in, int fd_out)
+{
+	if (fd_in != 0)
+	{
+		dprintf(2, "I closed %d\n", cmd->fd_in);
+		close(fd_in);
+	}
+	if (fd_out != 1)
+	{
+		dprintf(2, "%d is dead now\n", cmd->fd_out);
+		close(fd_out);
+	}
+}
 
 t_cmd	*init_cmd(void)
 {
@@ -37,16 +51,7 @@ void	delete_cmd(void *cmd_void)
 		ft_lstclear(&cmd->wordlist, delete_token);
 	if (cmd->token_list)
 		ft_lstclear(&cmd->token_list, delete_token);
-	if (cmd->fd_in != 0)
-	{
-		dprintf(2, "I closed %d\n", cmd->fd_in);
-		close(cmd->fd_in);
-	}
-	if (cmd->fd_out != 1)
-	{
-		dprintf(2, "%d is dead now\n", cmd->fd_out);
-		close(cmd->fd_out);
-	}
+	close_fds(cmd->fd_in, cmd->fd_out);
 	free(cmd);
 }
 

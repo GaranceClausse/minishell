@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   is_what_kind.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
-/*   Updated: 2021/11/23 14:26:17 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 21:41:15 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +29,6 @@ int	ft_isdigit(int c)
 		return (1);
 }
 
-
 int	ft_isunderscore(int c)
 {
 	if (c == '_')
@@ -47,7 +45,7 @@ int	is_valid_identifier(char *str, char *arg)
 	while (arg[i] && arg[i] != '=')
 	{
 		if ((ft_isalnum(arg[i]) && ft_isdigit(arg[i])
-		&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0)
+				&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0)
 		{
 			printf("%s: '%s' : not a valid identifier\n", str, arg);
 			return (1);

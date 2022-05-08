@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iss_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:20:03 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 14:50:34 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 21:53:44 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,37 +50,42 @@ static int	add_word(char **tab, int i, char *word)
 	return (1);
 }
 
+static int	check_s_and_add(t_split *data, char **s, char *iss, int *i)
+{
+	if (*s[*i] == '\'' && !data.is_d_quotes)
+		data.is_s_quote = data.is_s_quotes;
+	else if (*s[*i] == '"' && !data.is_s_quote)
+		data.is_d_quote = !data.is_d_quote;
+	else if (ft_is_in_set(*s[*i], iss) && !data.is_d_quote && !data.is_s_quote)
+	{
+		if (!add_word(split, data.count_word++, ft_substr(*s, 0, *i)))
+			return (1);
+		while (ft_is_in_set(*s[*i], iss))
+			(*i)++;
+		*s += (*i);
+		*i = -1;
+	}
+	return (0);
+}
+
 static char	**spliter(char **split, const char *s, char *iss)
 {
-	int	i;
-	int	count_word;
-	int	is_d_quote;
-	int	is_s_quote;
+	int		i;
+	t_split	data;
 
 	i = 0;
-	count_word = 0;
-	is_d_quote = 0;
-	is_s_quote = 0;
+	data.count_word = 0;
+	data.is_s_quotes = 0;
+	data.is_d_quote = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'' && !is_d_quote)
-			is_s_quote = !is_s_quote;
-		else if (s[i] == '"' && !is_s_quote)
-			is_d_quote = !is_d_quote;
-		else if (ft_is_in_set(s[i], iss) && !is_d_quote && !is_s_quote)
-		{
-			if (!add_word(split, count_word++, ft_substr(s, 0, i)))
-				return (NULL);
-			while (ft_is_in_set(s[i], iss))
-				i++;
-			s += i;
-			i = -1;
-		}
+		if (check_s_and_add(&data, &s, iss, &i))
+			return (NULL);
 		i++;
 	}
-	if (i && !add_word(split, count_word++, ft_substr(s, 0, i)))
+	if (i && !add_word(split, data.count_word++, ft_substr(s, 0, i)))
 		return (NULL);
-	split[count_word] = NULL;
+	split[data.count_word] = NULL;
 	return (split);
 }
 

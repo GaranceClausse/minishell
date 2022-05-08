@@ -6,17 +6,15 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 18:51:59 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 21:44:20 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/history.h>
 #include "minishell.h"
 
-int g_last_return = 0;
+int	g_last_return = 0;
 
-//exit error on error
-//stop traping the signal when not interactive
 static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	char	*usr_input;
@@ -31,11 +29,12 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 		if (complete_command(lexer, parser) == VALIDATED)
 		{
 			if (!expand_commands(env, parser))
-			{
-				exec_commands(env, *parser, lexer);
-			}
-		//	print_parser(parser);
+				g_last_return = exec_commands(env, *parser, lexer);
+			else
+				g_last_return = 1;
 		}
+		else
+			g_last_return = 1;
 		dprintf(2, "main: \n");
 		delete_parser(parser);
 		usr_input = readline(PS1);

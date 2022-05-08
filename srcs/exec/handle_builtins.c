@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:36:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 17:36:20 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 21:39:18 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_builtin(char *cmd_name)
 	return (0);
 }
 
-int	exec_builtin(t_combo *combo, char **wordlist)
+static int	exec_builtin(t_combo *combo, char **wordlist)
 {
 	if (!ft_strcmp(wordlist[0], "echo"))
 		return (echo(&wordlist[1]));
@@ -39,4 +39,19 @@ int	exec_builtin(t_combo *combo, char **wordlist)
 	if (!ft_strcmp(wordlist[0], "exit"))
 		exit_builtin(combo, &wordlist[1]);
 	return (0);
+}
+
+int	handle_builtins(t_combo *combo, t_cmd *cmd, char **wordlist)
+{
+	int	ret;
+
+	ret = exec_builtin(combo, wordlist);
+	if (cmd->is_in_pipe)
+	{
+		free_before_exit(combo, wordlist);
+		exit(ret);
+	}
+	free_char_tab(wordlist, 0);
+	//unset all vars 
+	return (ret);
 }

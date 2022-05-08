@@ -3,86 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   remover.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 17:39:51 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 19:14:06 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
-
-void	remove_empty_tokens(t_list **list)
-{
-	t_list	*cur;
-	t_list	*next;
-	t_token	*token;
-
-	while (*list)
-	{
-		token = (t_token *)(*list)->content;
-		if (!ft_strcmp(token->content, ""))
-		{
-			cur = (*list);
-			*list = (*list)->next;
-			delete_token(token);
-			free(cur);
-		}
-		else
-			break ;
-	}
-	cur = *list;
-	while (cur && cur->next)
-	{
-		token = (t_token *)cur->next->content;
-		while (cur->next && !ft_strcmp(token->content, ""))
-		{
-			next = cur->next;
-			cur->next = cur->next->next;
-			delete_token(token);
-			free(next);
-			if (cur->next)
-				token = (t_token *)cur->next->content;
-		}
-		cur = cur->next;
-	}
-}
-
-void	remove_empty_cmds(t_list **list)
-{
-	t_list	*cur;
-	t_list	*next;
-	t_cmd	*cmd;
-
-	while (*list)
-	{
-		cmd = (t_cmd *)(*list)->content;
-		if (!cmd->token_list && !cmd->wordlist)
-		{
-			cur = (*list);
-			*list = (*list)->next;
-			free(cmd);
-			free(cur);
-		}
-		else
-			break ;
-	}
-	cur = *list;
-	while (cur && cur->next)
-	{
-		cmd = (t_cmd *)cur->next->content;
-		while (cur->next && !cmd->token_list && !cmd->wordlist)
-		{
-			next = cur->next;
-			cur->next = cur->next->next;
-			free(cmd);
-			free(next);
-			if (cur->next)
-				cmd = (t_cmd *)cur->next->content;
-		}
-		cur = cur->next;
-	}
-}
 
 void	delete_quotes_token(t_token *token, int i)
 {

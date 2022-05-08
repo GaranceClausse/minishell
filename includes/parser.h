@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 11:16:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:16:47 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 21:16:36 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum e_ret {
 
 void	delete_parser(t_list **parser);
 int		add_cmd(t_list **parser, t_cmd *cmd);
+void	close_fds(int fd_in, int fd_out);
 void	delete_cmd(void *cmd);
 int		add_token(t_list **token_list, t_token *token);
 void	print_parser(t_list	**parser);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:07:20 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 16:08:32 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 21:48:27 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include "parser.h"
 # include "env.h"
+
+typedef struct	s_split
+{
+	int	count_word;
+	int	is_s_quote;
+	int	is_d_quote;
+}	t_split;
 
 char	**iss_split(const char *str, char *iss);
 int		split_list(t_list **list);

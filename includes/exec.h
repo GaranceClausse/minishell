@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:56 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:16:28 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 21:25:50 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ typedef struct s_combo {
 
 char	**token_to_wordlist(t_list *token_list);
 int		is_builtin(char *cmd_name);
-int		exec_builtin(t_combo *combo, char **wordlist);
-char	*get_cmd_name(t_env *env, char *partial_cmd);
+int		handle_builtins(t_combo *combo, t_cmd *cmd, char **wordlist);
+int		get_cmd_name(t_env *env, char **partial_cmd);
 int		redir_assign_exec(t_combo *combo, t_cmd *cmd);
 int		exec_commands(t_env *env, t_list *parser, t_lexer *lexer);
-int		wait_all_pids(t_list *parser);
+char	**get_wordlist(t_combo *combo, t_cmd *cmd);
+int		wait_all_pids(t_list *parser, int ret);
 void	free_before_exit(t_combo *combo, char **wordlist);
+int		fork_and_exec(t_combo *combo, t_cmd *cmd);
+int		shall_i_fork(t_cmd	*cmd);
 
 #endif

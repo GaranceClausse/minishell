@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 17:45:16 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 21:35:20 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
 
 static char	**get_paths(t_env *env)
 {
@@ -26,7 +25,7 @@ static char	**get_paths(t_env *env)
 	return (path_list);
 }
 
-char	*get_cmd_name(t_env *env, char *partial_cmd)
+int	get_cmd_name(t_env *env, char **partial_cmd)
 {
 	char	**paths;
 	char	*cmd;
@@ -38,22 +37,21 @@ char	*get_cmd_name(t_env *env, char *partial_cmd)
 		return (NULL);
 	while (paths[i])
 	{
-		cmd = ft_strjoin3(paths[i], "/", partial_cmd);
-		if (!cmd)
+		cmd = ft_strjoin3(paths[i], "/", *partial_cmd);
+		if (!cmd || !access(cmd, F_OK))
 		{
-			free_char_tab(paths, 0);
-			return (NULL);
-		}
-		if (!access(cmd, F_OK))
-		{
-			free_char_tab(paths, 0);
-			return (cmd);
+			free_char_tab(path, 0);
+			if (cmd)
+				return (1);
+			free(*partial_cmd);
+			*partial_cmd = cmd;
+			return (0);
 		}
 		free(cmd);
 		i++;
 	}
 	free_char_tab(paths, 0);
-	return (NULL);
+	return (0);
 }
 
 char	**token_to_wordlist(t_list *token_list)
@@ -62,7 +60,7 @@ char	**token_to_wordlist(t_list *token_list)
 	char	**wordlist;
 	int		i;
 
-	i= 0;
+	i = 0;
 	wordlist = malloc(sizeof(char *) * (ft_lstlen(token_list) + 1));
 	if (!wordlist)
 		return (NULL);
@@ -79,5 +77,22 @@ char	**token_to_wordlist(t_list *token_list)
 		i++;
 	}
 	wordlist[i] = NULL;
+	return (wordlist);
+}
+
+char	**get_wordlist(t_combo *combo, t_cmd *cmd)
+{
+	char	**wordlist;
+
+	wordlist = token_to_wordlist(cmd->wordlist);
+	if (!wordlist)
+	{
+		if (cmd->is_in_pipe)
+		{
+			free_before_exit(combo, 0);
+			exit(1);
+		}
+		return (NULL);
+	}
 	return (wordlist);
 }
