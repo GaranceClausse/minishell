@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 14:27:24 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 18:17:43 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
 
 # include <errno.h>
 # include <unistd.h>

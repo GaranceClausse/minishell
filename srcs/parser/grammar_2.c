@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 17:36:46 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 18:48:17 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,38 @@ int	command(t_lexer *lexer, t_cmd *cmd)
 	return (NOT_VALIDATED);
 }
 
+static int	check_command(t_lexer *lexer, t_list **parser,
+	int is_complete_command)
+{
+	int		ret;
+	t_cmd	*cmd;
+	t_token	*cur;
+
+	cmd = init_cmd();
+	if (!cmd)
+		return (ERROR);
+	ret = command(lexer, cmd);
+	if (ret != VALIDATED)
+	{
+		delete_cmd(cmd);
+		cur = pick_token(lexer);
+		if (!cur)
+			return (ERROR);
+		if (!is_complete_command
+			|| (ret == NOT_VALIDATED && pick_token(lexer)->type != NLINE))
+			return (syntax_error(ft_strjoin3("Syntax error near unexpected"
+						"token \'", cur->content, "\'\n"), 1));
+		return (ret);
+	}
+	if (add_cmd(parser, cmd))
+		return (ERROR);
+	return (ret);
+}
+
 int	pipeline(t_lexer *lexer, t_list **parser)
 {
 	t_token	*cur;
 	int		ret;
-	t_cmd	*cmd;
 
 	cur = pick_token(lexer);
 	if (!cur)
@@ -55,21 +82,7 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	ret = linebreak(lexer, 0);
 	if (ret == ERROR || ret == SYNTAX_ERROR)
 		return (ret);
-	cmd = init_cmd();
-	if (!cmd)
-		return (ERROR);
-	ret = command(lexer, cmd);
-	if (ret != VALIDATED)
-	{	
-		delete_cmd(cmd);
-		if (ret == ERROR || ret == SYNTAX_ERROR)
-			return (ret);
-		cur = pick_token(lexer);
-		return (syntax_error(ft_strjoin3("Syntax error near unexpected"
-					"token \'", cur->content, "\'\n"), 1));
-	}
-	if (add_cmd(parser, cmd))
-		return (ERROR);
+	ret = check_command(lexer, parser, 0);
 	ret = linebreak(lexer, 1);
 	if (ret != NOT_VALIDATED)
 		return (ret);
@@ -82,22 +95,10 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 int	complete_command(t_lexer *lexer, t_list **parser)
 {
 	int		ret;
-	t_cmd	*cmd;
 
-	cmd = init_cmd();
-	if (!cmd)
-		return (ERROR);
-	ret = command(lexer, cmd);
+	ret = check_command(lexer, parser, 1);
 	if (ret != VALIDATED)
-	{
-		delete_cmd(cmd);
-		if (ret == NOT_VALIDATED && pick_token(lexer)->type != NLINE)
-			return (syntax_error(ft_strjoin3("Syntax error near unexpected"
-						"token \'", pick_token(lexer)->content, "\'\n"), 1));
 		return (ret);
-	}
-	if (add_cmd(parser, cmd))
-		return (ERROR);
 	ret = linebreak(lexer, 1);
 	if (ret == ERROR || ret == SYNTAX_ERROR)
 		return (ret);

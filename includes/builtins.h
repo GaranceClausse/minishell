@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:29:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 11:51:16 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 18:15:56 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "env.h"
-#include "exec.h"
+# include "env.h"
+# include "exec.h"
 
-struct s_combo;
-typedef	struct s_combo t_combo;
+struct					s_combo;
+typedef struct s_combo	t_combo;
 
 int		echo(char **args);
 int		pwd(char **args);

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:39:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 15:41:32 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 18:17:32 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef REDIRECTION_H
 # define REDIRECTION_H
