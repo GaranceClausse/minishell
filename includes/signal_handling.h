@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handling.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 11:28:16 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/04/27 16:51:02 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 18:54:01 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <signal.h>
 # include <unistd.h>
 
+extern int	g_last_return;
 void	sigint_handler(int signo);
 
 #endif
