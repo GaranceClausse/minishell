@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cdpath.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:35:18 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/03 10:55:58 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 23:11:49 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*get_curpath_from_cdpath(t_env *env, char *directory)
 		free(ret);
 		return (ft_strdup(directory));
 	}
-	cdpath = ft_split(ret, ':');
+	cdpath = ft_split(ret, ":");
 	free(ret);
 	if (!cdpath)
 		return (NULL);

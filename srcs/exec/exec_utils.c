@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 22:25:23 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 23:15:58 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 	{
 		if (get_cmd_name(combo->env, wordlist))
 			exit(1);
-	}	
+	}
 	delete_parser(combo->parser);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

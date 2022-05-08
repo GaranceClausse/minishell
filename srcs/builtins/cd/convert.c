@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:54:25 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 13:31:38 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/08 23:12:09 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*canonical_conversion(char	*curpath)
 	char	*canon_path;
 	int		i;
 
-	split = ft_split(curpath, '/');
+	split = ft_split(curpath, "/");
 	if (!split)
 		return (NULL);
 	i = 0;

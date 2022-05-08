@@ -6,19 +6,19 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/08 22:22:38 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 23:20:26 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static t_combo	init_combo(t_env *env, t_list *parser, t_lexer *lexer)
+static t_combo	init_combo(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	t_combo	combo;
 
 	combo.env = env;
 	combo.lexer = lexer;
-	combo.parser = &parser;
+	combo.parser = parser;
 	combo.pid_list = NULL;
 	return (combo);
 }
@@ -48,7 +48,7 @@ int	exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 	t_list	*cur;
 	int		ret;
 
-	combo = init_combo(env, parser, lexer);
+	combo = init_combo(env, &parser, lexer);
 	if (!ft_lstlen(parser))
 		return (1);
 	cur = parser;
