@@ -6,15 +6,14 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:39:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:17:32 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:28:04 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIRECTION_H
 # define REDIRECTION_H
 
-# include "env.h"
-# include "parser.h"
+# include "expand.h"
 
 # define TMP "/tmp/fesjfijse;oe"
 

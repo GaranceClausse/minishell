@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 21:16:23 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:13:09 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	close_fds(int fd_in, int fd_out)
 {
 	if (fd_in != 0)
 	{
-		dprintf(2, "I closed %d\n", cmd->fd_in);
+		dprintf(2, "I closed %d\n", fd_in);
 		close(fd_in);
 	}
 	if (fd_out != 1)
 	{
-		dprintf(2, "%d is dead now\n", cmd->fd_out);
+		dprintf(2, "%d is dead now\n", fd_out);
 		close(fd_out);
 	}
 }

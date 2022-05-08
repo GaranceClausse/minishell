@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:39:48 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 22:11:06 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:20:34 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	add_token_to_command(t_list **list, char **contents)
 		i++;
 	}
 	cur->next = next;
-	return (i != 0 && content[i] != 0);
+	return (i != 0 && contents[i] != 0);
 }
 
 int	split_list(t_list **list)

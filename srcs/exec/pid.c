@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/08 21:44:53 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:26:17 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	wait_all_pids(t_list *parser, int ret)
 		if (cmd->pid != -1)
 		{
 			while (WIFSTOPPED(wstatus) || WIFCONTINUED(wstatus))
-				waitpid(*cur, &wstatus, WUNTRACED | WCONTINUED);
+				waitpid(cmd->pid, &wstatus, WUNTRACED | WCONTINUED);
 		}
 		parser = parser->next;
 	}

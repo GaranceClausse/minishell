@@ -6,13 +6,11 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:52:30 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:28:10 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redirection.h"
-#include "env.h"
-#include "expand.h"
 
 char	*remove_quotes_heredoc(char *delimiter)
 {

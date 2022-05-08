@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:48:45 by vkrajcov          #+#    #+#             */
-/*   Updated: 2021/12/02 10:01:45 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:48:32 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-static int	count_words(const char *s, char c)
+static int	count_words(const char *s, char *c)
 {
 	int		cpt;
 
@@ -22,10 +22,10 @@ static int	count_words(const char *s, char c)
 	cpt = 0;
 	while (*s)
 	{
-		if (*s == c)
+		if (*s == *c)
 		{
 			cpt++;
-			while (*s == c)
+			while (*s == *c)
 				s++;
 		}
 		else
@@ -84,16 +84,21 @@ static char	**spliter(char **split, const char *s, char c, size_t len)
 	return (split);
 }
 
-char	**ft_split(char const *str, char c)
+char	**ft_split(char const *str, char *c)
 {
 	char	**split;
 	char	*s;
 
-	s = ft_strtrim(str, &c);
-	split = malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!split || !s)
+	s = ft_strtrim(str, c);
+	if (!s)
 		return (NULL);
-	spliter(split, str, c, ft_strlen(str));
+	split = malloc(sizeof(char *) * (count_words(s, c) + 1));
+	if (!split)
+	{
+		free(s);
+		return (NULL);
+	}
+	spliter(split, str, *c, ft_strlen(str));
 	free(s);
 	return (split);
 }

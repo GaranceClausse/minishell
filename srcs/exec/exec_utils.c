@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 21:36:13 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:25:23 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ void	free_before_exit(t_combo *combo, char **wordlist)
 static int	exec(t_combo *combo, t_cmd *cmd)
 {
 	char	**wordlist;
-	int		ret;
 
 	wordlist = get_wordlist(combo, cmd);
 	if (!wordlist)
 		return (1);
 	if (is_builtin(wordlist[0]))
-		return (handle_builtins);
+		return (handle_builtins(combo, cmd, wordlist));
 	if (wordlist[0][0] != '/')
 	{
-		if (get_cmd_name(combo->env, wordlist[0]))
+		if (get_cmd_name(combo->env, wordlist))
 			exit(1);
 	}	
 	delete_parser(combo->parser);

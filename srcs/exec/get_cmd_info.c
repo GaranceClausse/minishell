@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 21:35:20 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:47:35 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	**get_paths(t_env *env)
 	path = get_value(env, "PATH");
 	if (!path)
 		return (NULL);
-	path_list = ft_split(path, ':');
+	path_list = ft_split(path, ":");
 	free(path);
 	return (path_list);
 }
@@ -34,13 +34,13 @@ int	get_cmd_name(t_env *env, char **partial_cmd)
 	i = 0;
 	paths = get_paths(env);
 	if (!paths)
-		return (NULL);
+		return (1);
 	while (paths[i])
 	{
 		cmd = ft_strjoin3(paths[i], "/", *partial_cmd);
 		if (!cmd || !access(cmd, F_OK))
 		{
-			free_char_tab(path, 0);
+			free_char_tab(paths, 0);
 			if (cmd)
 				return (1);
 			free(*partial_cmd);

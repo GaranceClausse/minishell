@@ -6,11 +6,19 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:20:03 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 21:53:44 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:32:47 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+typedef struct s_split
+{
+	char	**split;
+	int		count_word;
+	int		is_s_quote;
+	int		is_d_quote;
+}	t_split;
 
 static int	count_words(const char *s, char *set)
 {
@@ -52,15 +60,15 @@ static int	add_word(char **tab, int i, char *word)
 
 static int	check_s_and_add(t_split *data, char **s, char *iss, int *i)
 {
-	if (*s[*i] == '\'' && !data.is_d_quotes)
-		data.is_s_quote = data.is_s_quotes;
-	else if (*s[*i] == '"' && !data.is_s_quote)
-		data.is_d_quote = !data.is_d_quote;
-	else if (ft_is_in_set(*s[*i], iss) && !data.is_d_quote && !data.is_s_quote)
+	if ((*s)[*i] == '\'' && !data->is_d_quote)
+		data->is_s_quote = data->is_s_quote;
+	else if ((*s)[*i] == '"' && !data->is_s_quote)
+		data->is_d_quote = !data->is_d_quote;
+	else if (ft_is_in_set((*s)[*i], iss) && !data->is_d_quote && !data->is_s_quote)
 	{
-		if (!add_word(split, data.count_word++, ft_substr(*s, 0, *i)))
+		if (!add_word(data->split, data->count_word++, ft_substr(*s, 0, *i)))
 			return (1);
-		while (ft_is_in_set(*s[*i], iss))
+		while (ft_is_in_set((*s)[*i], iss))
 			(*i)++;
 		*s += (*i);
 		*i = -1;
@@ -68,14 +76,15 @@ static int	check_s_and_add(t_split *data, char **s, char *iss, int *i)
 	return (0);
 }
 
-static char	**spliter(char **split, const char *s, char *iss)
+static char	**spliter(char **split, char *s, char *iss)
 {
 	int		i;
 	t_split	data;
 
 	i = 0;
+	data.split = split;
 	data.count_word = 0;
-	data.is_s_quotes = 0;
+	data.is_s_quote = 0;
 	data.is_d_quote = 0;
 	while (s[i])
 	{

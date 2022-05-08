@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 21:41:52 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:47:41 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	free_char_tab(char **tab, int start);
 void	ft_swap_ptr(void **a, void **b);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
-char	**ft_split(char const *str, char c);
+char	**ft_split(char const *str, char *c);
 int		ft_lstlen(t_list *list);
 
 #endif

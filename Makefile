@@ -27,7 +27,7 @@ debug: LDFLAGS+=$(DBFLAGS)
 debug:	$(NAME)
 
 $(NAME): $(OBJS) $(LIBFTOBJ)
-	$(CC) $(LDFLAGS) $^ -o $@ 
+	$(CC) $^ $(LDFLAGS) -o $@ 
 
 clean: 
 	$(RM) $(OBJS) $(LIBFTOBJ) 

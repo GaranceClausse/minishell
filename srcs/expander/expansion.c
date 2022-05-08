@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 22:10:36 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:15:58 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 char	*search_var(t_var_list *dst, char *var_name, int j)
 {
-	int	i;
 	int	index;
 
-	i = 0;
 	index = search_in_env(dst, var_name, j - 1);
 	if (j == 1)
 		return (ft_strdup("$"));

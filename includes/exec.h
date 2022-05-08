@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:56 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 21:25:50 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:22:59 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int		wait_all_pids(t_list *parser, int ret);
 void	free_before_exit(t_combo *combo, char **wordlist);
 int		fork_and_exec(t_combo *combo, t_cmd *cmd);
 int		shall_i_fork(t_cmd	*cmd);
+int		exec_or_assign_only(t_combo *combo, t_cmd *cmd);
 
 #endif

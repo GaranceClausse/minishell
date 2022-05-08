@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 18:48:17 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/08 22:15:26 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 int	complete_command(t_lexer *lexer, t_list **parser)
 {
 	int		ret;
+	t_cmd	*cmd;
 
 	ret = check_command(lexer, parser, 1);
 	if (ret != VALIDATED)
@@ -104,6 +105,7 @@ int	complete_command(t_lexer *lexer, t_list **parser)
 		return (ret);
 	if (ret == VALIDATED)
 	{
+		cmd = (t_cmd *)(*parser)->content;
 		cmd->is_in_pipe = 0;
 		return (ret);
 	}
