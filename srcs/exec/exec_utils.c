@@ -6,10 +6,11 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 17:21:10 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:04:59 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <dirent.h>
 #include "exec.h"
 
 void	free_before_exit(t_combo *combo, char **wordlist)
@@ -21,7 +22,17 @@ void	free_before_exit(t_combo *combo, char **wordlist)
 		free_char_tab(wordlist, 0);
 }
 
-// 126 etc...
+static void	command_not_found(t_combo *combo, char **cmd_name)
+{
+	char	*msg;
+
+	write(2, *cmd_name, ft_strlen(*cmd_name));
+	free_before_exit(combo, cmd_name);
+	msg = " : Command not found\n";
+	write (2, msg, ft_strlen(msg));
+	exit(127);
+}
+
 static int	exec(t_combo *combo, t_cmd *cmd)
 {
 	char	**wordlist;
@@ -31,7 +42,7 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 		return (1);
 	if (is_builtin(wordlist[0]))
 		return (handle_builtins(combo, cmd, wordlist));
-	if (wordlist[0][0] != '/')//!ft_is_in_set(wordlist[0][0], "/.\0"))
+	if (ft_strlen(wordlist[0]) && !ft_is_in_set(wordlist[0][0], "/.\0"))
 	{
 		if (get_cmd_name(combo->env, wordlist))
 		{
@@ -43,10 +54,10 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	execve(wordlist[0], wordlist, combo->env->env_var.list);
+	if (errno == 2 || errno == 13)
+		command_not_found(combo, wordlist);
 	perror(wordlist[0]);
 	free_before_exit(combo, wordlist);
-	if (errno == 2 || errno == 13)
-		exit(127);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:11:12 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 13:51:42 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:28:47 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	shall_i_expand(char c, int *s_quote, int *d_quote)
 char	*search_var(t_env *env, char *var_name, int j)
 {
 	int	index;
-
 
 	if (j == 1)
 		return (ft_strdup("$"));

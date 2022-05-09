@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 14:33:35 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:32:30 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*expand_heredoc(char *input, t_env *env)
 	return (input);
 }
 
-static void	execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
+static char	*execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 {
 	char	*usr_input;
 	void	*old_getc;
@@ -100,18 +100,14 @@ static void	execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 		free(usr_input);
 		usr_input = readline(NULL);
 	}
-	if (!usr_input)
-	{
-		printf("unexpected end of file (wanted '%s')\n", delimiter);
-			return ;
-	}
-	free(usr_input);
 	rl_getc_function = old_getc;
+	return (usr_input);
 }
 
 int	here_doc(t_env *env, char *delimiter, int fd)
 {
 	int		expand;
+	char	*usr_input;
 
 	g_last_return = 0;
 	expand = 1;
@@ -123,22 +119,9 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 		delimiter = remove_quotes_heredoc(delimiter);
 		expand = 0;
 	}
-	execute_heredoc(env, delimiter, fd, expand);
+	usr_input = execute_heredoc(env, delimiter, fd, expand);
+	if (!usr_input)
+		printf("unexpected end of file (wanted '%s')\n", delimiter);
+	free(usr_input);
 	return (0);
 }
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_env	env;
-	char	*delimiter;
-	int		fd;
-
-	init_env(&env, 10, envp);
-	delimiter = argv[1];
-	fd = open(argv[2], O_WRONLY | O_TRUNC, 0677);
-	if (argc != 0)
-	{
-		here_doc(&env, delimiter, fd);
-	}
-	return (0);
-}*/

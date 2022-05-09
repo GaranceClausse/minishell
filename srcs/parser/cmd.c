@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 15:41:48 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:27:57 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 void	close_fds(int fd_in, int fd_out)
 {
 	if (fd_in != 0)
-	{
-	//	dprintf(2, "I closed %d\n", fd_in);
 		close(fd_in);
-	}
 	if (fd_out != 1)
-	{
-	//	dprintf(2, "I closed %d\n", fd_out);
 		close(fd_out);
-	}
 }
 
 t_cmd	*init_cmd(void)

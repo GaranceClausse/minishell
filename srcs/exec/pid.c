@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/09 16:22:39 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:30:27 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,7 @@ int	wait_all_pids(t_list *parser, int ret)
 	{
 		cmd = (t_cmd *)parser->content;
 		if (cmd->pid != -1)
-		{
 			waitpid(cmd->pid, &wstatus, 0);
-			/*
-			waitpid(cmd->pid, &wstatus, WUNTRACED | WCONTINUED);
-			while (WIFSTOPPED(wstatus) || WIFCONTINUED(wstatus))
-				waitpid(cmd->pid, &wstatus, WUNTRACED | WCONTINUED);*/
-		}
 		parser = parser->next;
 	}
 	if (ret)

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 17:13:40 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:34:40 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ int	get_cmd_name(t_env *env, char **partial_cmd)
 	while (paths[i])
 	{
 		cmd = ft_strjoin3(paths[i], "/", *partial_cmd);
-		if (!cmd)
+		if (!cmd || !access(cmd, X_OK))
 		{
 			free_char_tab(paths, 0);
-			return (1);
-		}
-		if (!access(cmd, F_OK))
-		{
-			free_char_tab(paths, 0);
+			if (!cmd)
+				return (1);
 			free(*partial_cmd);
 			*partial_cmd = cmd;
 			return (0);
