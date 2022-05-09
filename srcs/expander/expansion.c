@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 22:15:58 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 11:14:07 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
-
-char	*search_var(t_var_list *dst, char *var_name, int j)
-{
-	int	index;
-
-	index = search_in_env(dst, var_name, j - 1);
-	if (j == 1)
-		return (ft_strdup("$"));
-	else if (index == -1)
-		return (ft_strdup(""));
-	else
-		return (extract_var_value(dst->list[index]));
-}
 
 int	create_new_token(t_token *token, t_env *env, int i, int j)
 {
@@ -32,22 +19,7 @@ int	create_new_token(t_token *token, t_env *env, int i, int j)
 	char	*str_base;
 	int		ret;
 
-	if (token->content[i + 1] && token->content[i + 1] == '?')
-	{
-		str_expand = ft_itoa(g_last_return);
-		j++;
-	}
-	else
-	{
-		str_expand = search_var(&env->env_var, &token->content[i + 1], j);
-		if (str_expand && ft_strcmp(str_expand, "") == 0)
-		{
-			free(str_expand);
-			str_expand = search_var(&env->shell_var, &token->content[i + 1], j);
-		}
-		//if (!str_expand)
-		//	return (-1);
-	}
+	str_expand = get_str_expand(env, token, &i, &j);
 	str_base = ft_substr(token->content, 0, i);
 	tmp = token->content;
 	token->content = ft_strjoin3(str_base, str_expand,
@@ -71,10 +43,7 @@ void	expand_var(t_token *token, t_env *env)
 	d_quote = 0;
 	while (token->content[i])
 	{
-		if (token->content[i] == '\"' && s_quote % 2 == 0)
-			d_quote++;
-		else if (token->content[i] == '\'' && d_quote % 2 == 0)
-			s_quote++;
+		shall_i_expand(token->content[i], &s_quote, &d_quote);
 		if (token->content[i] == '$' && (s_quote % 2 == 0))
 		{
 			j = 1;

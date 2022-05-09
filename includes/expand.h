@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:07:20 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 22:16:23 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 11:13:35 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	remove_empty_cmds(t_list **list);
 void	remove_empty_tokens(t_list **list);
 int		remove_quotes(t_list **list);
 char	*search_var(t_var_list *dst, char *var_name, int j);
+void	shall_i_expand(char c, int *s_quote, int *d_quote);
+char	*get_str_expand(t_env *env, t_token *token, int *i, int *j);
 int		expand_commands(t_env *env, t_list **parser);
 
 #endif

@@ -5,7 +5,7 @@ OBJS = $(addprefix srcs/, signal.o main.o\
 	   	$(addprefix parser/, cmd.o parser.o grammar.o grammar_2.o grammar_3.o)\
 		$(addprefix lexer/, lexer.o lexer_utils.o get_token.o get_token_type.o) \
 		$(addprefix env/, env.o env_change.o env_search.o)\
-		$(addprefix expander/, expander.o expansion.o remover.o\
+		$(addprefix expander/, expander.o expansion.o remover.o expansion_utils.o\
 		remove_from_list.o iss_split.o spliter.o)\
 		$(addprefix redirections/, redir_and_assign.o here_doc.o)\
 		$(addprefix exec/, exec_commands.o exec_utils.o get_cmd_info.o handle_builtins.o pid.o))
