@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 22:28:10 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 14:33:35 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*create_expanded_string(t_env *env, char *input, int *i, int j)
 			&& (ft_isalnum(input[j + *i]) == 0
 				|| ft_isunderscore(input[j + *i]) == 0))
 			j++;
-		str_expand = search_var(&env->env_var, &input[*i + 1], j);
+		str_expand = search_var(env, &input[*i + 1], j);
 	}
 	str_base = ft_substr(input, 0, *i);
 	tmp = input;
@@ -79,7 +79,7 @@ char	*expand_heredoc(char *input, t_env *env)
 	return (input);
 }
 
-char	*execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
+static void	execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 {
 	char	*usr_input;
 	void	*old_getc;
@@ -100,18 +100,19 @@ char	*execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 		free(usr_input);
 		usr_input = readline(NULL);
 	}
+	if (!usr_input)
+	{
+		printf("unexpected end of file (wanted '%s')\n", delimiter);
+			return ;
+	}
 	free(usr_input);
 	rl_getc_function = old_getc;
-	return (usr_input);
 }
 
 int	here_doc(t_env *env, char *delimiter, int fd)
 {
-	char	*usr_input;
-	int		tmp;
 	int		expand;
 
-	tmp = g_last_return;
 	g_last_return = 0;
 	expand = 1;
 	if (fd == -1)
@@ -122,15 +123,7 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 		delimiter = remove_quotes_heredoc(delimiter);
 		expand = 0;
 	}
-	usr_input = execute_heredoc(env, delimiter, fd, expand);
-	if (g_last_return)
-		return (1);
-	g_last_return = tmp;
-	if (!usr_input)
-	{
-		printf("unexpected end of file (wanted '%s')\n", delimiter);
-		return (1);
-	}
+	execute_heredoc(env, delimiter, fd, expand);
 	return (0);
 }
 /*

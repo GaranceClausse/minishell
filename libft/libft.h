@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 22:47:41 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 16:13:52 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_is_in_set(int c, char const *set);
 char	**ft_split(char const *str, char *c);
 int		ft_lstlen(t_list *list);
+int		ft_isspace(int c);
 
 #endif

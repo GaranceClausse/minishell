@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 22:47:35 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 14:10:17 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_cmd_name(t_env *env, char **partial_cmd)
 		if (!cmd || !access(cmd, F_OK))
 		{
 			free_char_tab(paths, 0);
-			if (cmd)
+			if (!cmd)
 				return (1);
 			free(*partial_cmd);
 			*partial_cmd = cmd;

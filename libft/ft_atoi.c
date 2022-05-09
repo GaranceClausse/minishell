@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:52:03 by vkrajcov          #+#    #+#             */
-/*   Updated: 2021/12/02 13:33:52 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:08:24 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_atoi(const char *nptr)
 
 	nb = 0;
 	neg = 0;
-	while (ft_isspace(*nptr))
+	while (*nptr && ft_isspace(*nptr))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
 	{
@@ -50,7 +50,7 @@ int	ft_atoi(const char *nptr)
 			neg = 1;
 		nptr++;
 	}
-	while (*nptr && ft_isdigit(*nptr))
+	while (*nptr && ft_isdigit(*nptr) != 1)
 	{
 		if (!neg && check_overflow(nb, *nptr - '0'))
 			return (-1);

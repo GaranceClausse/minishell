@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/08 23:22:36 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 14:20:41 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	wait_all_pids(t_list *parser, int ret)
 	t_cmd	*cmd;
 	int		wstatus;
 
-	wstatus = 1;
+	wstatus = 0;
 	while (parser)
 	{
 		cmd = (t_cmd *)parser->content;

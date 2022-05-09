@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/04 11:52:22 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 13:44:07 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,21 @@ int	print_export(t_var_list *env_var)
 	return (0);
 }
 
-char	*exported_var(char *arg)
+char	*exported_var(t_env *env, char *arg)
 {
 	char	*var_name;
 	char	*var_value;
 	char	*var;
 
 	var_name = extract_name(arg);
-	var_value = extract_var_value(arg);
-	var = ft_strdup(arg);
+	var = delete_var(env, var_name);
+	if (var)
+		var_value = extract_var_value(var);
+	else
+	{
+		var_value = extract_var_value(arg);
+		var = ft_strdup(arg);
+	}
 	if (ft_strchr(arg, '='))
 	{
 		free(var);
@@ -98,7 +104,7 @@ int	export(t_env *env, char **args)
 	{
 		if (is_valid_identifier("export", args[i]) == 1)
 			return (1);
-		var = exported_var(args[i]);
+		var = exported_var(env, args[i]);
 		add_var(env, &env->env_var, var);
 		i++;
 	}

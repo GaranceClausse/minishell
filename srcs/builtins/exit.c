@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:22:10 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:56:39 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 16:11:59 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exit_builtin(t_combo *combo, char **args)
 	}	
 	while (args[0][i])
 	{
-		if (ft_isdigit(args[0][i]) == 1)
+		if (ft_isdigit(args[0][i]) == 1 && ft_isspace(args[0][i]) != 1)
 		{
 			write (2, "exit: numeric argument required\n", 32);
 			free_before_exit(combo, args - 1);

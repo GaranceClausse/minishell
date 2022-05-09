@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 16:04:13 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 19:27:36 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 14:48:28 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "redirection.h"
 #include "expand.h"
 
 int	expand_commands(t_env *env, t_list **parser)
@@ -26,6 +27,8 @@ int	expand_commands(t_env *env, t_list **parser)
 			return (1);
 		remove_empty_tokens(&cmd->wordlist);
 		if (remove_quotes(&cmd->wordlist) || remove_quotes(&cmd->token_list))
+			return (1);
+		if (redir(env, cmd))
 			return (1);
 		cur = cur->next;
 	}

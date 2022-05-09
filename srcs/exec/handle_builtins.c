@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:36:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 21:39:18 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 15:51:37 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ int	handle_builtins(t_combo *combo, t_cmd *cmd, char **wordlist)
 		exit(ret);
 	}
 	free_char_tab(wordlist, 0);
-	//unset all vars 
 	return (ret);
 }

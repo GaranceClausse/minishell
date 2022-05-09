@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 23:15:58 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 15:41:39 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 		return (1);
 	if (is_builtin(wordlist[0]))
 		return (handle_builtins(combo, cmd, wordlist));
-	if (wordlist[0][0] != '/')
+	if (wordlist[0][0] != '/' && wordlist[0][0] != '\0')
 	{
 		if (get_cmd_name(combo->env, wordlist))
+		{
+			free_before_exit(combo, wordlist);
 			exit(1);
+		}
 	}
 	delete_parser(combo->parser);
 	signal(SIGINT, SIG_DFL);
@@ -47,13 +50,13 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 	exit(1);
 }
 
-int	redir_assign_exec(t_combo *combo, t_cmd *cmd)
+int	assign_exec(t_combo *combo, t_cmd *cmd)
 {
 	int	oldin;
 	int	oldout;
 	int	ret;
 
-	if (redir_and_assign(combo->env, cmd, &combo->env->env_var))
+	if (assign(combo->env, cmd, &combo->env->env_var))
 	{
 		if (cmd->is_in_pipe)
 			free_before_exit(combo, NULL);
@@ -72,8 +75,8 @@ int	redir_assign_exec(t_combo *combo, t_cmd *cmd)
 int	exec_or_assign_only(t_combo *combo, t_cmd *cmd)
 {
 	if (ft_lstlen(cmd->wordlist))
-		return (redir_assign_exec(combo, cmd));
+		return (assign_exec(combo, cmd));
 	else
-		return (redir_and_assign(combo->env, cmd, &combo->env->shell_var));
+		return (assign(combo->env, cmd, &combo->env->shell_var));
 	return (0);
 }

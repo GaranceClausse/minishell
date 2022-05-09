@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/08 23:20:26 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 15:42:02 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	exec_pipe(t_combo *combo, t_list *parser, t_list *cur)
 	next->fd_in = pipe_fd[0];
 	if (fork_and_exec(combo, cmd))
 		return (wait_all_pids(parser, 1));
+	//dprintf(2, "Parent:\n");
 	close_fds(cmd->fd_in, cmd->fd_out);
 	return (0);
 }
@@ -64,7 +65,10 @@ int	exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 	else
 		ret = exec_or_assign_only(&combo, cmd);
 	if (cmd->fd_in != 0)
+	{
+		//dprintf(2, "Parent has closed %d\n", cmd->fd_in);
 		close(cmd->fd_in);
+	}
 	return (wait_all_pids(parser, ret));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 21:44:20 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/09 16:12:32 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 		}
 		else
 			g_last_return = 1;
-		dprintf(2, "main: \n");
+		//dprintf(2, "Main:\n");
 		delete_parser(parser);
 		usr_input = readline(PS1);
 	}
 	clear_history();
 	write(1, "exit\n", 5);
-	return (0);
+	return (g_last_return);
 }
 
 int	main(int argc, char	*argv[], char *envp[])
