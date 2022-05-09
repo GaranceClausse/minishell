@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 15:41:39 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:21:10 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 		return (1);
 	if (is_builtin(wordlist[0]))
 		return (handle_builtins(combo, cmd, wordlist));
-	if (wordlist[0][0] != '/' && wordlist[0][0] != '\0')
+	if (wordlist[0][0] != '/')//!ft_is_in_set(wordlist[0][0], "/.\0"))
 	{
 		if (get_cmd_name(combo->env, wordlist))
 		{
@@ -45,7 +45,7 @@ static int	exec(t_combo *combo, t_cmd *cmd)
 	execve(wordlist[0], wordlist, combo->env->env_var.list);
 	perror(wordlist[0]);
 	free_before_exit(combo, wordlist);
-	if (errno == 2)
+	if (errno == 2 || errno == 13)
 		exit(127);
 	exit(1);
 }

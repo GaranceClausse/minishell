@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 11:59:24 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:43:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	go_and_change_var(t_env *env, char *pwd, char *curpath)
 		perror("cd");
 		free(pwd);
 		free(curpath);
-		return (ret);
+		return (1);
 	}
 	ret = change_var_by_val(env, &env->env_var, "OLDPWD", pwd);
 	free(pwd);

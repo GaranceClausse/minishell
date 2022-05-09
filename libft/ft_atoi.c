@@ -6,17 +6,11 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:52:03 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 16:08:24 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:16:35 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_isspace(int c)
-{
-	return (c == '\t' || c == '\n' || c == '\v'
-		|| c == '\f' || c == '\r' || c == ' ');
-}
 
 static int	check_overflow(long nb, int add)
 {

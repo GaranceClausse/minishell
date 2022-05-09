@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 16:12:32 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:25:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 			g_last_return = 1;
 		//dprintf(2, "Main:\n");
 		delete_parser(parser);
-		usr_input = readline(PS1);
+		if (g_last_return == 130)
+			usr_input = readline(NULL);
+		else
+			usr_input = readline(PS1);
 	}
+	free(usr_input);
 	clear_history();
 	write(1, "exit\n", 5);
 	return (g_last_return);

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:20:03 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 09:48:37 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:33:58 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	add_word(char **tab, int i, char *word)
 static int	check_s_and_add(t_split *data, char **s, char *iss, int *i)
 {
 	if ((*s)[*i] == '\'' && !data->is_d_quote)
-		data->is_s_quote = data->is_s_quote;
+		data->is_s_quote = !data->is_s_quote;
 	else if ((*s)[*i] == '"' && !data->is_s_quote)
 		data->is_d_quote = !data->is_d_quote;
 	else if (ft_is_in_set((*s)[*i], iss)
@@ -93,8 +93,11 @@ static char	**spliter(char **split, char *s, char *iss)
 			return (NULL);
 		i++;
 	}
-	if (i && !add_word(split, data.count_word++, ft_substr(s, 0, i)))
-		return (NULL);
+	if (i)
+	{
+		if (!add_word(split, data.count_word++, ft_substr(s, 0, i)))
+			return (NULL);
+	}
 	split[data.count_word] = NULL;
 	return (split);
 }
