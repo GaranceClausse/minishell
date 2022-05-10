@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handling.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 11:28:16 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 18:54:01 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/10 15:47:33 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 
 extern int	g_last_return;
 void	sigint_handler(int signo);
+void	sigint_handler_multiline(int signo);
 
 #endif

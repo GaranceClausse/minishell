@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 17:32:30 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:55:02 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,22 @@ static char	*execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 	char	*usr_input;
 	void	*old_getc;
 
-	signal(SIGINT, sigint_handler);
 	old_getc = rl_getc_function;
 	rl_getc_function = getc;
-	write(1, "here_doc > ", 12);
-	usr_input = readline(NULL);
+	signal(SIGINT, sigint_handler_multiline);
+	usr_input = readline("here_doc > ");
+	signal(SIGINT, SIG_IGN);
 	while (g_last_return != 130 && usr_input
 		&& ft_strcmp(usr_input, delimiter) != 0)
 	{
 		if (expand == 1)
 			usr_input = expand_heredoc(usr_input, env);
-		write(1, "here_doc > ", 12);
 		write(fd, usr_input, ft_strlen(usr_input));
 		write(fd, "\n", 1);
 		free(usr_input);
-		usr_input = readline(NULL);
+		signal(SIGINT, sigint_handler);
+		usr_input = readline("here_doc > ");
+		signal(SIGINT, SIG_IGN);
 	}
 	rl_getc_function = old_getc;
 	return (usr_input);
@@ -120,8 +121,8 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 		expand = 0;
 	}
 	usr_input = execute_heredoc(env, delimiter, fd, expand);
-	if (!usr_input)
-		printf("unexpected end of file (wanted '%s')\n", delimiter);
+	if (!usr_input && g_last_return != 130)
+		printf("\nunexpected end of file (wanted '%s')\n", delimiter); //stderror
 	free(usr_input);
 	return (0);
 }

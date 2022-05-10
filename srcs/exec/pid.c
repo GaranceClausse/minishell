@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/09 17:30:27 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:37:23 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-//checker si ca intercepte les signaux
+static int	print_sig_interrupt(int signum)
+{
+	
+	if (signum == SIGQUIT)
+		write(2, "Quit (core dumped)", 19);
+	write(1, "\n", 1);
+	return (signum + 128);
+}
+
 int	wait_all_pids(t_list *parser, int ret)
 {
 	t_cmd	*cmd;
@@ -33,7 +41,7 @@ int	wait_all_pids(t_list *parser, int ret)
 	if (WIFEXITED(wstatus))
 		return (WEXITSTATUS(wstatus));
 	else if (WIFSIGNALED(wstatus))
-		return (128 + WTERMSIG(wstatus));
+		return (print_sig_interrupt(WTERMSIG(wstatus)));
 	return (EXIT_FAILURE);
 }
 

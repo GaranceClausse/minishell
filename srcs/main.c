@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 17:58:36 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:06:51 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,23 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	char	*usr_input;
 
-	signal(SIGINT, sigint_handler);
+	
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
 	usr_input = readline(COLOR_ORANGE PS1 COLOR_RESET);
+	signal(SIGINT, SIG_IGN);
 	while (usr_input)
 	{
 		add_history(usr_input);
 		feed_lexer(lexer, usr_input);
 		handle_input(env, parser, lexer);
-		if (g_last_return == 130)
-			usr_input = readline(NULL);
-		else
-			usr_input = readline(COLOR_ORANGE PS1 COLOR_RESET);
+		signal(SIGINT, sigint_handler);
+		usr_input = readline(COLOR_ORANGE PS1 COLOR_RESET);
+		signal(SIGINT, SIG_IGN);
 	}
 	free(usr_input);
 	clear_history();
-	write(1, "exit\n", 5);
+	write(2, "exit\n", 5);
 	return (g_last_return);
 }
 

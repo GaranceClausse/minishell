@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 18:52:23 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/10 15:58:34 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,28 @@
 
 #include "parser.h"
 
-int	multiline(t_lexer *lexer, char *delimiter)
+int	multiline(t_lexer *lexer)
 {
 	char	*usr_input;
 	void	*old_getc;
-	int		tmp;
 
-	(void)delimiter;
-	tmp = g_last_return;
-	g_last_return = 0;
-	signal(SIGINT, sigint_handler);
 	old_getc = rl_getc_function;
 	rl_getc_function = getc;
-	write(1, "pipe > ", 8);
-	usr_input = readline(NULL);
-	while (!usr_input && g_last_return != 130)
-		usr_input = readline(NULL);
+	signal(SIGINT, sigint_handler_multiline);
+	usr_input = readline("pipe > ");
+	signal(SIGINT, SIG_IGN);
 	rl_getc_function = old_getc;
-	if (g_last_return)
+	if (g_last_return == 130)
+	{
+		free(usr_input);
 		return (1);
+	}
+	else if (!usr_input && g_last_return != 130)
+	{
+		write(2,"\nunexpected end of file\n", 24); //stderr?
+		return (1);
+	}
 	feed_lexer(lexer, usr_input);
-	g_last_return = tmp;
 	return (0);
 }
 
@@ -79,7 +80,7 @@ int	linebreak(t_lexer *lexer, int is_final)
 		delete_token(get_token(lexer));
 		if (!is_final)
 		{
-			if (multiline(lexer, NULL))
+			if (multiline(lexer))
 				return (ERROR);
 			ret = linebreak(lexer, is_final);
 			if (ret == ERROR || ret == SYNTAX_ERROR)
