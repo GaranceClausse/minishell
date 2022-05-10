@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 16:43:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:07:32 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,17 @@ int	cd(t_env *env, char	**args)
 	pwd = get_value(env, "PWD");
 	curpath = join_pwd_to_path(pwd, curpath);
 	if (!curpath)
+	{
+		free(pwd);
 		return (1);
+	}
 	directory = canonical_conversion(curpath);
 	free(curpath);
 	if (!directory)
+	{
+		free(pwd);
 		return (1);
+	}
 	curpath = directory;
 	return (go_and_change_var(env, pwd, curpath));
 }
