@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:36:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 15:51:37 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:09:46 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	is_builtin(char *cmd_name)
 
 static int	exec_builtin(t_combo *combo, char **wordlist)
 {
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *)(*combo->parser)->content;
 	if (!ft_strcmp(wordlist[0], "echo"))
 		return (echo(&wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "cd"))
@@ -37,7 +40,7 @@ static int	exec_builtin(t_combo *combo, char **wordlist)
 	if (!ft_strcmp(wordlist[0], "unset"))
 		return (unset(combo->env, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "exit"))
-		exit_builtin(combo, &wordlist[1]);
+		exit_builtin(combo, &wordlist[1], cmd->is_in_pipe);
 	return (0);
 }
 

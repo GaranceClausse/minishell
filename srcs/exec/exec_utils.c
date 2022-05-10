@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 10:34:47 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:48:40 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,19 @@ int	assign_exec(t_combo *combo, t_cmd *cmd)
 	if (assign(combo->env, cmd, &combo->env->env_var))
 	{
 		if (cmd->is_in_pipe)
+		{
 			free_before_exit(combo, NULL);
+			exit(1);
+		}
+		return (1);
+	}
+	if (cmd->fd_in == -1 || cmd->fd_out == -1)
+	{
+		if (cmd->is_in_pipe)
+		{
+			free_before_exit(combo, NULL);
+			exit(1);
+		}
 		return (1);
 	}
 	oldin = dup(STDIN_FILENO);

@@ -6,20 +6,21 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:22:10 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 15:05:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:02:27 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "exec.h"
 
-void	exit_builtin(t_combo *combo, char **args)
+void	exit_builtin(t_combo *combo, char **args, int is_in_pipe)
 {
 	int	i;
 	int	ret;
 
 	i = 0;
-	write(2, "exit\n", 6);
+	if (!is_in_pipe)
+		write(2, "exit\n", 6);
 	if (!args[0])
 	{
 		free_before_exit(combo, args - 1);

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:46 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/10 10:17:47 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:50:22 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	close_fds(int fd_in, int fd_out)
 {
-	if (fd_in != 0)
+	if (fd_in != 0 && fd_in != -1)
 		close(fd_in);
-	if (fd_out != 1)
+	if (fd_out != 1 && fd_out != -1)
 		close(fd_out);
 }
 

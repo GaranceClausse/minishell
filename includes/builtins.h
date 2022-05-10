@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:29:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:15:56 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/10 17:02:47 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_curpath_from_cdpath(t_env *env, char *directory);
 int		check_folder_exists(char *curpath, char *directory);
 char	*canonical_conversion(char	*curpath);
 int		cd(t_env *env, char	**args);
-void	exit_builtin(t_combo *combo, char **args);
+void	exit_builtin(t_combo *combo, char **args, int is_in_pipe);
 int		print_export(t_var_list *env_var);
 
 #endif

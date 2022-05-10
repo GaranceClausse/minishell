@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/10 15:37:23 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:45:29 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,23 @@
 
 static int	print_sig_interrupt(int signum)
 {
-	
-	if (signum == SIGQUIT)
-		write(2, "Quit (core dumped)", 19);
-	write(1, "\n", 1);
+	char	*error_msg[7];
+	char	*msg;
+
+	error_msg[SIGHUP - 1] = "Hangup\n";
+	error_msg[SIGINT - 1] = "\n";
+	error_msg[SIGQUIT - 1] = "Quit (core dumped)\n";
+	error_msg[SIGILL - 1] = "Illegal instruction (core dumped)\n";
+	error_msg[SIGTRAP - 1] = "Trace/breakpoint trap (core dumped)\n";
+	error_msg[SIGABRT - 1] = "Aborted (core dumped)\n";
+	error_msg[SIGBUS - 1] = "Bus error (core dumped)\n";
+	if (signum == SIGSEGV)
+		msg = "Segmentation fault (core dumped)\n";
+	else if (signum > SIGBUS)
+		msg = "Signal\n";
+	else
+		msg = error_msg[signum - 1];
+	write(1, msg, ft_strlen(msg));
 	return (signum + 128);
 }
 

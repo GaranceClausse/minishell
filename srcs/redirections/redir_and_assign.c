@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 17:30:58 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:51:42 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 static int	apply_redir(int *fd_to_change, int new_fd, char *filename)
 {
+	if (*fd_to_change != 1 && *fd_to_change != 0 && *fd_to_change != -1)
+		close(*fd_to_change);
+	*fd_to_change = new_fd;
 	if (new_fd == -1)
 	{
 		if (filename)
@@ -23,8 +26,6 @@ static int	apply_redir(int *fd_to_change, int new_fd, char *filename)
 			write(2, "Heredoc error\n", 14);
 		return (1);
 	}
-	if (*fd_to_change != 1 && *fd_to_change != 0)
-		close(*fd_to_change);
 	*fd_to_change = new_fd;
 	return (0);
 }

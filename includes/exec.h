@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:56 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 10:33:33 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:04:21 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ char	**token_to_wordlist(t_list *token_list);
 int		is_builtin(char *cmd_name);
 int		handle_builtins(t_combo *combo, t_cmd *cmd, char **wordlist);
 int		get_cmd_name(t_env *env, char **partial_cmd);
-int		redir_assign_exec(t_combo *combo, t_cmd *cmd);
 int		exec_commands(t_env *env, t_list *parser, t_lexer *lexer);
-int		assign_exec(t_combo *combo, t_cmd *cmd);
 char	**get_wordlist(t_combo *combo, t_cmd *cmd);
 int		wait_all_pids(t_list *parser, int ret);
 void	free_before_exit(t_combo *combo, char **wordlist);

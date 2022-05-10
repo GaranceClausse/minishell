@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/10 15:02:30 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:51:21 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 		ret = fork_and_exec(&combo, cmd);
 	else
 		ret = exec_or_assign_only(&combo, cmd);
-	if (cmd->fd_in != 0)
+	if (cmd->fd_in != 0 && cmd->fd_in != -1)
 		close(cmd->fd_in);
 	return (wait_all_pids(parser, ret));
 }
