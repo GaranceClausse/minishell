@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 13:44:07 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:33:26 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ char	*exported_var(t_env *env, char *arg)
 	char	*var_value;
 	char	*var;
 
+	var_value = NULL;
 	var_name = extract_name(arg);
 	var = delete_var(env, var_name);
 	if (var)
 		var_value = extract_var_value(var);
 	else
-	{
-		var_value = extract_var_value(arg);
 		var = ft_strdup(arg);
-	}
 	if (ft_strchr(arg, '='))
 	{
+		free(var_value);
+		var_value = extract_var_value(arg);
 		free(var);
 		var = ft_strjoin3(var_name, "=", var_value);
 	}

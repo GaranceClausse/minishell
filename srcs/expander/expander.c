@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 16:04:13 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 14:48:28 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:12:42 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	expand_commands(t_env *env, t_list **parser)
 			return (1);
 		cur = cur->next;
 	}
-	remove_empty_cmds(parser);
+//	remove_empty_cmds(parser);
 	return (0);
 }

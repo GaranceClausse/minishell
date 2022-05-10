@@ -6,22 +6,11 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/09 17:41:06 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:34:18 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-static t_combo	init_combo(t_env *env, t_list **parser, t_lexer *lexer)
-{
-	t_combo	combo;
-
-	combo.env = env;
-	combo.lexer = lexer;
-	combo.parser = parser;
-	combo.pid_list = NULL;
-	return (combo);
-}
 
 static int	exec_pipe(t_combo *combo, t_list *parser, t_list *cur)
 {
@@ -66,6 +55,47 @@ int	exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 	if (cmd->fd_in != 0)
 		close(cmd->fd_in);
 	return (wait_all_pids(parser, ret));
+}
+
+static void	launch_exec(t_combo *combo, char **wordlist, char *cmd_name)
+{
+	delete_parser(combo->parser);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	execve(wordlist[0], wordlist, combo->env->env_var.list);
+	if (errno == 2 || errno == 13)
+		command_not_found(combo, wordlist, cmd_name);
+	perror(cmd_name);
+	free(cmd_name);
+	free_before_exit(combo, wordlist);
+}
+
+int	exec(t_combo *combo, t_cmd *cmd)
+{
+	char	**wordlist;
+	char	*cmd_name;
+
+	wordlist = get_wordlist(combo, cmd);
+	if (!wordlist)
+		return (1);
+	if (is_builtin(wordlist[0]))
+		return (handle_builtins(combo, cmd, wordlist));
+	cmd_name = ft_strdup(wordlist[0]);
+	if (!cmd_name)
+	{
+		free_before_exit(combo, wordlist);
+		exit(1);
+	}
+	if (ft_strlen(cmd_name) && !ft_is_in_set(cmd_name[0], "/.\0"))
+	{
+		if (get_cmd_name(combo->env, wordlist))
+		{
+			free_before_exit(combo, wordlist);
+			exit(1);
+		}
+	}
+	launch_exec(combo, wordlist, cmd_name);
+	exit(1);
 }
 
 // --trace-children=yes --track-fds=<yes
