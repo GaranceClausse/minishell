@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 15:13:15 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:22:09 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ void	search_and_expand(t_cmd	*cmd, t_env *env)
 	t_list	*list;
 
 	list = cmd->wordlist;
+	while (list)
+	{
+		token = list->content;
+		if (token->type != HERE_DOC)
+			expand_var(token, env);
+		list = list->next;
+	}
+}
+
+
+void	search_and_expand_redir(t_cmd	*cmd, t_env *env)
+{
+	t_token	*token;
+	t_list	*list;
+
+	list = cmd->token_list;
 	while (list)
 	{
 		token = list->content;

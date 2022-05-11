@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 21:18:10 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:19:48 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	is_valid_identifier(char *str, char *arg)
 	{
 		if (arg[i] == '=' && ft_strcmp("assign", str) == 0)
 			break ;
-		if ((ft_isalnum(arg[i]) && ft_isunderscore(arg[i]) && arg[i] != '=' && arg[i] != '$')
+		if ((ft_isalnum(arg[i]) && ft_isunderscore(arg[i]) && arg[i] != '=' /*&& arg[i] != '$'*/)
 		|| ft_isdigit(arg[0]) == 0 || arg[0] == '=')
 					pbm++;	
 		i++;
