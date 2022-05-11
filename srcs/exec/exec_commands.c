@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/11 12:20:04 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:46:26 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void	launch_exec(t_combo *combo, char **wordlist, char *cmd_name)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	execve(wordlist[0], wordlist, combo->env->env_var.list);
+	close(0);
+	close(1);
 	if (errno == 2 || errno == 13)
 		command_not_found(combo, wordlist, cmd_name);
 	perror(cmd_name);
@@ -101,6 +103,3 @@ int	exec(t_combo *combo, t_cmd *cmd)
 	launch_exec(combo, wordlist, cmd_name);
 	exit(1);
 }
-
-// --trace-children=yes --track-fds=<yes
-// --child-silent-after-fork=<yes|no>

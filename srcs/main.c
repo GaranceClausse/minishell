@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 15:17:22 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:23:37 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,5 @@ int	main(int argc, char	*argv[], char *envp[])
 	free_env(&env);
 	return (ret);
 }
+
+// valgrind --suppressions=readline.supp --track-fds=all --trace-children=yes ./minishell

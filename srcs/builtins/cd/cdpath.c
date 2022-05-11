@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:35:18 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 22:35:54 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 23:34:40 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	check_folder_exists(char *directory, char *cmd_name, int print)
 	DIR		*dir;
 	char	*prompt;
 
+	errno = 0;
 	dir = opendir(directory);
-	closedir(dir);
 	if (errno && errno != ENOENT)
 	{
+		closedir(dir);
 		if (print)
 		{
 			prompt = ft_strjoin("cd: ", cmd_name);
@@ -37,6 +38,7 @@ int	check_folder_exists(char *directory, char *cmd_name, int print)
 		}
 		return (-1);
 	}
+	closedir(dir);
 	return (!errno);
 }
 

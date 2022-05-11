@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 22:37:03 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 23:18:35 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name)
 
 int	assign_exec(t_combo *combo, t_cmd *cmd)
 {
-	int	oldin;
-	int	oldout;
 	int	ret;
 
 	if (assign(combo->env, cmd, &combo->env->env_var)
@@ -60,13 +58,11 @@ int	assign_exec(t_combo *combo, t_cmd *cmd)
 		}
 		return (1);
 	}
-	oldin = dup(STDIN_FILENO);
-	oldout = dup(STDOUT_FILENO);
-	dup2(cmd->fd_in, STDIN_FILENO);
-	dup2(cmd->fd_out, STDOUT_FILENO);
+	if (cmd->fd_in != 0)
+		dup2(cmd->fd_in, STDIN_FILENO);
+	if (cmd->fd_out != 1)
+		dup2(cmd->fd_out, STDOUT_FILENO);
 	ret = exec(combo, cmd);
-	dup2(oldin, STDIN_FILENO);
-	dup2(oldout, STDOUT_FILENO);
 	return (ret);
 }
 
