@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/10 17:45:29 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:25:59 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	wait_all_pids(t_list *parser, int ret)
 		return (WEXITSTATUS(wstatus));
 	else if (WIFSIGNALED(wstatus))
 		return (print_sig_interrupt(WTERMSIG(wstatus)));
-	return (EXIT_FAILURE);
+	return (g_last_return);
 }
 
 int	shall_i_fork(t_cmd	*cmd)

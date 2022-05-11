@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 16:48:40 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:16:24 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	assign_exec(t_combo *combo, t_cmd *cmd)
 	dup2(cmd->fd_in, STDIN_FILENO);
 	dup2(cmd->fd_out, STDOUT_FILENO);
 	ret = exec(combo, cmd);
-	dup2(STDIN_FILENO, oldin);
-	dup2(STDOUT_FILENO, oldout);
+	dup2(oldin, STDIN_FILENO);
+	dup2(oldout, STDOUT_FILENO);
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/10 16:51:21 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:20:04 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ static int	exec_pipe(t_combo *combo, t_list *parser, t_list *cur)
 		return (wait_all_pids(parser, 1));
 	cmd = (t_cmd *)cur->content;
 	next = (t_cmd *)cur->next->content;
-	cmd->fd_out = pipe_fd[1];
-	next->fd_in = pipe_fd[0];
+	if (cmd->fd_out == 1)
+		cmd->fd_out = pipe_fd[1];
+	else
+		close(pipe_fd[1]);
+	if (next->fd_in == 0)
+		next->fd_in = pipe_fd[0];
 	if (fork_and_exec(combo, cmd))
 		return (wait_all_pids(parser, 1));
 	close_fds(cmd->fd_in, cmd->fd_out);

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/10 12:07:32 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:01:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ static char	*join_pwd_to_path(char *pwd, char *curpath)
 	return (curpath);
 }
 
-static int	go_and_change_var(t_env *env, char *pwd, char *curpath)
+static int	go_and_change_var(t_env *env, char *pwd, char *curpath, char *cmd_name)
 {
-	int	ret;
+	int		ret;
+	char	*prompt;
 
 	ret = chdir(curpath);
 	if (ret)
 	{
-		perror("cd");
+		prompt = ft_strjoin("cd : ", cmd_name);
+		perror(prompt);
+		free(prompt);
 		free(pwd);
 		free(curpath);
 		return (1);
@@ -80,7 +83,10 @@ int	cd(t_env *env, char	**args)
 	char	*directory;
 	char	*curpath;
 	char	*pwd;
+	char	*tmp;
 
+
+	pwd = get_value(env, "PWD");
 	directory = get_directory_name(env, args);
 	if (!directory)
 		return (1);
@@ -88,24 +94,30 @@ int	cd(t_env *env, char	**args)
 	if (directory[0] != '/' && directory[0] != '.')
 	{
 		curpath = get_curpath_from_cdpath(env, directory);
-		free(directory);
 		if (!curpath)
+		{
+			free(directory);
 			return (1);
+		}
+		if (directory[0] != '/')
+		{
+			curpath = join_pwd_to_path(pwd, curpath);
+			if (!curpath)
+			{
+				free(directory);
+				free(pwd);
+				return (1);
+			}
+		}
+		free(directory);
 	}
-	pwd = get_value(env, "PWD");
-	curpath = join_pwd_to_path(pwd, curpath);
-	if (!curpath)
-	{
-		free(pwd);
-		return (1);
-	}
-	directory = canonical_conversion(curpath);
+	tmp = canonical_conversion(curpath);
 	free(curpath);
-	if (!directory)
+	if (!tmp)
 	{
 		free(pwd);
 		return (1);
 	}
-	curpath = directory;
-	return (go_and_change_var(env, pwd, curpath));
+	curpath = tmp;
+	return (go_and_change_var(env, pwd, curpath, args[0]));
 }

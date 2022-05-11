@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:54:25 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 23:12:09 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 11:52:41 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ char	*canonical_conversion(char	*curpath)
 			return (NULL);
 	}
 	free_char_tab(split, 0);
+	if (ft_strlen(canon_path) > 1)
+		canon_path[ft_strlen(canon_path) - 1] = '\0';
 	return (canon_path);
 }
