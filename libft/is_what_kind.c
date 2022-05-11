@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_what_kind.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 20:40:01 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:18:10 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ int	is_valid_identifier(char *str, char *arg)
 		msg = ft_strjoin3(str, ": '", arg);
 		if (!msg)
 			return (1);
+		
+
 		ft_putstr_fd(msg, 2);
-		ft_putstr_fd("' : not a valid identifier\n", 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
 		free(msg);
 		return (1);
 	}

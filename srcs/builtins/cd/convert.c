@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:54:25 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 11:52:41 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:36:00 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	add_dir_curpath(char **canon_path, char **split, int *i)
 	return (0);
 }
 
-char	*canonical_conversion(char	*curpath)
+char	*canonical_conversion(char	*curpath, char *cmd_name)
 {
 	char	**split;
 	char	*canon_path;
@@ -85,7 +85,7 @@ char	*canonical_conversion(char	*curpath)
 	{
 		if (!ft_strcmp(split[i], ".."))
 		{
-			if (dot_dot(&i, &canon_path, curpath, split))
+			if (dot_dot(&i, &canon_path, cmd_name, split))
 				return (NULL);
 		}
 		else if (!ft_strcmp(split[i], "."))
