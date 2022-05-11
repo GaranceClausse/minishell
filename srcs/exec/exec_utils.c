@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 15:00:00 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:55:13 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@ void	free_before_exit(t_combo *combo, char **wordlist)
 
 void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name)
 {
-	ft_putstr_fd(cmd_name, 2);
+	char	*msg;
+	
+	msg = ft_strjoin(cmd_name, ": Command not found\n");
 	free_before_exit(combo, wordlist);
 	free(cmd_name);
-	ft_putstr_fd(" : Command not found\n", 2);
+	ft_putstr_fd(msg, 2);
+	free(msg);
 	exit(127);
 }
 
