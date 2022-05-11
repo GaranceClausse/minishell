@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:35:18 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 22:04:23 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:18:23 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //	0 : Not found
 //	-1 : Found but not accessible
 //	1 : Found
-int	check_folder_exists(char *directory, char *cmd_name)
+int	check_folder_exists(char *directory, char *cmd_name, int print)
 {
 	DIR		*dir;
 	char	*prompt;
@@ -26,12 +26,15 @@ int	check_folder_exists(char *directory, char *cmd_name)
 	closedir(dir);
 	if (errno && errno != ENOENT)
 	{
-		prompt = ft_strjoin("cd: ", cmd_name);
-		if (!prompt)
-			return (-1);
-		ft_putstr_fd(prompt, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		free(prompt);
+		if (print)
+		{
+			prompt = ft_strjoin("cd: ", cmd_name);
+			if (!prompt)
+				return (-1);
+			ft_putstr_fd(prompt, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			free(prompt);
+		}
 		return (-1);
 	}
 	return (!errno);
@@ -42,12 +45,10 @@ static char	*check_curpath_cdpath(char *curpath, char *directory)
 	int		ret;
 	if (!curpath)
 		return (NULL);
-	ret = check_folder_exists(curpath, directory);
+	ret = check_folder_exists(curpath, directory, 0);
 	if (ret == 1)
 		return (curpath);
 	free(curpath);
-	if (ret == -1)
-		return (NULL);
 	return (ft_strdup(directory));
 }
 

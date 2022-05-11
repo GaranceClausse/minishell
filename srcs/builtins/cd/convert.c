@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:54:25 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 21:36:00 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:18:36 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	dot_dot(int *i, char **canon_path, char *curpath, char **split)
 		delete_from_char_tab(split, *i);
 		return (0);
 	}
-	ret = check_folder_exists(*canon_path, curpath);
+	ret = check_folder_exists(*canon_path, curpath, 1);
 	if (ret != 1)
 	{
 		if (!ret)
