@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:54:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 14:40:05 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:59:12 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	echo(char **args)
 	new_line = 1;
 	while (*args && *args[0] == '-')
 	{
-		if (is_only_n(*args + 1))
+		if (ft_strlen(*args) > 1 && is_only_n(*args + 1))
 			new_line = 0;
 		else
 			break ;
