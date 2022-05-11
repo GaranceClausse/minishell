@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 14:14:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:05:25 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	is_valid_identifier(char *str, char *arg)
 	while (arg[i] && arg[i] != '=')
 	{
 		if ((ft_isalnum(arg[i]) && ft_isdigit(arg[i])
-				&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0)
+				&& ft_isunderscore(arg[i]))
+				|| ft_isdigit(arg[0]) == 0)
 		{
 			msg = ft_strjoin3(str, ": '", arg);
 			if (!msg)

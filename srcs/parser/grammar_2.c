@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 14:22:24 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:53:42 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	check_command(t_lexer *lexer, t_list **parser,
 			return (ERROR);
 		if (!is_complete_command
 			|| (ret == NOT_VALIDATED && pick_token(lexer)->type != NLINE))
-			return (syntax_error(ft_strjoin3("Syntax error near unexpected"
+			return (syntax_error(ft_strjoin3("Syntax error near unexpected "
 						"token \'", cur->content, "\'\n"), 1));
 		return (ret);
 	}
