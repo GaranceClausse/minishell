@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:07:20 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/09 13:49:36 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:22:20 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*search_var(t_env *env, char *var_name, int j);
 void	shall_i_expand(char c, int *s_quote, int *d_quote);
 char	*get_str_expand(t_env *env, t_token *token, int *i, int *j);
 int		expand_commands(t_env *env, t_list **parser);
+void	search_and_expand_redir(t_cmd	*cmd, t_env *env);
 
 #endif

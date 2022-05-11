@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 15:13:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:23:05 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	redir(t_env *env, t_cmd	*cmd)
 	t_token	*token;
 	t_list	*cur;
 
+	search_and_expand_redir(cmd, env);
 	cur = cmd->token_list;
 	while (cur)
 	{
