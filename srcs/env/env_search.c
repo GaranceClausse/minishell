@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:41:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/04 17:38:52 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:14:25 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ char	*get_value(t_env *env, char *name)
 	int		i;
 
 	i = search_in_env(&env->env_var, name, ft_strlen(name));
-	if (i > 0)
+	if (i > -1)
 		return (extract_var_value(env->env_var.list[i]));
-	search_in_env(&env->shell_var, name, ft_strlen(name));
-	if (i > 0)
+	i = search_in_env(&env->shell_var, name, ft_strlen(name));
+	if (i > -1)
 		return (extract_var_value(env->shell_var.list[i]));
 	return (ft_strdup(""));
 }

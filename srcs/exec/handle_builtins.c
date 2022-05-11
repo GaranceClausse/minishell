@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:36:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 17:09:46 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:58:10 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	exec_builtin(t_combo *combo, char **wordlist)
 	if (!ft_strcmp(wordlist[0], "env"))
 		return (print_env(&combo->env->env_var, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "pwd"))
-		return (pwd(&wordlist[1]));
+		return (pwd());
 	if (!ft_strcmp(wordlist[0], "export"))
 		return (export(combo->env, &wordlist[1]));
 	if (!ft_strcmp(wordlist[0], "unset"))
