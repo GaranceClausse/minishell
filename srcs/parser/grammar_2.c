@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 15:53:42 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:46:35 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	pipeline(t_lexer *lexer, t_list **parser)
 	if (ret == ERROR || ret == SYNTAX_ERROR)
 		return (ret);
 	ret = check_command(lexer, parser, 0);
+	if (ret != VALIDATED)
+		return (ret);
 	ret = linebreak(lexer, 1);
 	if (ret != NOT_VALIDATED)
 		return (ret);
