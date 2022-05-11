@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:08:53 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/03 10:55:58 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:18:51 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	pwd(char **args)
 	buf = NULL;
 	if (*args)
 	{
-		write (2, "pwd: too many arguments\n", 25);
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 		return (1);
 	}
 	cur_dir = getcwd(buf, 4096);
 	if (cur_dir == NULL)
 	{
-		write (2, "pwd: path not found\n", 21);
+		ft_putstr_fd("pwd: path not found\n", 2);
 		return (1);
 	}
 	printf("%s\n", cur_dir);

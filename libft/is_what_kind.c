@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 16:13:29 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:14:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	ft_isunderscore(int c)
 
 int	is_valid_identifier(char *str, char *arg)
 {
-	int	i;
+	int		i;
+	char	*msg;
 
 	i = 0;
 	while (arg[i] && arg[i] != '=')
@@ -53,7 +54,12 @@ int	is_valid_identifier(char *str, char *arg)
 		if ((ft_isalnum(arg[i]) && ft_isdigit(arg[i])
 				&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0)
 		{
-			printf("%s: '%s' : not a valid identifier\n", str, arg);
+			msg = ft_strjoin3(str, ": '", arg);
+			if (!msg)
+				return (1);
+			ft_putstr_fd(msg, 2);
+			ft_putstr_fd("' : not a valid identifier\n", 2);
+			free(msg);
 			return (1);
 		}
 		i++;

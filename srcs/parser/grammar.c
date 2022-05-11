@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:42 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/10 15:58:34 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:23:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	multiline(t_lexer *lexer)
 	}
 	else if (!usr_input && g_last_return != 130)
 	{
-		write(2,"\nunexpected end of file\n", 24); //stderr?
+		ft_putstr_fd("\nunexpected end of file\n", 2);
 		return (1);
 	}
 	feed_lexer(lexer, usr_input);

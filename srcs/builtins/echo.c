@@ -6,37 +6,52 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:54:51 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/02 13:10:46 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:40:05 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 
+static int	is_only_n(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	echo(char **args)
 {
 	int	new_line;
 
 	new_line = 1;
-	while (*args && !ft_strcmp(*args, "-n"))
+	while (*args && *args[0] == '-')
 	{
-		new_line = 0;
+		if (is_only_n(*args + 1))
+			new_line = 0;
+		else
+			break ;
 		args++;
 	}
 	if (*args)
 	{
-		if (write(1, *args, ft_strlen(*args)) == -1)
-			return (1);
+		ft_putstr_fd(*args, 1);
 		args++;
 	}
 	while (*args)
 	{
-		if (write(1, " ", 1) == -1 || write(1, *args, ft_strlen(*args)) == -1)
-			return (1);
+		ft_putstr_fd(" ", 1);
+		ft_putstr_fd(*args, 1);
 		args++;
 	}
 	if (new_line)
-		if (write(1, "\n", 1) == -1)
-			return (1);
+		ft_putstr_fd("\n", 1);
 	return (0);
 }

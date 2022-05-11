@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 16:27:27 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:16:14 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ static char	*execute_heredoc(t_env *env, char *delimiter, int fd, int expand)
 	{
 		if (expand == 1)
 			usr_input = expand_heredoc(usr_input, env);
-		write(fd, usr_input, ft_strlen(usr_input));
-		write(fd, "\n", 1);
+		ft_putstr_fd(usr_input, fd);
+		ft_putstr_fd("\n", fd);
 		free(usr_input);
 		signal(SIGINT, sigint_handler);
 		usr_input = readline("here_doc > ");
@@ -122,7 +122,11 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 	}
 	usr_input = execute_heredoc(env, delimiter, fd, expand);
 	if (!usr_input && g_last_return != 130)
-		printf("\nunexpected end of file (wanted '%s')\n", delimiter); //stderror
+	{
+		ft_putstr_fd("\nunexpected end of file (wanted '", 2);
+		ft_putstr_fd(delimiter, 2);
+		ft_putstr_fd("'\n", 2);
+	}
 	free(usr_input);
 	return (0);
 }

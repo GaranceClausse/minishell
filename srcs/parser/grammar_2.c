@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:38 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 22:15:26 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 14:22:24 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	syntax_error(char *err_msg, int is_freable)
 {
 	if (!err_msg)
 		return (ERROR);
-	write(2, err_msg, ft_strlen(err_msg));
+	ft_putstr_fd(err_msg, 2);
 	if (is_freable)
 		free(err_msg);
 	return (SYNTAX_ERROR);

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 12:23:39 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:17:22 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	handle_input(t_env *env, t_list **parser, t_lexer *lexer)
 		if (!expand_commands(env, parser))
 			g_last_return = exec_commands(env, *parser, lexer);
 		else
-			g_last_return = 2;
+			g_last_return = 1;
 	}
 	else
-		g_last_return = 1;
+		g_last_return = 2;
 	delete_parser(parser);
 }
 
@@ -33,7 +33,6 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 {
 	char	*usr_input;
 
-	
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, sigint_handler);
 	usr_input = readline(COLOR_ORANGE PS1 COLOR_RESET);
@@ -49,7 +48,7 @@ static int	interactive_shell(t_env *env, t_list **parser, t_lexer *lexer)
 	}
 	free(usr_input);
 	clear_history();
-	write(2, "exit\n", 5);
+	ft_putstr_fd("exit\n", 2);
 	return (g_last_return);
 }
 

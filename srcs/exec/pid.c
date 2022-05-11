@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:15:44 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/11 12:25:59 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:22:00 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	print_sig_interrupt(int signum)
 		msg = "Signal\n";
 	else
 		msg = error_msg[signum - 1];
-	write(1, msg, ft_strlen(msg));
+	ft_putstr_fd(msg, 1);
 	return (signum + 128);
 }
 

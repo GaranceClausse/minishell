@@ -14,7 +14,7 @@ LIBFTOBJ = $(addprefix libft/, ft_substr.o ft_strlen.o ft_strcmp.o \
 	   ft_strncmp.o ft_realloc_str.o ft_strdup.o ft_lstadd_back.o ft_lstclear.o \
 	   ft_lstdelone.o ft_lstlast.o ft_lstnew.o ft_swap.o ft_strjoin.o ft_is_in_set.o \
 	   free_char_tab.o ft_strtrim.o is_what_kind.o ft_itoa.o ft_split.o \
-	  ft_strchr.o ft_atoi.o ft_lstlen.o)
+	  ft_strchr.o ft_atoi.o ft_lstlen.o ft_putstr_fd.o)
 
 CFLAGS = -Ilibft -Iincludes -Wall -Wextra -Werror
 DBFLAGS = -g3

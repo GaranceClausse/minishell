@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/10 16:51:42 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:13:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	apply_redir(int *fd_to_change, int new_fd, char *filename)
 		if (filename)
 			perror(filename);
 		else
-			write(2, "Heredoc error\n", 14);
+			ft_putstr_fd("Heredoc error\n", 2);
 		return (1);
 	}
 	*fd_to_change = new_fd;
@@ -32,7 +32,7 @@ static int	apply_redir(int *fd_to_change, int new_fd, char *filename)
 
 static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
-	int	fd;
+	int	fds[2];
 
 	if (token->type == REDIR_IN)
 		return (apply_redir(&(cmd->fd_in),
@@ -42,15 +42,15 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 					| O_WRONLY | O_TRUNC, 0644), token->content));
 	if (token->type == HERE_DOC)
 	{
-		fd = open(TMP, O_CREAT | O_WRONLY | O_TRUNC, 0677);
-		if (here_doc(env, token->content, fd))
+		if (pipe(fds))
+			return (1);
+		if (here_doc(env, token->content, fds[1]))
 		{
-			close(fd);
+			close_fds(fds[0], fds[1]);
 			return (1);
 		}
-		close(fd);
-		fd = open(TMP, O_RDONLY);
-		return (apply_redir(&cmd->fd_in, fd, NULL));
+		close(fds[1]);
+		return (apply_redir(&(cmd->fd_in), fds[0], NULL));
 	}
 	return (apply_redir(&(cmd->fd_out), open(token->content, O_CREAT
 				| O_WRONLY | O_APPEND, 0644), token->content));
@@ -90,6 +90,11 @@ int	assign(t_env *env, t_cmd *cmd, t_var_list *list)
 			var = ft_strdup(token->content);
 			if (!var)
 				return (1);
+			if (is_valid_identifier("assign", var))
+			{
+				free(var);
+				return (1);
+			}
 			if (add_var(env, list, var))
 				return (1);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:07:30 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:50:57 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 14:17:23 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	print_env(t_var_list *env_var, char **args)
 	i = 0;
 	if (*args)
 	{
-		write (2, "env: too many arguments\n", 25);
+		ft_putstr_fd("env: too many arguments\n", 2);
 		return (1);
 	}
 	while (env_var->list[i])

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 12:01:50 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:58:29 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static char	*get_directory_name(t_env *env, char **args)
 	{
 		if (args[1])
 		{
-			write (2, "cd : too many arguments\n", 24);
+			ft_putstr_fd("cd : too many arguments\n", 2);
 			return (NULL);
 		}
 		return (ft_strdup(args[0]));
 	}
 	directory = get_value(env, "HOME");
 	if (!directory)
-		write(2, "cd : HOME not set\n", 18);
+		ft_putstr_fd("cd : HOME not set\n", 2);
 	return (directory);
 }
 
@@ -51,7 +51,8 @@ static char	*join_pwd_to_path(char *pwd, char *curpath)
 	return (curpath);
 }
 
-static int	go_and_change_var(t_env *env, char *pwd, char *curpath, char *cmd_name)
+static int	go_and_change_var(t_env *env, char *pwd,
+	char *curpath, char *cmd_name)
 {
 	int		ret;
 	char	*prompt;
@@ -78,46 +79,53 @@ static int	go_and_change_var(t_env *env, char *pwd, char *curpath, char *cmd_nam
 	return (ret);
 }
 
+static int	curpath_and_pwd(t_env *env, char *directory,
+	char **curpath, char *pwd)
+{
+	if (directory[0] != '/' && directory[0] != '.')
+	{
+		*curpath = get_curpath_from_cdpath(env, directory);
+		if (!*curpath)
+		{
+			free(directory);
+			return (1);
+		}
+	}
+	else
+		*curpath = directory;
+	if (directory[0] != '/')
+	{
+		if (directory[0] != '.')
+			free(directory);
+		*curpath = join_pwd_to_path(pwd, *curpath);
+		if (!*curpath)
+		{
+			free(pwd);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	cd(t_env *env, char	**args)
 {
 	char	*directory;
 	char	*curpath;
 	char	*pwd;
-	char	*tmp;
 
-
-	pwd = get_value(env, "PWD");
 	directory = get_directory_name(env, args);
 	if (!directory)
 		return (1);
-	curpath = directory;
-	if (directory[0] != '/' && directory[0] != '.')
-	{
-		curpath = get_curpath_from_cdpath(env, directory);
-		if (!curpath)
-		{
-			free(directory);
-			return (1);
-		}
-		if (directory[0] != '/')
-		{
-			curpath = join_pwd_to_path(pwd, curpath);
-			if (!curpath)
-			{
-				free(directory);
-				free(pwd);
-				return (1);
-			}
-		}
-		free(directory);
-	}
-	tmp = canonical_conversion(curpath);
+	pwd = get_value(env, "PWD");
+	if (curpath_and_pwd(env, directory, &curpath, pwd))
+		return (1);
+	directory = canonical_conversion(curpath);
 	free(curpath);
-	if (!tmp)
+	if (!directory)
 	{
 		free(pwd);
 		return (1);
 	}
-	curpath = tmp;
+	curpath = directory;
 	return (go_and_change_var(env, pwd, curpath, args[0]));
 }

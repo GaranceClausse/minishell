@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 12:16:24 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:00:00 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ void	free_before_exit(t_combo *combo, char **wordlist)
 
 void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name)
 {
-	char	*msg;
-
-	write(2, cmd_name, ft_strlen(cmd_name));
+	ft_putstr_fd(cmd_name, 2);
 	free_before_exit(combo, wordlist);
 	free(cmd_name);
-	msg = " : Command not found\n";
-	write (2, msg, ft_strlen(msg));
+	ft_putstr_fd(" : Command not found\n", 2);
 	exit(127);
 }
 
@@ -50,16 +47,8 @@ int	assign_exec(t_combo *combo, t_cmd *cmd)
 	int	oldout;
 	int	ret;
 
-	if (assign(combo->env, cmd, &combo->env->env_var))
-	{
-		if (cmd->is_in_pipe)
-		{
-			free_before_exit(combo, NULL);
-			exit(1);
-		}
-		return (1);
-	}
-	if (cmd->fd_in == -1 || cmd->fd_out == -1)
+	if (assign(combo->env, cmd, &combo->env->env_var)
+		|| cmd->fd_in == -1 || cmd->fd_out == -1)
 	{
 		if (cmd->is_in_pipe)
 		{

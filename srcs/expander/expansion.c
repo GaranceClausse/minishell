@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 11:14:07 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:13:15 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	expand_var(t_token *token, t_env *env)
 				&& (ft_isalnum(token->content[j + i]) == 0
 					|| ft_isunderscore(token->content[j + i]) == 0))
 				j++;
-			//check output of create_new_token
 			i += create_new_token(token, env, i, j);
 		}
 		else

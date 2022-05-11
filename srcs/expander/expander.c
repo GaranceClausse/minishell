@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 16:04:13 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 12:25:06 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:23:00 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	expand_commands(t_env *env, t_list **parser)
 		remove_empty_tokens(&cmd->wordlist);
 		if (remove_quotes(&cmd->wordlist) || remove_quotes(&cmd->token_list))
 			return (1);
-		redir(env, cmd);
+		if (redir(env, cmd))
+			g_last_return = 1;
 		cur = cur->next;
 	}
 	return (0);
