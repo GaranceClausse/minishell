@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 22:10:28 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:36:11 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,53 +51,12 @@ static char	*join_pwd_to_path(char *pwd, char *curpath)
 	return (curpath);
 }
 
-static int	go_and_change_var(t_env *env, char *pwd,
-	char *curpath, char *cmd_name)
-{
-	int		ret;
-	char	*prompt;
-
-	ret = chdir(curpath);
-	if (ret)
-	{
-		prompt = ft_strjoin("cd: ", cmd_name);
-		perror(prompt);
-		free(prompt);
-		free(pwd);
-		free(curpath);
-		return (1);
-	}
-	ret = change_var_by_val(env, &env->env_var, "OLDPWD", pwd);
-	free(pwd);
-	if (ret)
-	{
-		free(curpath);
-		return (1);
-	}
-	ret = change_var_by_val(env, &env->env_var, "PWD", curpath);
-	free(curpath);
-	return (ret);
-}
-
-static int	curpath_and_pwd(t_env *env, char *directory,
-	char **curpath, char *pwd)
+static int	join_pwd(char *directory, char *pwd, char **curpath)
 {
 	int		show_absolute;
 	char	*clean_path;
 
-	show_absolute = 0;
-	if (directory[0] != '/' && directory[0] != '.')
-	{
-		*curpath = get_curpath_from_cdpath(env, directory);
-		if (!*curpath)
-		{
-			free(directory);
-			return (1);
-		}
-		show_absolute = (ft_strcmp(*curpath, directory) != 0);
-	}
-	else
-		*curpath = directory;
+	show_absolute = (ft_strcmp(*curpath, directory) != 0);
 	if (directory[0] != '/')
 	{
 		if (directory[0] != '.')
@@ -118,6 +77,23 @@ static int	curpath_and_pwd(t_env *env, char *directory,
 	return (0);
 }
 
+static int	join_curpath(t_env *env, char *directory,
+	char **curpath)
+{
+	if (directory[0] != '/' && directory[0] != '.')
+	{
+		*curpath = get_curpath_from_cdpath(env, directory);
+		if (!*curpath)
+		{
+			free(directory);
+			return (1);
+		}
+	}
+	else
+		*curpath = directory;
+	return (0);
+}
+
 int	cd(t_env *env, char	**args)
 {
 	char	*directory;
@@ -128,7 +104,9 @@ int	cd(t_env *env, char	**args)
 	if (!directory)
 		return (1);
 	pwd = get_value(env, "PWD");
-	if (curpath_and_pwd(env, directory, &curpath, pwd))
+	if (join_curpath(env, directory, &curpath))
+		return (1);
+	if (join_pwd(directory, pwd, &curpath))
 		return (1);
 	directory = canonical_conversion(curpath, args[0]);
 	free(curpath);

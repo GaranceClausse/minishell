@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 20:55:13 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:37:03 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_before_exit(t_combo *combo, char **wordlist)
 void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name)
 {
 	char	*msg;
-	
+
 	msg = ft_strjoin(cmd_name, ": Command not found\n");
 	free_before_exit(combo, wordlist);
 	free(cmd_name);

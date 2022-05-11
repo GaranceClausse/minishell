@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:15:39 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 22:19:48 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:37:59 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ int	is_valid_identifier(char *str, char *arg)
 	{
 		if (arg[i] == '=' && ft_strcmp("assign", str) == 0)
 			break ;
-		if ((ft_isalnum(arg[i]) && ft_isunderscore(arg[i]) && arg[i] != '=' /*&& arg[i] != '$'*/)
-		|| ft_isdigit(arg[0]) == 0 || arg[0] == '=')
-					pbm++;	
+		if ((ft_isalnum(arg[i]) && ft_isunderscore(arg[i])
+			&& arg[i] != '=' /*&& arg[i] != '$'*/)
+			|| ft_isdigit(arg[0]) == 0 || arg[0] == '=')
+					pbm++;
 		i++;
 	}
 	if (pbm != 0 || !ft_strcmp(arg, ""))
@@ -65,8 +66,6 @@ int	is_valid_identifier(char *str, char *arg)
 		msg = ft_strjoin3(str, ": '", arg);
 		if (!msg)
 			return (1);
-		
-
 		ft_putstr_fd(msg, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		free(msg);

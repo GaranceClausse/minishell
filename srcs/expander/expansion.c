@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:48:35 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 21:22:09 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 22:30:06 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	search_and_expand(t_cmd	*cmd, t_env *env)
 		list = list->next;
 	}
 }
-
 
 void	search_and_expand_redir(t_cmd	*cmd, t_env *env)
 {

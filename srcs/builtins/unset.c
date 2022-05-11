@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:32:03 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 16:22:42 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/11 22:36:42 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static int	unset_identifier(char *str, char *arg)
 	{
 		if ((ft_isalnum(arg[i]) && ft_isdigit(arg[i])
 				&& ft_isunderscore(arg[i])) || ft_isdigit(arg[0]) == 0
-				|| arg[i] == '=')
-					pbm++;		
+			|| arg[i] == '=')
+					pbm++;
 		i++;
 	}
 	if (pbm != 0 || !ft_strcmp(arg, ""))

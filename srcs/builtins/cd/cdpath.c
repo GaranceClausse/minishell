@@ -6,7 +6,7 @@
 /*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 10:35:18 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 22:18:23 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/11 22:35:54 by deacllock        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,38 @@ int	check_folder_exists(char *directory, char *cmd_name, int print)
 	return (!errno);
 }
 
+int	go_and_change_var(t_env *env, char *pwd,
+	char *curpath, char *cmd_name)
+{
+	int		ret;
+	char	*prompt;
+
+	ret = chdir(curpath);
+	if (ret)
+	{
+		prompt = ft_strjoin("cd: ", cmd_name);
+		perror(prompt);
+		free(prompt);
+		free(pwd);
+		free(curpath);
+		return (1);
+	}
+	ret = change_var_by_val(env, &env->env_var, "OLDPWD", pwd);
+	free(pwd);
+	if (ret)
+	{
+		free(curpath);
+		return (1);
+	}
+	ret = change_var_by_val(env, &env->env_var, "PWD", curpath);
+	free(curpath);
+	return (ret);
+}
+
 static char	*check_curpath_cdpath(char *curpath, char *directory)
 {
 	int		ret;
+
 	if (!curpath)
 		return (NULL);
 	ret = check_folder_exists(curpath, directory, 0);
