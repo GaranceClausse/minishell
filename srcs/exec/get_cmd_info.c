@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:28:09 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/12 18:59:10 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:15:43 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	get_cmd_name(t_env *env, char **partial_cmd)
 				return (1);
 			free(*partial_cmd);
 			*partial_cmd = cmd;
-			return (0);
+			return (-1);
 		}
 		free(cmd);
 		i++;

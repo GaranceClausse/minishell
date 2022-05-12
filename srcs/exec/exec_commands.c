@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/12 18:52:36 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:16:44 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	exec(t_combo *combo, t_cmd *cmd)
 {
 	char	**wordlist;
 	char	*cmd_name;
+	int 	ret;
 
 	wordlist = get_wordlist(combo, cmd);
 	if (!wordlist)
@@ -94,12 +95,14 @@ int	exec(t_combo *combo, t_cmd *cmd)
 	}
 	if (ft_strlen(cmd_name) && !ft_is_in_set(cmd_name[0], "/.\0"))
 	{
-		if (get_cmd_name(combo->env, wordlist))
+		ret = get_cmd_name(combo->env, wordlist);
+		if (ret == 1)
 		{
 			free_before_exit(combo, wordlist);
 			exit(1);
 		}
-		command_not_found(combo, wordlist, cmd_name);
+		else if (ret == 0)
+			command_not_found(combo, wordlist, cmd_name);
 	}
 	launch_exec(combo, wordlist, cmd_name);
 	exit(1);
