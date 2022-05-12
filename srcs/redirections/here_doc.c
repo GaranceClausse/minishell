@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/12 19:11:29 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:24:19 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 		ft_putstr_fd(delimiter, 2);
 		ft_putstr_fd("')\n", 2);
 	}
+	if (expand == 0)
+		free(delimiter);
 	free(usr_input);
 	return (g_last_return);
 }

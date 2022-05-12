@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/12 19:23:10 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:30:19 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,18 @@ int	exec_commands(t_env *env, t_list *parser, t_lexer *lexer)
 
 static void	launch_exec(t_combo *combo, char **wordlist, char *cmd_name)
 {
+	int	ret;
+
+	if (ft_strlen(cmd_name) && !ft_is_in_set(cmd_name[0], "/.\0"))
+	{
+		ret = get_cmd_name(combo->env, wordlist);
+		if (ret == 1)
+			free_before_exit(combo, wordlist);
+		if (ret == 1)
+			exit(1);
+		else if (ret == 0)
+			command_not_found(combo, wordlist, cmd_name);
+	}
 	delete_parser(combo->parser);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -78,7 +90,6 @@ int	exec(t_combo *combo, t_cmd *cmd)
 {
 	char	**wordlist;
 	char	*cmd_name;
-	int 	ret;
 
 	wordlist = get_wordlist(combo, cmd);
 	if (!wordlist)
@@ -90,17 +101,6 @@ int	exec(t_combo *combo, t_cmd *cmd)
 	{
 		free_before_exit(combo, wordlist);
 		exit(1);
-	}
-	if (ft_strlen(cmd_name) && !ft_is_in_set(cmd_name[0], "/.\0"))
-	{
-		ret = get_cmd_name(combo->env, wordlist);
-		if (ret == 1)
-		{
-			free_before_exit(combo, wordlist);
-			exit(1);
-		}
-		else if (ret == 0)
-			command_not_found(combo, wordlist, cmd_name);
 	}
 	launch_exec(combo, wordlist, cmd_name);
 	exit(1);

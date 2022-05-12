@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remover.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/12 19:35:15 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:26:00 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,9 @@ static int	remove_quotes_from_token(t_token	*token, int	*header)
 		{
 			quotes[2] = !quotes[2];
 			delete_quotes_token(token, i);
+			*header = quotes[2];
 			if (!token->content)
-			{
-				*header = quotes[2];
 				return (1);
-			}
 		}
 		else if (remove_quotes_content(token, quotes, &i) == 1)
 		{
