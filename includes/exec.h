@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:56 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 16:04:21 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:19:10 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ t_combo	init_combo(t_env *env, t_list **parser, t_lexer *lexer);
 int		exec_or_assign_only(t_combo *combo, t_cmd *cmd);
 int		exec(t_combo *combo, t_cmd *cmd);
 void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name);
+void	restore_fd(t_cmd *cmd, int oldin, int oldout);
+void	save_fd(t_cmd *cmd, int *oldin, int *oldout);
 
 #endif

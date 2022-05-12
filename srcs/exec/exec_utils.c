@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 23:18:35 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/12 12:22:33 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name)
 int	assign_exec(t_combo *combo, t_cmd *cmd)
 {
 	int	ret;
+	int	oldin;
+	int oldout;
 
 	if (assign(combo->env, cmd, &combo->env->env_var)
 		|| cmd->fd_in == -1 || cmd->fd_out == -1)
@@ -58,11 +60,15 @@ int	assign_exec(t_combo *combo, t_cmd *cmd)
 		}
 		return (1);
 	}
+	if (!cmd->is_in_pipe)
+		save_fd(cmd, &oldin, &oldout);
 	if (cmd->fd_in != 0)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != 1)
 		dup2(cmd->fd_out, STDOUT_FILENO);
 	ret = exec(combo, cmd);
+	if (!cmd->is_in_pipe)
+		restore_fd(cmd, oldin, oldout);
 	return (ret);
 }
 

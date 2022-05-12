@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 23:23:37 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/12 12:12:55 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	main(int argc, char	*argv[], char *envp[])
 		ret = interactive_shell(&env, &parser, lexer);
 	free_lexer(lexer);
 	free_env(&env);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	return (ret);
 }
 
