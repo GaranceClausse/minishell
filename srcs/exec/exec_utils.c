@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/12 19:14:43 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:23:23 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	command_not_found(t_combo *combo, char **wordlist, char *cmd_name)
 	free(cmd_name);
 	ft_putstr_fd(msg, 2);
 	free(msg);
+	close(0);
+	close(1);
 	exit(127);
 }
 

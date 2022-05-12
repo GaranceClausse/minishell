@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/12 19:16:44 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:23:10 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static void	launch_exec(t_combo *combo, char **wordlist, char *cmd_name)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	execve(wordlist[0], wordlist, combo->env->env_var.list);
-	close(0);
-	close(1);
 	if (errno == 2 || errno == 13)
 		command_not_found(combo, wordlist, cmd_name);
 	perror(cmd_name);
