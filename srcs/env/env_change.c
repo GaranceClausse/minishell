@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_change.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:26:44 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/02 18:06:12 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:21:42 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	add_var(t_env *env, t_var_list *dst, char *var)
 {
 	int	ret;
 
+	if (!var)
+		return (1);
 	ret = change_var(&env->shell_var, var);
 	if (ret != 1)
 		return (ret + 1);

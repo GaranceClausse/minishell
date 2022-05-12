@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:12:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/10 11:33:26 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:22:38 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ int	print_export(t_var_list *env_var)
 	char	*var_name;
 	char	**env_list;
 
-	i = 0;
+	i = -1;
 	env_list = order_list(env_var);
-	while (env_list[i])
+	while (env_list[++i])
 	{		
 		var_name = extract_name(env_list[i]);
+		if (ft_strcmp(var_name, "_") == 0)
+			continue ;
 		if (ft_strchr(env_list[i], '=') == 0)
 			printf("export %s\n", var_name);
 		else
@@ -61,7 +63,6 @@ int	print_export(t_var_list *env_var)
 			free(var_value);
 		}
 		free(var_name);
-		i++;
 	}
 	free_char_tab(env_list, 0);
 	return (0);
