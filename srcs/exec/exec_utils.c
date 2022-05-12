@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:22:16 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/12 12:22:33 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:27:10 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	assign_exec(t_combo *combo, t_cmd *cmd)
 {
 	int	ret;
 	int	oldin;
-	int oldout;
+	int	oldout;
 
 	if (assign(combo->env, cmd, &combo->env->env_var)
 		|| cmd->fd_in == -1 || cmd->fd_out == -1)

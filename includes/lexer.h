@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 16:28:58 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/08 18:17:43 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/12 13:32:42 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef enum e_type {
 	REDIR_IN,
 	REDIR_OUT,
 	HERE_DOC,
-	LIMITER,
 	APPEND,
 	PIPE,
 	WORD,
@@ -57,6 +56,7 @@ void	get_token_type(t_token *token, char c);
 void	feed_lexer(t_lexer *lexer, char *str);
 void	delete_token(void *token);
 t_token	*pick_token(t_lexer	*lexer);
+t_lexer	*init_lexer(void);
 void	free_lexer(t_lexer *lexer);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/12 12:12:55 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:33:12 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,12 @@ int	main(int argc, char	*argv[], char *envp[])
 	(void)argv;
 	if (!init_env(&env, 10, envp))
 		return (1);
-	lexer = malloc(sizeof(t_lexer));
+	lexer = init_lexer();
 	if (!lexer)
 	{
 		free_env(&env);
 		return (1);
 	}
-	lexer->str = NULL;
-	lexer->token = NULL;
-	feed_lexer(lexer, NULL);
 	parser = NULL;
 	ret = 0;
 	if (isatty(STDIN_FILENO))
@@ -82,5 +79,3 @@ int	main(int argc, char	*argv[], char *envp[])
 	close(STDOUT_FILENO);
 	return (ret);
 }
-
-// valgrind --suppressions=readline.supp --track-fds=all --trace-children=yes ./minishell

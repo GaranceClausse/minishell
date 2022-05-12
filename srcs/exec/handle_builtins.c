@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:36:55 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/12 12:19:01 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:37:27 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	handle_builtins(t_combo *combo, t_cmd *cmd, char **wordlist)
 	if (cmd->is_in_pipe)
 	{
 		free_before_exit(combo, wordlist);
+		close(0);
+		close(1);
 		exit(ret);
 	}		
 	free_char_tab(wordlist, 0);

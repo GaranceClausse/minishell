@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:15:22 by gclausse          #+#    #+#             */
-/*   Updated: 2022/04/26 10:32:16 by vkrajcov         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:31:50 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+t_lexer	*init_lexer(void)
+{
+	t_lexer	*lexer;
+
+	lexer = malloc(sizeof(t_lexer));
+	if (!lexer)
+		return (NULL);
+	lexer->str = NULL;
+	lexer->token = NULL;
+	feed_lexer(lexer, NULL);
+	return (lexer);
+}
 
 void	feed_lexer(t_lexer *lexer, char *str)
 {
