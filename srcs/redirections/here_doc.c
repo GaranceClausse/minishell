@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:24:25 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/11 15:16:14 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:11:29 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 char	*remove_quotes_heredoc(char *delimiter)
 {
 	int		i;
+	int		j;
 	char	*cpy;
 
 	i = 0;
+	j = 0;
 	cpy = malloc(sizeof(char) * (ft_strlen(delimiter) + 1));
 	if (!cpy)
 		return (NULL);
 	while (delimiter[i])
 	{
-		if (delimiter[i] == '\'' || delimiter[i] == '"')
-			i++;
-		else
-			cpy[i] = delimiter[i];
+		if (!(delimiter[i] == '\'' || delimiter[i] == '"'))
+		{
+			cpy[j] = delimiter[i];
+			j++;
+		}
 		i++;
 	}
-	free(delimiter);
+	cpy[j] = '\0';
 	return (cpy);
 }
 
@@ -125,8 +128,8 @@ int	here_doc(t_env *env, char *delimiter, int fd)
 	{
 		ft_putstr_fd("\nunexpected end of file (wanted '", 2);
 		ft_putstr_fd(delimiter, 2);
-		ft_putstr_fd("'\n", 2);
+		ft_putstr_fd("')\n", 2);
 	}
 	free(usr_input);
-	return (0);
+	return (g_last_return);
 }

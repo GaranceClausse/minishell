@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:21:10 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/12 13:33:12 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 16:52:55 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ int	g_last_return = 0;
 
 static void	handle_input(t_env *env, t_list **parser, t_lexer *lexer)
 {
+	int	ret;
+
 	if (complete_command(lexer, parser) == VALIDATED)
 	{
-		if (!expand_commands(env, parser))
+		ret = expand_commands(env, parser);
+		if (!ret)
 			g_last_return = exec_commands(env, *parser, lexer);
 		else
-			g_last_return = 1;
+			g_last_return = ret;
 	}
-	else
+	else if (g_last_return < 128)
 		g_last_return = 2;
 	delete_parser(parser);
 }

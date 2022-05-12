@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_from_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 19:14:29 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/08 19:29:24 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/12 19:10:51 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	move_head_empty_token(t_list **list)
 	while (*list)
 	{
 		token = (t_token *)(*list)->content;
-		if (!ft_strcmp(token->content, ""))
+		if (!ft_strcmp(token->content, "") || !ft_strcmp(token->content, "\1\1"))
 		{
 			cur = (*list);
 			*list = (*list)->next;
@@ -43,7 +43,8 @@ void	remove_empty_tokens(t_list **list)
 	while (cur && cur->next)
 	{
 		token = (t_token *)cur->next->content;
-		while (cur->next && !ft_strcmp(token->content, ""))
+		while (cur->next && (!ft_strcmp(token->content, "")
+				|| !ft_strcmp(token->content, "\1\1")))
 		{
 			next = cur->next;
 			cur->next = cur->next->next;

@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:11:12 by gclausse          #+#    #+#             */
-/*   Updated: 2022/05/09 17:28:47 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:02:34 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*search_var(t_env *env, char *var_name, int j)
 char	*get_str_expand(t_env *env, t_token *token, int *i, int *j)
 {
 	char	*str_expand;
+	char	*tmp;
 
 	if (token->content[(*i) + 1] && token->content[(*i) + 1] == '?')
 	{
@@ -47,6 +48,13 @@ char	*get_str_expand(t_env *env, t_token *token, int *i, int *j)
 		(*j)++;
 	}
 	else
+	{
 		str_expand = search_var(env, &token->content[(*i) + 1], *j);
+		if (!str_expand)
+			return (NULL);
+		tmp = ft_strjoin3("\1", str_expand, "\1");
+		free(str_expand);
+		str_expand = tmp;
+	}
 	return (str_expand);
 }

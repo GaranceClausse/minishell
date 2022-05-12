@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remover.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:56:43 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/08 19:14:06 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/12 19:12:15 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,59 @@ void	delete_quotes_token(t_token *token, int i)
 
 	tmp = token->content;
 	start = ft_substr(token->content, 0, i);
-	token->content = ft_strjoin(start, token->content + i + 1);
-	free(start);
+	if (token->content + i + 1)
+	{
+		token->content = ft_strjoin(start, token->content + i + 1);
+		free(start);
+	}
+	else
+		token->content = start;
 	free(tmp);
 }
 
+static int	remove_quotes_content(t_token *token, int *quotes, int *i)
+{
+	if (token->content[*i] == '\'' && !quotes[1] && !quotes[2])
+		quotes[0] = !quotes[0];
+	else if (token->content[*i] == '"' && !quotes[0] && !quotes[2])
+		quotes[1] = !quotes[1];
+	if ((token->content[*i] == '\'' && !quotes[1] && !quotes[2])
+		|| (token->content[*i] == '"' && !quotes[0] && !quotes[2]))
+	{
+		delete_quotes_token(token, *i);
+		if (!token->content)
+			return (1);
+	}
+	else
+		(*i)++;
+	return (0);
+}
+
+/*
+quotes[0] = s_quotes
+quotes[1] = d_quotes
+quotes[2] = my 'special' quote
+*/
 static int	remove_quotes_from_token(t_token	*token)
 {
-	int		s_quote;
-	int		d_quote;
-	int		i;
+	int	quotes[3];
+	int	i;
 
 	i = 0;
-	s_quote = 0;
-	d_quote = 0;
+	quotes[0] = 0;
+	quotes[1] = 0;
+	quotes[2] = 0;
 	while (token->content[i])
 	{
-		if (token->content[i] == '\'' && !d_quote)
-			s_quote = !s_quote;
-		else if (token->content[i] == '"' && !s_quote)
-			d_quote = !d_quote;
-		if ((token->content[i] == '\'' && !d_quote)
-			|| (token->content[i] == '"' && !s_quote))
+		if (token->content[i] == 1)
 		{
+			quotes[2] = !quotes[2];
 			delete_quotes_token(token, i);
 			if (!token->content)
 				return (1);
 		}
-		else
-			i++;
+		else if (remove_quotes_content(token, quotes, &i) == 1)
+			return (1);
 	}
 	return (0);
 }

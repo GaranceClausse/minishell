@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:22:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 21:23:05 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 18:27:13 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	apply_redir(int *fd_to_change, int new_fd, char *filename)
 static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 {
 	int	fds[2];
+	int	ret;
 
 	if (token->type == REDIR_IN)
 		return (apply_redir(&(cmd->fd_in),
@@ -44,10 +45,12 @@ static int	check_and_apply_redir(t_env *env, t_cmd *cmd, t_token *token)
 	{
 		if (pipe(fds))
 			return (1);
-		if (here_doc(env, token->content, fds[1]))
+		ret = here_doc(env, token->content, fds[1]);
+		if (ret)
 		{
+			cmd->fd_in = -1;
 			close_fds(fds[0], fds[1]);
-			return (1);
+			return (ret);
 		}
 		close(fds[1]);
 		return (apply_redir(&(cmd->fd_in), fds[0], NULL));
@@ -60,16 +63,17 @@ int	redir(t_env *env, t_cmd	*cmd)
 {
 	t_token	*token;
 	t_list	*cur;
+	int		ret;
 
-	search_and_expand_redir(cmd, env);
 	cur = cmd->token_list;
 	while (cur)
 	{
 		token = (t_token *)cur->content;
 		if (token->type >= REDIR_IN && token->type <= APPEND)
 		{
-			if (check_and_apply_redir(env, cmd, token))
-				return (1);
+			ret = check_and_apply_redir(env, cmd, token);
+			if (ret)
+				return (ret);
 		}
 		cur = cur->next;
 	}

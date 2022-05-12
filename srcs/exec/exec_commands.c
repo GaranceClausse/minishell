@@ -6,7 +6,7 @@
 /*   By: gclausse <gclausse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:36:22 by deacllock         #+#    #+#             */
-/*   Updated: 2022/05/12 13:27:22 by gclausse         ###   ########.fr       */
+/*   Updated: 2022/05/12 18:52:36 by gclausse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	exec(t_combo *combo, t_cmd *cmd)
 			free_before_exit(combo, wordlist);
 			exit(1);
 		}
+		command_not_found(combo, wordlist, cmd_name);
 	}
 	launch_exec(combo, wordlist, cmd_name);
 	exit(1);
