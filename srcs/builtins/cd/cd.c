@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deacllock <deacllock@student.42.fr>        +#+  +:+       +#+        */
+/*   By: vkrajcov <vkrajcov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:33:50 by vkrajcov          #+#    #+#             */
-/*   Updated: 2022/05/11 22:36:11 by deacllock        ###   ########.fr       */
+/*   Updated: 2022/05/12 20:22:16 by vkrajcov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_directory_name(t_env *env, char **args)
 		return (ft_strdup(args[0]));
 	}
 	directory = get_value(env, "HOME");
-	if (!directory)
+	if (!directory || !ft_strcmp(directory, ""))
 		ft_putstr_fd("cd: HOME not set\n", 2);
 	return (directory);
 }
